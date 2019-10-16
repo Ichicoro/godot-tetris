@@ -17,16 +17,15 @@ scale = Vector2( 5, 5 )
 texture = ExtResource( 1 )
 script = ExtResource( 2 )
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Blur View" type="ColorRect" parent="."]
 material = SubResource( 1 )
 margin_left = 16.0
 margin_top = 16.0
 margin_right = 176.0
 margin_bottom = 272.0
 rect_scale = Vector2( 2, 2 )
-color = Color( 1, 0, 0, 1 )
 
-[node name="ColorRect2" type="ColorRect" parent="."]
+[node name="Red Filter" type="ColorRect" parent="."]
 margin_left = 16.0
 margin_top = 16.0
 margin_right = 176.0

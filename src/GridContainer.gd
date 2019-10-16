@@ -3,8 +3,7 @@ extends GridContainer
 onready var img = preload("res://assets/block.png")
 
 var table = null
-
-var tick_timer = 0;
+var tick_timer = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -26,19 +25,22 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var result = null
 	tick_timer += delta
 	if Input.is_action_just_pressed("move_left"):
-		result = table.try_moving_left()
+		var result = table.try_moving_left()
+		self.redraw()
 	if Input.is_action_just_pressed("move_right"):
-		result = table.try_moving_right()
+		var result = table.try_moving_right()
+		self.redraw()
+	if Input.is_action_just_pressed("hard_drop"):
+		table.hard_drop()
+		self.redraw()
 	if (tick_timer >= 0.5):
 		tick_timer = 0
-		result = table.tick()
-	if (result):
+		var result = table.tick()
 		self.redraw()
-		
-		
+
+
 func redraw():
 	for child in get_children():
 		child.queue_free()
