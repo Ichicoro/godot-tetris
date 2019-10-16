@@ -1,11 +1,15 @@
 extends Object
 class_name Table
 
+var can_tick = true
+
 var grid = []
 var grid_size: Vector2
 
 var ft: Tetromino = null      # Falling tetromino
 var nextft: Tetromino = null  # Next random tetromino
+
+var held_tetromino = null
 
 var tetrominos = []
 
@@ -91,7 +95,7 @@ func try_moving_left():
 	
 func try_moving_right():
 	var newft = self.ft.moved_right()
-	if (newft.topleft.col+len(newft.shape) == 10):
+	if (newft.topleft.col+len(newft.shape[0]) == self.grid_size.x+1):
 		return false
 	if not check_newft(newft):
 		return false
@@ -101,7 +105,7 @@ func try_moving_right():
 
 func try_moving_down():
 	var newft = self.ft.moved_down()
-	if (newft.topleft.row+len(newft.shape[0]) == 18):
+	if (newft.topleft.row+len(newft.shape) == self.grid_size.y+1):
 		return false
 	if not check_newft(newft):
 		return false
@@ -110,15 +114,18 @@ func try_moving_down():
 
 
 func drop_piece():
-	print("-------------")
 	for y in range(len(self.ft.shape)):
 		for x in range(len(self.ft.shape[0])):
 			var xpos = self.ft.topleft.col+x
 			var ypos = self.ft.topleft.row+y
 			if self.ft.shape[y][x] != 0:
 				self.grid[ypos][xpos] = self.ft.shape[y][x]
-	#for row in self.grid:
-	#	print(row)
+	if true:
+		for row in self.grid:
+			print(row)
+		for row in self.ft.shape:
+			print(row)
+		print("-------------")
 
 
 func hard_drop():
@@ -127,6 +134,19 @@ func hard_drop():
 	drop_piece()
 	self.ft = self.nextft
 	self.nextft = self.gen_random_tetromino()
+
+
+func hold_tetromino():
+	var current_tetromino: Tetromino = self.ft.copy()
+	if held_tetromino == null:
+		self.ft = self.nextft.copy()
+		self.held_tetromino = current_tetromino
+		self.nextft = gen_random_tetromino()
+	else:
+		self.ft = self.held_tetromino.copy()
+		self.held_tetromino = current_tetromino
+	self.ft.reset_topleft()
+
 
 
 func check_lines():
@@ -148,11 +168,25 @@ func check_lines():
 
 
 func tick():
+	if !can_tick:
+		return
+	if true:
+		for row in self.ft.shape:
+			print(row)
 	if try_moving_down():
 		return false
 	else:
 		drop_piece()
 		self.ft = self.nextft
 		self.nextft = self.gen_random_tetromino()
+		if !check_newft(self.ft):
+			self.ft = null
+			self.nextft = null
+			print("ENDGAME")
+			can_tick = false
+			return
+	#if !try_moving_down():
+	#	print("ENDGAME")
+	#	can_tick = false
 	return check_lines()
 	#return false

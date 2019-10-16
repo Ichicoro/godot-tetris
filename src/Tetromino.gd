@@ -3,6 +3,7 @@ class_name Tetromino
 
 var shape = []
 var topleft
+var def_topleft
 
 const colors = {
 	0: Color(1,1,1,0.1), 				# no tetromino
@@ -18,8 +19,9 @@ const colors = {
 
 
 func _init(shape, topleft = {"row": 0, "col": 3}):
-	self.shape = shape
-	self.topleft = topleft
+	self.shape = shape.duplicate(true)
+	self.topleft = topleft.duplicate(true)
+	self.def_topleft = topleft.duplicate(true)
 	
 	
 func copy():
@@ -51,3 +53,7 @@ func moved_down():
 
 static func get_tint_from_value(value):
 	return colors[value]
+
+
+func reset_topleft():
+	self.topleft = self.def_topleft.duplicate(true)
