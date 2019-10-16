@@ -65,6 +65,7 @@ func reset_grid():
 
 
 func gen_random_tetromino():
+	randomize()
 	return self.tetrominos[(randi()+1)%(len(self.tetrominos)-1)].copy()
 	
 func check_newft(newft):
@@ -115,9 +116,9 @@ func drop_piece():
 			var xpos = self.ft.topleft.col+x
 			var ypos = self.ft.topleft.row+y
 			if self.ft.shape[y][x] != 0:
-				self.grid [ypos][xpos] = self.ft.shape[y][x]
-	for row in self.grid:
-		print(row)
+				self.grid[ypos][xpos] = self.ft.shape[y][x]
+	#for row in self.grid:
+	#	print(row)
 
 
 func hard_drop():
@@ -130,14 +131,13 @@ func hard_drop():
 
 func check_lines():
 	var lines_cleared = 0
-	
 	for y in range(self.grid_size.y):
 		var deletable = true
 		for x in range(self.grid_size.x):
 			if self.grid[y][x] == 0:
 				deletable = false
 		if (deletable):
-			self.grid.pop(y)
+			self.grid.remove(y)
 			var newline = []
 			for i in range(self.grid_size.y):
 				newline.append(0)
