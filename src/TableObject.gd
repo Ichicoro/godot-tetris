@@ -11,6 +11,8 @@ var nextft: Tetromino = null  # Next random tetromino
 
 var held_tetromino = null
 
+var total_lines_cleared = 0
+
 var tetrominos = []
 
 # Called when the node enters the scene tree for the first time.
@@ -113,6 +115,16 @@ func try_moving_down():
 	return true
 
 
+func try_rotating_left():
+	var newft = self.ft.moved_down()
+	if (newft.topleft.row+len(newft.shape) == self.grid_size.y+1):
+		return false
+	if not check_newft(newft):
+		return false
+	self.ft = newft
+	return true
+
+
 func drop_piece():
 	for y in range(len(self.ft.shape)):
 		for x in range(len(self.ft.shape[0])):
@@ -159,10 +171,11 @@ func check_lines():
 		if (deletable):
 			self.grid.remove(y)
 			var newline = []
-			for i in range(self.grid_size.y):
+			for i in range(self.grid_size.x):
 				newline.append(0)
-			self.grid.append(newline)
+			self.grid.push_front(newline)
 			lines_cleared += 1
+	self.total_lines_cleared += lines_cleared
 	return lines_cleared
 
 
@@ -174,7 +187,7 @@ func tick():
 		for row in self.ft.shape:
 			print(row)
 	if try_moving_down():
-		return false
+		return check_lines()
 	else:
 		drop_piece()
 		self.ft = self.nextft
@@ -182,11 +195,8 @@ func tick():
 		if !check_newft(self.ft):
 			self.ft = null
 			self.nextft = null
-			print("ENDGAME")
+			print("ENDGAME - Total score: ", self.total_lines_cleared)
 			can_tick = false
-			return
-	#if !try_moving_down():
-	#	print("ENDGAME")
-	#	can_tick = false
+			return check_lines()
 	return check_lines()
 	#return false

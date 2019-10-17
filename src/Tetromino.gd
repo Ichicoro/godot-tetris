@@ -33,6 +33,10 @@ func rotated_right():
 	return self.shape
 
 
+func rotated_left():
+	return self.shape
+
+
 func moved_left():
 	var newft = self.copy()
 	newft.topleft.col -= 1
