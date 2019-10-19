@@ -1,0 +1,194 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Background noise test.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/fonts/RobotoMono/RobotoMono-Bold.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://GameUI.tres" type="Theme" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 48
+font_data = ExtResource( 2 )
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Button
+
+func _pressed():
+	get_tree().change_scene(\"res://MainScene.tscn\")
+	pass
+"
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends Button
+
+onready var settings_dialog = get_node(\"/root/Control/SettingsDialog\")
+
+func pressed():
+	settings_dialog.popup()
+
+
+func _on_SettingsDialog_about_to_show():
+	get_node(\"/root/Control/SettingsDialog/VBoxContainer/EnableConsoleToggle\").pressed = Settings.is_console_enabled
+"
+
+[sub_resource type="GDScript" id=4]
+script/source = "extends Button
+
+func _pressed():
+	get_node(\"/root/Control/QuitDialog\").popup()
+"
+
+[sub_resource type="DynamicFont" id=5]
+size = 64
+font_data = ExtResource( 2 )
+
+[sub_resource type="GDScript" id=6]
+script/source = "extends ConfirmationDialog
+
+func confirmed():
+	get_tree().quit()
+"
+
+[sub_resource type="GDScript" id=7]
+script/source = "extends CheckButton
+
+func toggled(button_pressed):
+	Settings.is_console_enabled = button_pressed
+"
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background noise" parent="." instance=ExtResource( 1 )]
+scale = Vector2( 6.47493, 6.47493 )
+
+[node name="PlayButton" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -128.0
+margin_top = -144.0
+margin_right = 128.0
+margin_bottom = -63.0
+theme = ExtResource( 3 )
+custom_fonts/font = SubResource( 1 )
+text = "PLAY"
+script = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SettingsButton" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -128.0
+margin_top = -40.5
+margin_right = 128.0
+margin_bottom = 40.5
+theme = ExtResource( 3 )
+custom_fonts/font = SubResource( 1 )
+text = "SETTINGS"
+script = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="QuitButton" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -128.0
+margin_top = 61.8112
+margin_right = 128.0
+margin_bottom = 142.811
+theme = ExtResource( 3 )
+custom_fonts/font = SubResource( 1 )
+text = "QUIT"
+script = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.211
+margin_right = 3.0
+margin_bottom = -0.224007
+custom_fonts/font = SubResource( 5 )
+text = "TETRIS"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="QuitDialog" type="ConfirmationDialog" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -101.0
+margin_top = -42.0
+margin_right = 147.0
+margin_bottom = 54.0
+rect_min_size = Vector2( 100, 60 )
+theme = ExtResource( 3 )
+popup_exclusive = true
+dialog_text = "Do you really want to quit?"
+script = SubResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SettingsDialog" type="WindowDialog" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -152.0
+margin_top = -94.0
+margin_right = 153.0
+margin_bottom = 12.0
+theme = ExtResource( 3 )
+window_title = "Settings"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnableConsoleToggle" type="CheckButton" parent="SettingsDialog/VBoxContainer"]
+margin_right = 305.0
+margin_bottom = 52.0
+text = "Enable Console"
+flat = true
+script = SubResource( 7 )
+
+[node name="Button" type="Button" parent="SettingsDialog/VBoxContainer"]
+margin_top = 60.0
+margin_right = 305.0
+margin_bottom = 96.0
+text = "Dump debug data to console"
+
+[node name="CheckBox" type="CheckBox" parent="SettingsDialog/VBoxContainer"]
+visible = false
+margin_top = 104.0
+margin_right = 360.0
+margin_bottom = 152.0
+text = "Enable console"
+[connection signal="pressed" from="SettingsButton" to="SettingsButton" method="pressed"]
+[connection signal="pressed" from="SettingsButton" to="SettingsButton" method="_on_Button2_pressed"]
+[connection signal="confirmed" from="QuitDialog" to="QuitDialog" method="confirmed"]
+[connection signal="about_to_show" from="SettingsDialog" to="SettingsButton" method="_on_SettingsDialog_about_to_show"]
+[connection signal="toggled" from="SettingsDialog/VBoxContainer/EnableConsoleToggle" to="SettingsDialog/VBoxContainer/EnableConsoleToggle" method="toggled"]

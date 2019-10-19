@@ -26,7 +26,11 @@ func _init(grid_size: Vector2 = Vector2(10,16)):
 
 func setup_tetrominos():
 	self.tetrominos = []
-	self.tetrominos.append(Tetromino.new([[2,2],[2,2]],{'row':0,'col':4}))
+	self.tetrominos.append(Tetromino.new(
+		[[2,2],
+		[2,2]],
+		{'row':0,'col':4})
+	)
 	self.tetrominos.append(Tetromino.new(
 		[[3,3,3],
 		[3,0,0]]
@@ -116,9 +120,24 @@ func try_moving_down():
 
 
 func try_rotating_left():
-	var newft = self.ft.moved_down()
-	if (newft.topleft.row+len(newft.shape) == self.grid_size.y+1):
+	var newft = self.ft.rotated_left()
+	if (newft.topleft.col+len(newft.shape[0]) >= self.grid_size.x+1):
+		while (newft.topleft.col+len(newft.shape[0]) >= self.grid_size.x+1):
+			newft.topleft.col -= 1
+	while (newft.topleft.row+len(newft.shape) >= self.grid_size.y+1):
+		newft.topleft.row -= 1
+	if not check_newft(newft):
 		return false
+	self.ft = newft
+	return true
+
+
+func try_rotating_right():
+	var newft = self.ft.rotated_right()
+	while (newft.topleft.col+len(newft.shape[0]) >= self.grid_size.x+1):
+			newft.topleft.col -= 1
+	while (newft.topleft.row+len(newft.shape) >= self.grid_size.y+1):
+		newft.topleft.row -= 1
 	if not check_newft(newft):
 		return false
 	self.ft = newft
@@ -143,9 +162,9 @@ func drop_piece():
 func hard_drop():
 	while (try_moving_down()):
 		pass
-	drop_piece()
-	self.ft = self.nextft
-	self.nextft = self.gen_random_tetromino()
+#	drop_piece()
+#	self.ft = self.nextft
+#	self.nextft = self.gen_random_tetromino()
 
 
 func hold_tetromino():
@@ -196,6 +215,7 @@ func tick():
 			self.ft = null
 			self.nextft = null
 			print("ENDGAME - Total score: ", self.total_lines_cleared)
+			ConsoleManager.println("ENDGAME - Total score: " + str(self.total_lines_cleared))
 			can_tick = false
 			return check_lines()
 	return check_lines()
