@@ -6,24 +6,42 @@ var table: Table = null
 var tick_timer = 0
 var tick_max = 0.5
 
+var paused = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+#	for child in get_children():
+#		child.free()
+#	paused = true
+#	return
 	table = Table.new()
 	redraw()
 
 
+func toggle_pause():
+	if self.paused:
+		if Input.is_action_just_pressed("menu"):
+			paused = false
+		return
+	else:
+		if Input.is_action_just_pressed("menu"):
+			paused = true
+			return
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if !table.can_tick:
+	if !table.can_tick or paused:
 		return
+	table.check_lines()
 	tick_timer += delta
 	if Input.is_action_just_pressed("move_left"):
 		var result = table.try_moving_left()
-		tick_timer = tick_max/2
+		tick_timer = tick_max/4
 		self.redraw()
 	if Input.is_action_just_pressed("move_right"):
 		var result = table.try_moving_right()
-		tick_timer = tick_max/2
+		tick_timer = tick_max/4
 		self.redraw()
 	if Input.is_action_just_pressed("hard_drop"):
 		table.hard_drop()
@@ -31,7 +49,15 @@ func _process(delta):
 		self.redraw()
 	if Input.is_action_just_pressed("hold"):
 		table.hold_tetromino()
-		tick_timer = tick_max/2
+		tick_timer = tick_max/4
+		self.redraw()
+	if Input.is_action_just_pressed("spin_left"):
+		table.try_rotating_left()
+		tick_timer = tick_max/4
+		self.redraw()
+	if Input.is_action_just_pressed("spin_right"):
+		table.try_rotating_right()
+		tick_timer = tick_max/4
 		self.redraw()
 	if (tick_timer >= tick_max):
 		tick_timer = 0

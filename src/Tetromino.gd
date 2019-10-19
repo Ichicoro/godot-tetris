@@ -30,11 +30,27 @@ func copy():
 
 
 func rotated_right():
-	return self.shape
+	var newft = self.copy()
+	var newshape = []
+	for x in range(len(self.shape[0])):
+		newshape.append([])
+		for y in range(len(self.shape)):
+			newshape[x].push_front(self.shape[y][x])
+	newft.shape = newshape
+	return newft
 
 
 func rotated_left():
-	return self.shape
+	var newft = self.copy()
+	var newshape = []
+	for x in range(len(self.shape[0])):
+#		x = len(self.shape[0]) -1 -x
+		newshape.append([])
+		for y in range(len(self.shape)):
+			y = len(self.shape) - y - 1
+			newshape[x].push_front(self.shape[y][len(self.shape[0]) -1 -x])
+	newft.shape = newshape
+	return newft
 
 
 func moved_left():

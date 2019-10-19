@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/tetrissplash.png-5e94de08c177d1eb86862b57a5e8e625.image"
+
+[deps]
+
+source_file="res://tetrissplash.png"
+dest_files=[ "res://.import/tetrissplash.png-5e94de08c177d1eb86862b57a5e8e625.image" ]
+
+[params]
+
