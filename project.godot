@@ -37,14 +37,15 @@ config/icon="res://tetrislogo.png"
 UserData="*res://addons/github-integration/scripts/user_data.gd"
 Settings="*res://src/Settings.gd"
 ConsoleManager="*res://src/ConsoleManager.gd"
+Utils="*res://src/Utils.gd"
 
 [display]
 
 window/size/width=430
-window/size/height=584
-window/dpi/allow_hidpi=true
+window/size/height=512
 window/handheld/orientation="portrait"
-window/stretch/aspect="expand"
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
 
 [editor_plugins]
 
@@ -52,8 +53,7 @@ enabled=PoolStringArray( "github-integration" )
 
 [gui]
 
-theme/use_hidpi=true
-theme/custom_font="res://assets/fonts/RobotoMono/Roboto Mono.tres"
+theme/custom_font="res://assets/fonts/PressStart2P.tres"
 
 [input]
 

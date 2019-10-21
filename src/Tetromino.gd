@@ -17,6 +17,18 @@ const colors = {
 	8: Color(.12, 1.0, .12, 1)
 }
 
+const textures = {
+	0: null,
+	1: preload("res://assets/tetrominos/debug.png"),
+	2: preload("res://assets/tetrominos/o.png"),
+	3: preload("res://assets/tetrominos/l.png"),
+	4: preload("res://assets/tetrominos/i.png"),
+	5: preload("res://assets/tetrominos/j.png"),
+	6: preload("res://assets/tetrominos/t.png"),
+	7: preload("res://assets/tetrominos/s.png"),
+	8: preload("res://assets/tetrominos/z.png"),
+}
+
 
 func _init(shape, topleft = {"row": 0, "col": 3}):
 	self.shape = shape.duplicate(true)
@@ -73,6 +85,10 @@ func moved_down():
 
 static func get_tint_from_value(value):
 	return colors[value]
+
+
+static func get_texture_from_value(value):
+	return textures[value]
 
 
 func reset_topleft():
