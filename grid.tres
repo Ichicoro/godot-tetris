@@ -1,0 +1,35 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+//render_mode skip_vertex_transform;
+
+uniform vec4 color1 = vec4(0.266,0.58,0.43,1);
+uniform vec4 color2 = vec4(0.10,0.24,0.10,1);
+uniform int pixel_size = 64;
+
+uniform mat4 global_transform;
+varying vec2 world_position;
+
+void vertex(){
+    world_position = (global_transform * vec4(VERTEX, 0.0, 1.0)).xy;
+}
+
+void fragment() {
+//	world_position = (global_transform * vec4(VERTEX, 0.0, 1.0)).xy;
+	int x = int(FRAGCOORD.x);
+	int y = int(FRAGCOORD.y);
+	
+	if ((x/pixel_size + y/pixel_size) % 2 == 0) {
+		COLOR = color1;
+	} else {
+		COLOR = color2;
+	}
+}"
+
+[resource]
+shader = SubResource( 1 )
+shader_param/color1 = Plane( 0.266, 0.58, 0.43, 1 )
+shader_param/color2 = Plane( 0.1, 0.24, 0.1, 1 )
+shader_param/pixel_size = 64
+shader_param/global_transform = null

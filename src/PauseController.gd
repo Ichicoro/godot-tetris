@@ -18,6 +18,9 @@ func _process(delta):
 		if Input.is_action_just_pressed("menu"):
 			gameview.set("paused", false)
 			pausescreen.hide()
+		if Input.is_key_pressed(KEY_Q):
+			print("Quit to main menu")
+			get_tree().change_scene("res://MainMenu.tscn")
 	else:
 		if Input.is_action_just_pressed("menu"):
 			gameview.set("paused", true)

@@ -24,7 +24,7 @@ func _ready():
 
 
 func text_changed(new_text: String):
-	self.text += new_text.replace(\"`\", \"\")
+	self.text.replace(\"`\", \"\")
 "
 
 [node name="ConsoleControl" type="Node2D"]

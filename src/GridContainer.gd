@@ -72,7 +72,24 @@ func redraw():
 	for y in range(len(table.grid)):
 		for x in range(len(table.grid[y])):
 			var texrect = TextureRect.new()
-			texrect.rect_min_size = Vector2(16,16)
+			texrect.rect_min_size = Vector2(8,8)
+			if (table.grid[y][x] != 0):
+				texrect.texture = Tetromino.get_texture_from_value(table.grid[y][x])
+			if (y in range(table.ft.topleft.row, table.ft.topleft.row+len(table.ft.shape)) and x in range(table.ft.topleft.col, table.ft.topleft.col+len(table.ft.shape[0]))):
+				var value = table.ft.shape[table.ft.topleft.row - y][table.ft.topleft.col - x-1]
+				value = table.ft.shape[y - table.ft.topleft.row][x - table.ft.topleft.col]
+				if (value != 0):
+					texrect.texture = Tetromino.get_texture_from_value(value)
+			add_child(texrect)
+
+
+func redraw_old():
+	for child in get_children():
+		child.queue_free()
+	for y in range(len(table.grid)):
+		for x in range(len(table.grid[y])):
+			var texrect = TextureRect.new()
+			texrect.rect_min_size = Vector2(8,8)
 			if (table.grid[y][x] != 0):
 				texrect.texture = img
 				texrect.modulate = Tetromino.get_tint_from_value(table.grid[y][x])
