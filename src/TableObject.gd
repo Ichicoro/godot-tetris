@@ -18,6 +18,7 @@ var tetrominos = []
 # Called when the node enters the scene tree for the first time.
 func _init(grid_size: Vector2 = Vector2(10,16)):
 	self.grid_size = grid_size
+	self.can_tick = true
 	setup_tetrominos()
 	self.ft = gen_random_tetromino()
 	self.nextft = gen_random_tetromino()
@@ -215,7 +216,8 @@ func tick():
 			self.ft = null
 			self.nextft = null
 			print("ENDGAME - Total score: ", self.total_lines_cleared)
-			ConsoleManager.println("ENDGAME - Total score: " + str(self.total_lines_cleared))
+			Utils.show_notification("GAME OVER", "Total score: " + str(self.total_lines_cleared) + "\nPress ENTER to exit.")
+#			ConsoleManager.println("ENDGAME - Total score: " + str(self.total_lines_cleared))
 			can_tick = false
 			return check_lines()
 	return check_lines()

@@ -14,6 +14,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if !gameview.get("table").can_tick:
+		return
 	if gameview.get("paused"):
 		if Input.is_action_just_pressed("menu"):
 			gameview.set("paused", false)

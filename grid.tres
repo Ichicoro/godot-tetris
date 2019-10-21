@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=2]
 
-[sub_resource type="Shader" id=1]
+[sub_resource type="Shader" id=8]
 code = "shader_type canvas_item;
 //render_mode skip_vertex_transform;
 
@@ -28,8 +28,8 @@ void fragment() {
 }"
 
 [resource]
-shader = SubResource( 1 )
+shader = SubResource( 8 )
 shader_param/color1 = Plane( 0.266, 0.58, 0.43, 1 )
 shader_param/color2 = Plane( 0.1, 0.24, 0.1, 1 )
-shader_param/pixel_size = 64
+shader_param/pixel_size = 32
 shader_param/global_transform = null

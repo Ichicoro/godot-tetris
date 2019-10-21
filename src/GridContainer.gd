@@ -47,6 +47,10 @@ func _process(delta):
 		table.hard_drop()
 		tick_timer = tick_max/2
 		self.redraw()
+	if Input.is_action_just_pressed("soft_drop"):
+		table.tick()
+		tick_timer = 0#tick_max/2
+		self.redraw()
 	if Input.is_action_just_pressed("hold"):
 		table.hold_tetromino()
 		tick_timer = tick_max/4
@@ -67,6 +71,7 @@ func _process(delta):
 
 
 func redraw():
+	get_tree().root.get_node("Control/ScorePanel/ScoreLabel").text = str(table.total_lines_cleared)
 	for child in get_children():
 		child.queue_free()
 	for y in range(len(table.grid)):
