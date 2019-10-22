@@ -6,7 +6,6 @@
 [ext_resource path="res://assets/fonts/PressStart2P.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://src/PauseController.gd" type="Script" id=6]
 [ext_resource path="res://GameUI.tres" type="Theme" id=7]
-[ext_resource path="res://src/game_view.gd" type="Script" id=8]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends ColorRect
@@ -33,6 +32,10 @@ bg_color = Color( 1, 1, 1, 1 )
 
 [sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="DynamicFont" id=9]
+size = 8
+font_data = ExtResource( 5 )
 
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 1, 1, 1, 1 )
@@ -76,7 +79,6 @@ anchor_bottom = 1.0
 margin_bottom = -2.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -247,6 +249,16 @@ custom_styles/panel = SubResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Label" type="Label" parent="Panel"]
+margin_left = -4.5
+margin_top = 2.5
+margin_right = 35.5
+margin_bottom = 26.5
+custom_fonts/font = SubResource( 9 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "n/a"
+align = 1
 
 [node name="Pause screen" type="Control" parent="."]
 visible = false
