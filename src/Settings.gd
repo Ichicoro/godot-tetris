@@ -1,6 +1,6 @@
 extends Node
 
-var is_console_enabled: bool = true
+var is_console_enabled: bool = false
 
 
 func _ready():

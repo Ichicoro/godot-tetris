@@ -1,12 +1,12 @@
 [gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://grid.tres" type="Material" id=1]
-[ext_resource path="res://GameUI.tres" type="Theme" id=2]
+[ext_resource path="res://Background noise test.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Shaders/Blur.shader" type="Shader" id=3]
 [ext_resource path="res://src/GridContainer.gd" type="Script" id=4]
 [ext_resource path="res://assets/fonts/PressStart2P.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://src/PauseController.gd" type="Script" id=6]
-[ext_resource path="res://Background noise test.tscn" type="PackedScene" id=7]
+[ext_resource path="res://GameUI.tres" type="Theme" id=7]
 [ext_resource path="res://game_view.gd" type="Script" id=8]
 
 [sub_resource type="GDScript" id=1]
@@ -55,7 +55,7 @@ anchor_bottom = 1.0
 margin_right = -215.0
 margin_bottom = -254.0
 rect_scale = Vector2( 2, 2 )
-theme = ExtResource( 2 )
+theme = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -70,7 +70,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Background noise" parent="." instance=ExtResource( 7 )]
+[node name="Background noise" parent="." instance=ExtResource( 2 )]
 visible = false
 position = Vector2( 136.784, 245.109 )
 scale = Vector2( 8.43884, 8.43884 )
@@ -150,6 +150,44 @@ __meta__ = {
 }
 
 [node name="ScoreLabel" type="Label" parent="ScorePanel"]
+margin_left = 2.1405
+margin_top = 5.5
+margin_right = 58.1405
+margin_bottom = 29.5
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HiscorePanel" type="Panel" parent="."]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -55.0
+margin_top = 21.0
+margin_bottom = 46.0
+custom_styles/panel = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="HiscorePanel"]
+margin_left = 1.57974
+margin_top = -3.9604
+margin_right = 57.5797
+margin_bottom = 20.0396
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "HI"
+align = 2
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HiscoreLabel" type="Label" parent="HiscorePanel"]
 margin_left = 2.1405
 margin_top = 5.5
 margin_right = 58.1405

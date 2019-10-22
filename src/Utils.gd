@@ -29,3 +29,30 @@ func unpause_node(node : Node) -> void:
 	for c in get_children():
 		unpause_node(c)
 
+
+func save_hiscore(score: int):
+	var save_game = File.new()
+	save_game.open("user://hiscore.save", File.WRITE)
+	save_game.seek(0)
+	save_game.store_16(score)
+	save_game.close()
+
+
+func load_hiscore() -> int:
+	var save_game = File.new()
+	if not save_game.file_exists("user://hiscore.save"):
+		return -1
+	save_game.open("user://hiscore.save", File.READ)
+	var hiscore = save_game.get_16()
+	save_game.close()
+	return hiscore
+
+
+func print_hiscore_file():
+	var save_game = File.new()
+	if not save_game.file_exists("user://hiscore.save"):
+		print_debug('ded file')
+		return
+	save_game.open("user://hiscore.save", File.WRITE)
+	print_debug(save_game.get_as_text())
+	save_game.close()

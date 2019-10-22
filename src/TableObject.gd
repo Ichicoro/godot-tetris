@@ -217,7 +217,9 @@ func tick():
 			self.nextft = null
 			print("ENDGAME - Total score: ", self.total_lines_cleared)
 			Utils.show_notification("GAME OVER", "Total score: " + str(self.total_lines_cleared) + "\nPress ENTER to exit.")
-#			ConsoleManager.println("ENDGAME - Total score: " + str(self.total_lines_cleared))
+			var old_hiscore = Utils.load_hiscore()
+			if self.total_lines_cleared > old_hiscore:
+				Utils.save_hiscore(self.total_lines_cleared)
 			can_tick = false
 			return check_lines()
 	return check_lines()

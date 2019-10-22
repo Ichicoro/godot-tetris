@@ -6,7 +6,7 @@ onready var base_window = str(main_ui.get_path()) + "/ConsoleControl/ConsoleWind
 
 
 func _ready():
-	main_ui.add_child(consolecontrol.instance())
+	#main_ui.add_child(consolecontrol.instance())
 	pass
 
 

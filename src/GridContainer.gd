@@ -14,6 +14,11 @@ func _ready():
 #		child.free()
 #	paused = true
 #	return
+	var hiscore = Utils.load_hiscore()
+	if (hiscore == -1):
+		hiscore = 0
+	get_tree().root.get_node("Control/HiscorePanel/HiscoreLabel").text = str(hiscore)
+	
 	table = Table.new()
 	redraw()
 
