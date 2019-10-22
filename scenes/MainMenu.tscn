@@ -1,7 +1,7 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/fonts/PressStart2P.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://GameUI.tres" type="Theme" id=4]
+[ext_resource path="res://GameUI.tres" type="Theme" id=2]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -37,32 +37,19 @@ shader_param/color2 = Plane( 0.2, 0.1, 0.1, 1 )
 shader_param/pixel_size = 16
 shader_param/global_transform = null
 
-[sub_resource type="DynamicFont" id=2114]
+[sub_resource type="DynamicFont" id=3]
 size = 24
 font_data = ExtResource( 1 )
 
-[sub_resource type="GDScript" id=2115]
+[sub_resource type="GDScript" id=4]
 script/source = "extends Button
 
 func _ready():
 	pass
 
 func _pressed():
-	get_tree().change_scene(\"res://MainScene.tscn\")
+	get_tree().change_scene(\"res://scenes/MainScene.tscn\")
 	pass
-"
-
-[sub_resource type="GDScript" id=2116]
-script/source = "extends Button
-
-onready var settings_dialog = get_node(\"/root/Control/SettingsDialog\")
-
-func pressed():
-	settings_dialog.popup()
-
-
-func _on_SettingsDialog_about_to_show():
-	get_node(\"/root/Control/SettingsDialog/VBoxContainer/EnableConsoleToggle\").pressed = Settings.is_console_enabled
 "
 
 [sub_resource type="GDScript" id=6]
@@ -76,7 +63,7 @@ func _pressed():
 	get_node(\"/root/Control/QuitDialog\").popup()
 "
 
-[sub_resource type="DynamicFont" id=2117]
+[sub_resource type="DynamicFont" id=7]
 size = 64
 font_data = ExtResource( 1 )
 
@@ -87,17 +74,17 @@ func confirmed():
 	get_tree().quit()
 "
 
-[sub_resource type="GDScript" id=2118]
+[sub_resource type="GDScript" id=9]
 script/source = "extends CheckButton
 
 func toggled(button_pressed):
 	Settings.is_console_enabled = button_pressed
 "
 
-[sub_resource type="DynamicFont" id=2119]
+[sub_resource type="DynamicFont" id=10]
 font_data = ExtResource( 1 )
 
-[sub_resource type="GDScript" id=2120]
+[sub_resource type="GDScript" id=11]
 script/source = "extends Label
 
 # Declare member variables here. Examples:
@@ -106,7 +93,7 @@ script/source = "extends Label
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	self.text = \"v\" + str(ProjectSettings.get_setting(\"application/config/version\"))
+	self.text = Utils.get_version()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -116,7 +103,7 @@ func _ready():
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = ExtResource( 4 )
+theme = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -135,31 +122,14 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -128.0
-margin_top = -112.0
+margin_top = -56.0
 margin_right = 128.0
-margin_bottom = -31.0
+margin_bottom = 25.0
 focus_next = NodePath("../SettingsButton")
-custom_fonts/font = SubResource( 2114 )
+custom_fonts/font = SubResource( 3 )
 text = "PLAY"
 flat = true
-script = SubResource( 2115 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SettingsButton" type="Button" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -128.0
-margin_top = -10.0
-margin_right = 128.0
-margin_bottom = 71.0
-custom_fonts/font = SubResource( 2114 )
-text = "SETTINGS"
-flat = true
-script = SubResource( 2116 )
+script = SubResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -170,10 +140,10 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -128.0
-margin_top = 94.8112
+margin_top = 56.8112
 margin_right = 128.0
-margin_bottom = 175.811
-custom_fonts/font = SubResource( 2114 )
+margin_bottom = 137.811
+custom_fonts/font = SubResource( 3 )
 text = "QUIT"
 flat = true
 script = SubResource( 6 )
@@ -186,7 +156,7 @@ anchor_right = 1.0
 anchor_bottom = 0.211
 margin_right = 3.0
 margin_bottom = 35.968
-custom_fonts/font = SubResource( 2117 )
+custom_fonts/font = SubResource( 7 )
 text = "TETRIS"
 align = 1
 valign = 1
@@ -237,7 +207,7 @@ margin_right = 305.0
 margin_bottom = 52.0
 text = "Enable Console"
 flat = true
-script = SubResource( 2118 )
+script = SubResource( 9 )
 
 [node name="Button" type="Button" parent="SettingsDialog/VBoxContainer"]
 margin_top = 60.0
@@ -260,16 +230,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -100.0
 margin_top = -42.0
-custom_fonts/font = SubResource( 2119 )
-text = "v1.0"
+custom_fonts/font = SubResource( 10 )
+text = "n/a"
 align = 2
 valign = 1
-script = SubResource( 2120 )
+script = SubResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="pressed" from="SettingsButton" to="SettingsButton" method="pressed"]
-[connection signal="pressed" from="SettingsButton" to="SettingsButton" method="_on_Button2_pressed"]
 [connection signal="confirmed" from="QuitDialog" to="QuitDialog" method="confirmed"]
-[connection signal="about_to_show" from="SettingsDialog" to="SettingsButton" method="_on_SettingsDialog_about_to_show"]
 [connection signal="toggled" from="SettingsDialog/VBoxContainer/EnableConsoleToggle" to="SettingsDialog/VBoxContainer/EnableConsoleToggle" method="toggled"]

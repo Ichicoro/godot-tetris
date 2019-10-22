@@ -27,17 +27,17 @@ _global_script_class_icons={
 [application]
 
 config/name="Tetris"
-run/main_scene="res://MainMenu.tscn"
+run/main_scene="res://scenes/MainMenu.tscn"
 boot_splash/image="res://tetrissplash.png"
 boot_splash/bg_color=Color( 0.309804, 0.219608, 0.2, 1 )
 config/icon="res://tetrislogo.png"
-config/version=1.1
+config/version=1.2
 
 [autoload]
 
 UserData="*res://addons/github-integration/scripts/user_data.gd"
 Settings="*res://src/Settings.gd"
-ConsoleManager="*res://src/ConsoleManager.gd"
+ConsoleManager="res://src/ConsoleManager.gd"
 Utils="*res://src/Utils.gd"
 
 [display]

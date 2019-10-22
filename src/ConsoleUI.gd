@@ -18,5 +18,5 @@ func _process(delta):
 
 
 func _on_ConsoleInput_text_entered(new_text):
-	ConsoleManager.handle_input(new_text)
+	#ConsoleManager.handle_input(new_text)
 	get_node("ConsoleInput").text = ""

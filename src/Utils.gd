@@ -10,7 +10,7 @@ func _ready():
 
 
 func show_notification(title: String, subtitle: String = ""):
-	var notification = load("res://Notification.tscn").instance()
+	var notification = load("res://scenes/Notification.tscn").instance()
 	notification.get_node("Title").text = title
 	notification.get_node("Subtitle").text = subtitle
 	get_tree().root.add_child(notification)
@@ -53,6 +53,10 @@ func print_hiscore_file():
 	if not save_game.file_exists("user://hiscore.save"):
 		print_debug('ded file')
 		return
-	save_game.open("user://hiscore.save", File.WRITE)
+	save_game.open("user://hiscore.save", File.READ)
 	print_debug(save_game.get_as_text())
 	save_game.close()
+
+
+func get_version() -> String:
+	return "v" + str(ProjectSettings.get_setting("application/config/version"))

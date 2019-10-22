@@ -5,7 +5,7 @@ var minimum_size = Vector2(430, 584)
 
 func _ready():
 	#viewport.connect("size_changed", self, "window_resize")
-	window_resize()
+	#window_resize()
 	pass
 
 func window_resize():

@@ -14,15 +14,23 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if !gameview.get("table").can_tick:
+	if !gameview.get("table").can_tick or pausescreen == null:
 		return
 	if gameview.get("paused"):
 		if Input.is_action_just_pressed("menu"):
 			gameview.set("paused", false)
 			pausescreen.hide()
 		if Input.is_key_pressed(KEY_Q):
-			print("Quit to main menu")
-			get_tree().change_scene("res://MainMenu.tscn")
+			pausescreen.hide()
+			gameview.table.do_finish_animation()
+			pausescreen = null
+			return
+			var old_hiscore = Utils.load_hiscore()
+			if gameview.table.total_lines_cleared > old_hiscore:
+				Utils.save_hiscore(gameview.table.total_lines_cleared)
+				Utils.show_notification("HI SCORE!", "New score: " + str(gameview.table.total_lines_cleared) + "\nPress ENTER to exit.")
+			else:
+				Utils.show_notification("GAME OVER", "Total score: " + str(gameview.table.total_lines_cleared) + "\nPress ENTER to exit.")
 	else:
 		if Input.is_action_just_pressed("menu"):
 			gameview.set("paused", true)

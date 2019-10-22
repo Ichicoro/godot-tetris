@@ -1,16 +1,18 @@
 extends Node
 
 onready var main_ui: Node = get_tree().root.get_children()[-1]
-onready var consolecontrol = load("res://ConsoleUI.tscn")
+onready var consolecontrol = load("res://scenes/ConsoleUI.tscn")
 onready var base_window = str(main_ui.get_path()) + "/ConsoleControl/ConsoleWindow"
 
 
 func _ready():
-	#main_ui.add_child(consolecontrol.instance())
+	return
+	main_ui.add_child(consolecontrol.instance())
 	pass
 
 
 func _process(delta):
+	return
 	if not Settings.is_console_enabled:
 		return
 	if Input.is_action_just_pressed("console_toggle"):
