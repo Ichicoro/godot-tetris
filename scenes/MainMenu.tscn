@@ -52,7 +52,7 @@ func _pressed():
 	pass
 "
 
-[sub_resource type="GDScript" id=6]
+[sub_resource type="GDScript" id=5]
 script/source = "extends Button
 
 func _ready():
@@ -63,28 +63,28 @@ func _pressed():
 	get_node(\"/root/Control/QuitDialog\").popup()
 "
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=6]
 size = 64
 font_data = ExtResource( 1 )
 
-[sub_resource type="GDScript" id=8]
+[sub_resource type="GDScript" id=7]
 script/source = "extends ConfirmationDialog
 
 func confirmed():
 	get_tree().quit()
 "
 
-[sub_resource type="GDScript" id=9]
+[sub_resource type="GDScript" id=8]
 script/source = "extends CheckButton
 
 func toggled(button_pressed):
 	Settings.is_console_enabled = button_pressed
 "
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=9]
 font_data = ExtResource( 1 )
 
-[sub_resource type="GDScript" id=11]
+[sub_resource type="GDScript" id=10]
 script/source = "extends Label
 
 # Declare member variables here. Examples:
@@ -146,7 +146,7 @@ margin_bottom = 137.811
 custom_fonts/font = SubResource( 3 )
 text = "QUIT"
 flat = true
-script = SubResource( 6 )
+script = SubResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -156,7 +156,7 @@ anchor_right = 1.0
 anchor_bottom = 0.211
 margin_right = 3.0
 margin_bottom = 35.968
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 6 )
 text = "TETRIS"
 align = 1
 valign = 1
@@ -176,7 +176,7 @@ margin_bottom = 54.0
 rect_min_size = Vector2( 100, 60 )
 popup_exclusive = true
 dialog_text = "Do you really want to quit?"
-script = SubResource( 8 )
+script = SubResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -207,7 +207,7 @@ margin_right = 305.0
 margin_bottom = 52.0
 text = "Enable Console"
 flat = true
-script = SubResource( 9 )
+script = SubResource( 8 )
 
 [node name="Button" type="Button" parent="SettingsDialog/VBoxContainer"]
 margin_top = 60.0
@@ -230,11 +230,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -100.0
 margin_top = -42.0
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 9 )
 text = "n/a"
 align = 2
 valign = 1
-script = SubResource( 11 )
+script = SubResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
