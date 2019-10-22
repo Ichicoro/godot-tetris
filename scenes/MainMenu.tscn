@@ -1,7 +1,6 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/fonts/PressStart2P.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://GameUI.tres" type="Theme" id=2]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -55,36 +54,24 @@ func _pressed():
 [sub_resource type="GDScript" id=5]
 script/source = "extends Button
 
+const ExitDialog = preload(\"res://scenes/ExitDialog.tscn\")
+
 func _ready():
 	if OS.get_name() == \"HTML5\":
 		self.queue_free()
 
 func _pressed():
-	get_node(\"/root/Control/QuitDialog\").popup()
+	get_tree().root.add_child(ExitDialog.instance())
 "
 
 [sub_resource type="DynamicFont" id=6]
 size = 64
 font_data = ExtResource( 1 )
 
-[sub_resource type="GDScript" id=7]
-script/source = "extends ConfirmationDialog
-
-func confirmed():
-	get_tree().quit()
-"
-
-[sub_resource type="GDScript" id=8]
-script/source = "extends CheckButton
-
-func toggled(button_pressed):
-	Settings.is_console_enabled = button_pressed
-"
-
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=7]
 font_data = ExtResource( 1 )
 
-[sub_resource type="GDScript" id=10]
+[sub_resource type="GDScript" id=9]
 script/source = "extends Label
 
 # Declare member variables here. Examples:
@@ -93,7 +80,25 @@ script/source = "extends Label
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	self.text = Utils.get_version()
+	self.text = \"v\" + str(ProjectSettings.get_setting(\"application/config/version\"))
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass"
+
+[sub_resource type="GDScript" id=8]
+script/source = "extends Label
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	var hiscore = Utils.load_hiscore()
+	if hiscore == -1:
+		hiscore = 0
+	self.text = \"HISCORE: \" + str(hiscore)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -103,7 +108,6 @@ func _ready():
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -155,7 +159,7 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 0.211
 margin_right = 3.0
-margin_bottom = 35.968
+margin_bottom = 45.968
 custom_fonts/font = SubResource( 6 )
 text = "TETRIS"
 align = 1
@@ -164,65 +168,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="QuitDialog" type="ConfirmationDialog" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -101.0
-margin_top = -42.0
-margin_right = 147.0
-margin_bottom = 54.0
-rect_min_size = Vector2( 100, 60 )
-popup_exclusive = true
-dialog_text = "Do you really want to quit?"
-script = SubResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SettingsDialog" type="WindowDialog" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -152.0
-margin_top = -94.0
-margin_right = 153.0
-margin_bottom = 12.0
-window_title = "Settings"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="VBoxContainer" type="VBoxContainer" parent="SettingsDialog"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="EnableConsoleToggle" type="CheckButton" parent="SettingsDialog/VBoxContainer"]
-margin_right = 305.0
-margin_bottom = 52.0
-text = "Enable Console"
-flat = true
-script = SubResource( 8 )
-
-[node name="Button" type="Button" parent="SettingsDialog/VBoxContainer"]
-margin_top = 60.0
-margin_right = 305.0
-margin_bottom = 84.0
-disabled = true
-text = "Dump debug data to console"
-
-[node name="CheckBox" type="CheckBox" parent="SettingsDialog/VBoxContainer"]
-visible = false
-margin_top = 104.0
-margin_right = 360.0
-margin_bottom = 152.0
-text = "Enable console"
-
 [node name="Label2" type="Label" parent="."]
 anchor_left = 1.0
 anchor_top = 1.0
@@ -230,13 +175,26 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -100.0
 margin_top = -42.0
-custom_fonts/font = SubResource( 9 )
+margin_right = -16.0
+custom_fonts/font = SubResource( 7 )
 text = "n/a"
 align = 2
 valign = 1
-script = SubResource( 10 )
+script = SubResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="confirmed" from="QuitDialog" to="QuitDialog" method="confirmed"]
-[connection signal="toggled" from="SettingsDialog/VBoxContainer/EnableConsoleToggle" to="SettingsDialog/VBoxContainer/EnableConsoleToggle" method="toggled"]
+
+[node name="HighScoreLabel" type="Label" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = -42.0
+margin_right = 100.0
+custom_fonts/font = SubResource( 7 )
+text = "HISCORE: 0"
+valign = 1
+script = SubResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

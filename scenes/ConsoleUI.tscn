@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/ConsoleUI.gd" type="Script" id=1]
-[ext_resource path="res://GameUI.tres" type="Theme" id=2]
 [ext_resource path="res://assets/fonts/RobotoMono/Roboto Mono.tres" type="DynamicFont" id=3]
 [ext_resource path="res://assets/fonts/RobotoMono/Roboto Mono Bold.tres" type="DynamicFont" id=4]
 
@@ -38,7 +37,6 @@ margin_left = 26.0
 margin_top = 188.0
 margin_right = 393.0
 margin_bottom = 454.0
-theme = ExtResource( 2 )
 popup_exclusive = true
 window_title = "Console"
 resizable = true
@@ -84,7 +82,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-theme = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

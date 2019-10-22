@@ -48,10 +48,6 @@ window/handheld/orientation="portrait"
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 
-[editor_plugins]
-
-enabled=PoolStringArray( "github-integration" )
-
 [gui]
 
 theme/custom_font="res://assets/fonts/PressStart2P.tres"

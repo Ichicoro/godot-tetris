@@ -1,11 +1,10 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://shaders/grid.tres" type="Material" id=1]
 [ext_resource path="res://shaders/Blur.shader" type="Shader" id=3]
 [ext_resource path="res://src/GridContainer.gd" type="Script" id=4]
 [ext_resource path="res://assets/fonts/PressStart2P.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://src/PauseController.gd" type="Script" id=6]
-[ext_resource path="res://GameUI.tres" type="Theme" id=7]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends ColorRect
@@ -33,19 +32,19 @@ bg_color = Color( 1, 1, 1, 1 )
 [sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 1, 1, 1, 1 )
 
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=5]
 size = 8
 font_data = ExtResource( 5 )
 
-[sub_resource type="StyleBoxFlat" id=5]
+[sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 1, 1, 1, 1 )
 
-[sub_resource type="StyleBoxEmpty" id=6]
-
-[sub_resource type="DynamicFont" id=7]
-font_data = ExtResource( 5 )
+[sub_resource type="StyleBoxEmpty" id=7]
 
 [sub_resource type="DynamicFont" id=8]
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=9]
 size = 8
 extra_spacing_top = -2
 font_data = ExtResource( 5 )
@@ -57,7 +56,6 @@ anchor_bottom = 1.0
 margin_right = -215.0
 margin_bottom = -254.0
 rect_scale = Vector2( 2, 2 )
-theme = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -133,10 +131,10 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="ScorePanel"]
-margin_left = 1.57974
-margin_top = -3.9604
-margin_right = 57.5797
-margin_bottom = 20.0396
+margin_left = -3.92026
+margin_top = 4.0396
+margin_right = 52.0797
+margin_bottom = 28.0396
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "SCORE"
 align = 2
@@ -145,10 +143,10 @@ __meta__ = {
 }
 
 [node name="ScoreLabel" type="Label" parent="ScorePanel"]
-margin_left = 2.1405
-margin_top = 5.5
-margin_right = 58.1405
-margin_bottom = 29.5
+margin_left = -4.8595
+margin_top = 14.0
+margin_right = 51.1405
+margin_bottom = 38.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "0"
 align = 2
@@ -170,10 +168,10 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="HiscorePanel"]
-margin_left = 1.57974
-margin_top = -3.9604
-margin_right = 57.5797
-margin_bottom = 20.0396
+margin_left = -3.92026
+margin_top = 4.0396
+margin_right = 52.0797
+margin_bottom = 28.0396
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "HI"
 align = 2
@@ -183,10 +181,10 @@ __meta__ = {
 }
 
 [node name="HiscoreLabel" type="Label" parent="HiscorePanel"]
-margin_left = 2.1405
-margin_top = 5.5
-margin_right = 58.1405
-margin_bottom = 29.5
+margin_left = -4.8595
+margin_top = 13.5
+margin_right = 51.1405
+margin_bottom = 37.5
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "0"
 align = 2
@@ -208,10 +206,10 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="LevelPanel"]
-margin_left = 1.57974
-margin_top = -3.9604
-margin_right = 57.5797
-margin_bottom = 20.0396
+margin_left = -3.92026
+margin_top = 4.0396
+margin_right = 52.0797
+margin_bottom = 28.0396
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "LEVEL"
 align = 2
@@ -220,10 +218,10 @@ __meta__ = {
 }
 
 [node name="LevelLabel" type="Label" parent="LevelPanel"]
-margin_left = 2.1405
-margin_top = 5.5
-margin_right = 58.1405
-margin_bottom = 29.5
+margin_left = -4.8595
+margin_top = 14.0
+margin_right = 51.1405
+margin_bottom = 38.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "0"
 align = 2
@@ -252,13 +250,16 @@ __meta__ = {
 
 [node name="Label" type="Label" parent="Panel"]
 margin_left = -4.5
-margin_top = 2.5
+margin_top = 10.5
 margin_right = 35.5
-margin_bottom = 26.5
-custom_fonts/font = SubResource( 9 )
+margin_bottom = 34.5
+custom_fonts/font = SubResource( 5 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "n/a"
 align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Pause screen" type="Control" parent="."]
 visible = false
@@ -286,7 +287,7 @@ anchor_bottom = 0.5
 margin_top = -34.4124
 margin_right = -0.0749969
 margin_bottom = 34.5876
-custom_styles/panel = SubResource( 5 )
+custom_styles/panel = SubResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -297,8 +298,8 @@ anchor_right = 1.0
 anchor_bottom = 0.5
 margin_top = -32.452
 margin_bottom = 10.548
-custom_styles/normal = SubResource( 6 )
-custom_fonts/font = SubResource( 7 )
+custom_styles/normal = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "PAUSED"
 align = 1
@@ -314,8 +315,8 @@ anchor_bottom = 0.5
 margin_top = 2.548
 margin_right = -0.0749969
 margin_bottom = 29.548
-custom_styles/normal = SubResource( 6 )
-custom_fonts/font = SubResource( 8 )
+custom_styles/normal = SubResource( 7 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Press Q to quit to
 the menu"
