@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/tetris_jingle.wav-188c0882b2da18c2ddd3872e1f7d8d8e.sample"
+
+[deps]
+
+source_file="res://assets/sounds/tetris_jingle.wav"
+dest_files=[ "res://.import/tetris_jingle.wav-188c0882b2da18c2ddd3872e1f7d8d8e.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

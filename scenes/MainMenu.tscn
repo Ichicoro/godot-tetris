@@ -47,7 +47,8 @@ func _ready():
 	pass
 
 func _pressed():
-	get_tree().change_scene(\"res://scenes/MainScene.tscn\")
+	FXPlayer.playjingle()
+	get_tree().change_scene(\"res://scenes/GameScene.tscn\")
 	pass
 "
 
@@ -57,10 +58,11 @@ script/source = "extends Button
 const ExitDialog = preload(\"res://scenes/ExitDialog.tscn\")
 
 func _ready():
-	if OS.get_name() == \"HTML5\":
+	if OS.get_name() in [\"HTML5\"]:
 		self.queue_free()
 
 func _pressed():
+	FXPlayer.playjingle()
 	get_tree().root.add_child(ExitDialog.instance())
 "
 
@@ -71,7 +73,7 @@ font_data = ExtResource( 1 )
 [sub_resource type="DynamicFont" id=7]
 font_data = ExtResource( 1 )
 
-[sub_resource type="GDScript" id=9]
+[sub_resource type="GDScript" id=8]
 script/source = "extends Label
 
 # Declare member variables here. Examples:
@@ -84,9 +86,10 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
-#	pass"
+#	pass
+"
 
-[sub_resource type="GDScript" id=8]
+[sub_resource type="GDScript" id=9]
 script/source = "extends Label
 
 # Declare member variables here. Examples:
@@ -177,10 +180,10 @@ margin_left = -100.0
 margin_top = -42.0
 margin_right = -16.0
 custom_fonts/font = SubResource( 7 )
-text = "n/a"
+text = "v1.0"
 align = 2
 valign = 1
-script = SubResource( 9 )
+script = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -194,7 +197,7 @@ margin_right = 100.0
 custom_fonts/font = SubResource( 7 )
 text = "HISCORE: 0"
 valign = 1
-script = SubResource( 8 )
+script = SubResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

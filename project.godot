@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "AudioStreamPlayer",
+"class": "DelayableAudioStreamPlayer",
+"language": "GDScript",
+"path": "res://src/DelayableAudioStreamPlayer.gd"
+}, {
 "base": "Object",
 "class": "Table",
 "language": "GDScript",
@@ -20,6 +25,7 @@ _global_script_classes=[ {
 "path": "res://src/Tetromino.gd"
 } ]
 _global_script_class_icons={
+"DelayableAudioStreamPlayer": "",
 "Table": "",
 "Tetromino": ""
 }
@@ -39,6 +45,7 @@ UserData="*res://addons/github-integration/scripts/user_data.gd"
 Settings="*res://src/Settings.gd"
 ConsoleManager="res://src/ConsoleManager.gd"
 Utils="*res://src/Utils.gd"
+FXPlayer="*res://src/FXPlayer.gd"
 
 [display]
 
