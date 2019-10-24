@@ -46,6 +46,7 @@ Settings="*res://src/Settings.gd"
 ConsoleManager="res://src/ConsoleManager.gd"
 Utils="*res://src/Utils.gd"
 FXPlayer="*res://src/FXPlayer.gd"
+SceneSwitcher="*res://src/SceneSwitcher.gd"
 
 [display]
 

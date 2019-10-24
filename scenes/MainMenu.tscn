@@ -43,12 +43,19 @@ font_data = ExtResource( 1 )
 [sub_resource type="GDScript" id=4]
 script/source = "extends Button
 
+const PlayDialog = preload(\"res://scenes/PlayDialog.tscn\")
+
 func _ready():
-	pass
+	self.grab_focus()
 
 func _pressed():
 	FXPlayer.playjingle()
-	get_tree().change_scene(\"res://scenes/GameScene.tscn\")
+	for child in get_tree().root.get_children():
+		if child.name == \"PlayDialog\":
+			print(PlayDialog.resource_name)
+			return
+	get_tree().root.add_child(PlayDialog.instance())
+	# get_tree().change_scene(\"res://scenes/GameScene.tscn\")
 	pass
 "
 
@@ -58,11 +65,15 @@ script/source = "extends Button
 const ExitDialog = preload(\"res://scenes/ExitDialog.tscn\")
 
 func _ready():
-	if OS.get_name() in [\"HTML5\"]:
+	if OS.get_name() in [\"HTML5\", \"Android\", \"iOS\"]:
 		self.queue_free()
 
 func _pressed():
 	FXPlayer.playjingle()
+	for child in get_tree().root.get_children():
+		if child.name == \"ExitDialog\":
+			print(ExitDialog.resource_name)
+			return
 	get_tree().root.add_child(ExitDialog.instance())
 "
 

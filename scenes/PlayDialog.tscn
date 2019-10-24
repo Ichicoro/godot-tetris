@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/fonts/PressStart2P.ttf" type="DynamicFontData" id=1]
 
@@ -32,6 +32,32 @@ font_data = ExtResource( 1 )
 [sub_resource type="DynamicFont" id=4]
 font_data = ExtResource( 1 )
 
+[sub_resource type="GDScript" id=5]
+script/source = "extends Label
+
+export var minimum_level: int = 4
+export var maximum_level: int = 10
+export var levelValue: int = 4
+
+const template_str: String = '← %s →'
+
+func _ready():
+	self.grab_focus()
+
+
+func _process(delta):
+	if Input.is_action_just_pressed(\"move_left\"):
+		if levelValue > minimum_level:
+			levelValue -= 1
+			self.text = template_str % str(levelValue)
+	elif Input.is_action_just_pressed(\"move_right\"):
+		if levelValue < maximum_level:
+			levelValue += 1
+			self.text = template_str % str(levelValue)
+	elif Input.is_action_just_pressed(\"ui_accept\"):
+		SceneSwitcher.change_scene(\"res://scenes/GameScene.tscn\", {level=levelValue})
+"
+
 [node name="ExitDialog" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -54,9 +80,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -215.0
-margin_top = -57.4683
+margin_top = -76.0
 margin_right = 215.0
-margin_bottom = 69.5317
+margin_bottom = 87.0
 rect_pivot_offset = Vector2( 1.30591, 0.700417 )
 custom_styles/panel = SubResource( 2 )
 __meta__ = {
@@ -69,12 +95,12 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -215.0
-margin_top = -63.4683
+margin_top = -87.9083
 margin_right = 215.0
-margin_bottom = 35.5317
+margin_bottom = 11.0917
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "QUIT?"
+text = "SELECT LEVEL"
 align = 1
 valign = 1
 __meta__ = {
@@ -87,14 +113,32 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -215.0
-margin_top = 14.5317
+margin_top = 34.5317
 margin_right = 215.0
-margin_bottom = 74.5317
+margin_bottom = 94.5317
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Press Q to quit
+text = "Press ENTER to select
 or ESC to go back"
 align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChosenLevel" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -215.0
+margin_top = -1.0
+margin_right = 215.0
+margin_bottom = 18.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "← 4 →"
+align = 1
+script = SubResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

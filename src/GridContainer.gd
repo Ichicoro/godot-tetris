@@ -19,7 +19,11 @@ func _ready():
 		hiscore = 0
 	get_tree().root.get_node("Control/HiscorePanel/HiscoreLabel").text = str(hiscore)
 	
-	table = Table.new()
+	var passedLevel = SceneSwitcher.get_param("level")
+	if passedLevel == null:
+		passedLevel = 4
+	tick_max = 1 - range_lerp(passedLevel, 4, 10, 0.5, 0.8)
+	table = Table.new(passedLevel)
 	redraw()
 
 
@@ -77,6 +81,7 @@ func _process(delta):
 
 func redraw():
 	get_tree().root.get_node("Control/ScorePanel/ScoreLabel").text = str(table.total_lines_cleared)
+	get_tree().root.get_node("Control/LevelPanel/LevelLabel").text = str(table.difficulty_level)
 	for child in get_children():
 		child.queue_free()
 	for y in range(len(table.grid)):

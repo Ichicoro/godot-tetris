@@ -12,11 +12,15 @@ var nextft: Tetromino = null  # Next random tetromino
 var held_tetromino = null
 
 var total_lines_cleared = 0
+var cleared_counter = 0
 
 var tetrominos = []
 
+var difficulty_level: int
+
 # Called when the node enters the scene tree for the first time.
-func _init(grid_size: Vector2 = Vector2(10,16)):
+func _init(difficulty: int = 4, grid_size: Vector2 = Vector2(10,16)):
+	self.difficulty_level = difficulty
 	self.grid_size = grid_size
 	self.can_tick = true
 	setup_tetrominos()
@@ -196,7 +200,17 @@ func check_lines():
 			self.grid.push_front(newline)
 			lines_cleared += 1
 	self.total_lines_cleared += lines_cleared
+	update_level(lines_cleared)
 	return lines_cleared
+
+
+func update_level(lines_cleared):
+	if (lines_cleared == 0): return
+	
+	cleared_counter += lines_cleared
+	if cleared_counter>=10 && difficulty_level<10:
+		difficulty_level += 1
+		cleared_counter = 0
 
 
 
