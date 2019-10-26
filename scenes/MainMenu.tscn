@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/fonts/PressStart2P.ttf" type="DynamicFontData" id=1]
 
@@ -119,6 +119,29 @@ func _ready():
 #	pass
 "
 
+[sub_resource type="DynamicFont" id=10]
+size = 8
+font_data = ExtResource( 1 )
+
+[sub_resource type="GDScript" id=11]
+script/source = "extends LinkButton
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+
+func _pressed():
+	OS.shell_open(\"https://marte.dev\")
+"
+
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -202,13 +225,32 @@ __meta__ = {
 [node name="HighScoreLabel" type="Label" parent="."]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_left = 16.0
+margin_left = 20.0
 margin_top = -42.0
-margin_right = 100.0
+margin_right = 180.0
 custom_fonts/font = SubResource( 7 )
 text = "HISCORE: 0"
 valign = 1
 script = SubResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="LinkButton" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -90.0
+margin_top = -45.0
+margin_right = -18.0
+margin_bottom = -37.0
+grow_horizontal = 0
+custom_fonts/font = SubResource( 10 )
+custom_colors/font_color = Color( 1, 1, 1, 0.447059 )
+text = "marte.dev"
+underline = 1
+script = SubResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
