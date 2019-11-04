@@ -5,20 +5,8 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = \"text\"
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-func _process(delta):
-	if Input.is_key_pressed(KEY_Q):
-		self.queue_free()
-		get_tree().quit()
-	elif Input.is_key_pressed(KEY_ESCAPE):
+func _input(event):
+	if Input.is_action_just_pressed(\"menu\"):
 		self.queue_free()
 "
 
@@ -35,8 +23,6 @@ font_data = ExtResource( 1 )
 [sub_resource type="GDScript" id=5]
 script/source = "extends Label
 
-export var minimum_level: int = 4
-export var maximum_level: int = 10
 export var levelValue: int = 4
 
 const template_str: String = '← %s →'
@@ -45,16 +31,19 @@ func _ready():
 	self.grab_focus()
 
 
-func _process(delta):
+func _input(event):
 	if Input.is_action_just_pressed(\"move_left\"):
-		if levelValue > minimum_level:
+		if levelValue > Settings.min_difficulty:
 			levelValue -= 1
 			self.text = template_str % str(levelValue)
 	elif Input.is_action_just_pressed(\"move_right\"):
-		if levelValue < maximum_level:
+		if levelValue < Settings.max_difficulty:
 			levelValue += 1
 			self.text = template_str % str(levelValue)
 	elif Input.is_action_just_pressed(\"ui_accept\"):
+		for child in get_tree().root.get_children():
+			if child.name == \"PlayDialog\":
+				child.queue_free()
 		SceneSwitcher.change_scene(\"res://scenes/GameScene.tscn\", {level=levelValue})
 "
 

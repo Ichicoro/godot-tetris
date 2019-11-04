@@ -22,7 +22,7 @@ func _ready():
 	var passedLevel = SceneSwitcher.get_param("level")
 	if passedLevel == null:
 		passedLevel = 4
-	tick_max = 1 - range_lerp(passedLevel, 4, 10, 0.5, 0.8)
+	tick_max = 1 - range_lerp(passedLevel, 4, Settings.max_difficulty, 0.5, 0.8)
 	table = Table.new(passedLevel)
 	redraw()
 

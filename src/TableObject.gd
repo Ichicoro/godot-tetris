@@ -44,10 +44,10 @@ func setup_tetrominos():
 		[[4,4,4,4]],
 		{'row':0,'col':3}
 	))
-	self.tetrominos.append(Tetromino.new(
-		[[4],[4],[4],[4]],
-		{'row':0,'col':4}
-	))
+#	self.tetrominos.append(Tetromino.new(
+#		[[4],[4],[4],[4]],
+#		{'row':0,'col':4}
+#	))
 	self.tetrominos.append(Tetromino.new(
 		[[5,5,5],
 		[0,0,5]]
@@ -208,7 +208,7 @@ func update_level(lines_cleared):
 	if (lines_cleared == 0): return
 	
 	cleared_counter += lines_cleared
-	if cleared_counter>=10 && difficulty_level<10:
+	if cleared_counter>=10 && difficulty_level<Settings.max_difficulty:
 		difficulty_level += 1
 		cleared_counter = 0
 
