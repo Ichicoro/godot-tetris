@@ -326,7 +326,7 @@ script = ExtResource( 5 )
 
 [node name="DelayableAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
-volume_db = -35.0
+volume_db = -12.0
 script = ExtResource( 7 )
 delay = 1.0
 

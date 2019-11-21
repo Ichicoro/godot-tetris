@@ -1,22 +1,23 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/fonts/PressStart2P.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://src/PlayDialogController.gd" type="Script" id=2]
+[ext_resource path="res://assets/sounds/levelSelected.wav" type="AudioStream" id=3]
 
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 1, 1, 1, 1 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=2]
 size = 32
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=4]
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=5]
-font_data = ExtResource( 1 )
-
-[node name="ExitDialog" type="Control"]
+[node name="PlayDialog" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 2 )
@@ -42,7 +43,7 @@ margin_top = -76.0
 margin_right = 215.0
 margin_bottom = 87.0
 rect_pivot_offset = Vector2( 1.30591, 0.700417 )
-custom_styles/panel = SubResource( 2 )
+custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -58,7 +59,7 @@ __meta__ = {
 margin_right = 430.0
 margin_bottom = 51.0
 size_flags_vertical = 7
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "SELECT LEVEL"
 align = 1
@@ -82,7 +83,7 @@ margin_right = 175.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 30 )
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 3 )
 custom_colors/font_color_disabled = Color( 0, 0, 0, 0 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
@@ -97,7 +98,7 @@ margin_right = 235.0
 margin_bottom = 51.0
 rect_min_size = Vector2( 40, 0 )
 size_flags_vertical = 7
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "%s"
 align = 1
@@ -113,7 +114,7 @@ margin_right = 295.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 30 )
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 3 )
 custom_colors/font_color_disabled = Color( 0, 0, 0, 0 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
@@ -126,7 +127,7 @@ margin_top = 110.0
 margin_right = 430.0
 margin_bottom = 163.0
 size_flags_vertical = 7
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Press ENTER to select
 or ESC to go back"
@@ -135,5 +136,9 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+attenuation = 1.18921
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/decrLvlBtn" to="." method="decrLevel"]
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/incrLvlBtn" to="." method="incrLevel"]
