@@ -6,20 +6,11 @@
 [ext_resource path="res://shaders/Blur.shader" type="Shader" id=4]
 [ext_resource path="res://src/PauseController.gd" type="Script" id=5]
 [ext_resource path="res://src/GridContainer.gd" type="Script" id=6]
-[ext_resource path="res://src/DelayableAudioStreamPlayer.gd" type="Script" id=7]
+[ext_resource path="res://src/SoundController.gd" type="Script" id=9]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends ColorRect
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = \"text\"
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	material.set_shader_param(\"global_transform\", get_global_transform())
 "
@@ -324,12 +315,6 @@ __meta__ = {
 [node name="Pause controller" type="Node" parent="."]
 script = ExtResource( 5 )
 
-[node name="DelayableAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 3 )
-volume_db = -12.0
-script = ExtResource( 7 )
-delay = 1.0
-
 [node name="TouchControls" type="Panel" parent="."]
 anchor_right = 1.0
 margin_top = 256.0
@@ -343,3 +328,13 @@ margin_left = 10.0
 margin_top = 10.0
 margin_right = 50.0
 margin_bottom = 50.0
+
+[node name="Sound Controller" type="Node" parent="."]
+script = ExtResource( 9 )
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="Sound Controller"]
+stream = ExtResource( 3 )
+volume_db = -60.075
+
+[node name="SFXPlayer" type="AudioStreamPlayer2D" parent="Sound Controller"]
+[connection signal="newTableAction" from="Game view/GridContainer" to="Sound Controller" method="playSFX"]

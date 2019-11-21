@@ -1,28 +1,34 @@
 extends Object
+
 class_name Table
 
 signal lines_cleared(amount)
 signal level_up
 
-var can_tick = true
+enum TABLE_ACTION \
+{
+	HARD_DROP,
+	SOFT_DROP,
+	HOLD,
+	SPIN_L,
+	SPIN_R,
+	MOVE_L,
+	MOVE_R
+}
 
+var can_tick = true
 var grid = []
 var grid_size: Vector2
-
 var ft: Tetromino = null      # Falling tetromino
 var nextft: Tetromino = null  # Next random tetromino
-
 var held_tetromino = null
-
 var total_lines_cleared = 0
 var cleared_counter = 0
-
 var tetrominos = []
-
 var difficulty_level: int
 
 # Called when the node enters the scene tree for the first time.
-func _init(difficulty: int = 4, grid_size: Vector2 = Vector2(10,16)):
+func _init(difficulty: int = Settings.min_difficulty, grid_size: Vector2 = Vector2(10,16)):
 	self.difficulty_level = difficulty
 	self.grid_size = grid_size
 	self.can_tick = true
@@ -30,7 +36,6 @@ func _init(difficulty: int = 4, grid_size: Vector2 = Vector2(10,16)):
 	self.ft = gen_random_tetromino()
 	self.nextft = gen_random_tetromino()
 	reset_grid()
-
 
 func setup_tetrominos():
 	self.tetrominos = []
@@ -67,7 +72,6 @@ func setup_tetrominos():
 		[[0,8,8],
 		[8,8,0]]
 	))
-
 
 func reset_grid():
 	self.grid = []
@@ -216,8 +220,6 @@ func update_level(lines_cleared):
 		difficulty_level += 1
 		cleared_counter = 0
 
-
-
 func tick():
 	if !can_tick:
 		return
@@ -239,6 +241,19 @@ func tick():
 			return check_lines()
 	return check_lines()
 	#return false
+
+static func tableActionToString(action) :
+	
+	match action :
+		
+		TABLE_ACTION.HARD_DROP : return "hardDrop"
+		TABLE_ACTION.HOLD : return "hold"
+		TABLE_ACTION.SOFT_DROP : return "softDrop"
+		TABLE_ACTION.SPIN_L : return "spinLeft"
+		TABLE_ACTION.SPIN_R : return "spinRight"
+		TABLE_ACTION.MOVE_L : return "moveLeft"
+		TABLE_ACTION.MOVE_R : return "moveRight"
+		_ : return ""
 
 func do_finish_animation():
 	var old_hiscore = Utils.load_hiscore()

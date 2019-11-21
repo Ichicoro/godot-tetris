@@ -2,7 +2,7 @@
 
 [ext_resource path="res://assets/fonts/PressStart2P.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://src/PlayDialogController.gd" type="Script" id=2]
-[ext_resource path="res://assets/sounds/levelSelected.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/sounds/sfx/levelSelected.wav" type="AudioStream" id=3]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 1, 1, 1, 1 )
