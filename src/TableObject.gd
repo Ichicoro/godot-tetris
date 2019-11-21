@@ -93,7 +93,7 @@ func reset_grid():
 
 func gen_random_tetromino():
 	randomize()
-	return self.tetrominos[(randi()+1)%(len(self.tetrominos)-1)].copy()
+	return self.tetrominos[(randi()+1)%(len(self.tetrominos))].copy()
 	
 func check_newft(newft):
 	for y in range(len(self.ft.shape)):
