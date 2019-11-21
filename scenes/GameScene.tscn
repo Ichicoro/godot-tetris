@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://assets/fonts/PressStart2P.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://shaders/grid.tres" type="Material" id=2]
@@ -21,6 +21,22 @@ shader_param/blurSize = 20
 
 [sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="GDScript" id=10]
+script/source = "extends Label
+
+func updateText(newScore) :
+	
+	self.text = str(newScore)
+"
+
+[sub_resource type="GDScript" id=11]
+script/source = "extends Label
+
+func updateText(newLevel) :
+	
+	self.text = str(newLevel)
+"
 
 [sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 1, 1, 1, 1 )
@@ -140,6 +156,7 @@ margin_bottom = 38.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "0"
 align = 2
+script = SubResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -211,6 +228,7 @@ margin_bottom = 38.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "0"
 align = 2
+script = SubResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -334,7 +352,9 @@ script = ExtResource( 9 )
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="Sound Controller"]
 stream = ExtResource( 3 )
-volume_db = -54.189
+volume_db = -12.0
 
 [node name="SFXPlayer" type="AudioStreamPlayer2D" parent="Sound Controller"]
+[connection signal="newLevel" from="Game view/GridContainer" to="LevelPanel/LevelLabel" method="updateText"]
+[connection signal="newScore" from="Game view/GridContainer" to="ScorePanel/ScoreLabel" method="updateText"]
 [connection signal="newTableAction" from="Game view/GridContainer" to="Sound Controller" method="playSFX"]

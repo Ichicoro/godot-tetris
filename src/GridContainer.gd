@@ -1,6 +1,8 @@
 extends GridContainer
 
 signal newTableAction(action)
+signal newScore(score)
+signal newLevel(level)
 
 onready var img = preload("res://assets/block.png")
 
@@ -26,14 +28,8 @@ func _ready():
 
 
 func toggle_pause():
-	if self.paused:
-		if Input.is_action_just_pressed("menu"):
-			paused = false
-		return
-	else:
-		if Input.is_action_just_pressed("menu"):
-			paused = true
-			return
+
+	paused = (paused != Input.is_action_just_pressed("menu"))
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -83,8 +79,7 @@ func _process(delta):
 
 
 func redraw():
-	get_tree().root.get_node("Control/ScorePanel/ScoreLabel").text = str(table.total_lines_cleared)
-	get_tree().root.get_node("Control/LevelPanel/LevelLabel").text = str(table.difficulty_level)
+	
 	for child in get_children():
 		if child is TextureRect :
 			child.queue_free()
@@ -113,6 +108,7 @@ func handle_lines_cleared(amount):
 		4 : action = Table.TABLE_ACTION.TETRIS
 	
 	emit_signal("newTableAction", action)
+	emit_signal("newScore", table.total_lines_cleared)
 	
 	get_tree().root.add_child(Alert.show_alert(text))
 
@@ -121,5 +117,6 @@ func handle_level_up():
 	yield(get_tree().create_timer(1.4), "timeout")
 	
 	emit_signal("newTableAction", Table.TABLE_ACTION.LEVEL_UP)
+	emit_signal("newLevel", table.difficulty_level)
 	
 	get_tree().root.add_child(Alert.show_alert("Level up!"))

@@ -27,6 +27,7 @@ var grid_size: Vector2
 var ft: Tetromino = null      # Falling tetromino
 var nextft: Tetromino = null  # Next random tetromino
 var held_tetromino = null
+var last_gened_tetromino = -1
 var total_lines_cleared = 0
 var cleared_counter = 0
 var tetrominos = []
@@ -92,8 +93,19 @@ func reset_grid():
 
 
 func gen_random_tetromino():
-	randomize()
-	return self.tetrominos[(randi()+1)%(len(self.tetrominos))].copy()
+	
+	var indexes = []
+	
+	for i in len(self.tetrominos) :
+		
+		if i != last_gened_tetromino :
+			indexes.append(i)
+		
+	indexes.shuffle()
+	
+	last_gened_tetromino = indexes[0]
+	
+	return self.tetrominos[indexes[0]].copy()
 	
 func check_newft(newft):
 	for y in range(len(self.ft.shape)):
@@ -168,7 +180,7 @@ func drop_piece():
 			var ypos = self.ft.topleft.row+y
 			if self.ft.shape[y][x] != 0:
 				self.grid[ypos][xpos] = self.ft.shape[y][x]
-	if true:
+	if false:
 		for row in self.grid:
 			print(row)
 		for row in self.ft.shape:
@@ -209,8 +221,10 @@ func check_lines():
 				newline.append(0)
 			self.grid.push_front(newline)
 			lines_cleared += 1
-	if (lines_cleared >= 1): emit_signal("lines_cleared", lines_cleared)
+	
 	self.total_lines_cleared += lines_cleared
+	if (lines_cleared >= 1): emit_signal("lines_cleared", lines_cleared)
+	
 	update_level(lines_cleared)
 	return lines_cleared
 
