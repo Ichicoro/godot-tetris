@@ -103,9 +103,23 @@ func redraw():
 
 func handle_lines_cleared(amount):
 	var text = ["SINGLE!", "DOUBLE!", "TRIPLE!", "TETRIS!"][amount-1]
+	
+	var action = 0
+	
+	match amount :
+		1 : action = Table.TABLE_ACTION.SINGLE_CLEAR
+		2 : action = Table.TABLE_ACTION.DOUBLE_CLEAR
+		3 : action = Table.TABLE_ACTION.TRIPLE_CLEAR
+		4 : action = Table.TABLE_ACTION.TETRIS
+	
+	emit_signal("newTableAction", action)
+	
 	get_tree().root.add_child(Alert.show_alert(text))
 
 
 func handle_level_up():
 	yield(get_tree().create_timer(1.4), "timeout")
+	
+	emit_signal("newTableAction", Table.TABLE_ACTION.LEVEL_UP)
+	
 	get_tree().root.add_child(Alert.show_alert("Level up!"))

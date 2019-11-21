@@ -13,7 +13,12 @@ enum TABLE_ACTION \
 	SPIN_L,
 	SPIN_R,
 	MOVE_L,
-	MOVE_R
+	MOVE_R,
+	SINGLE_CLEAR,
+	DOUBLE_CLEAR,
+	TRIPLE_CLEAR,
+	TETRIS,
+	LEVEL_UP
 }
 
 var can_tick = true
@@ -190,8 +195,6 @@ func hold_tetromino():
 		self.held_tetromino = current_tetromino
 	self.ft.reset_topleft()
 
-
-
 func check_lines():
 	var lines_cleared = 0
 	for y in range(self.grid_size.y):
@@ -253,6 +256,11 @@ static func tableActionToString(action) :
 		TABLE_ACTION.SPIN_R : return "spinRight"
 		TABLE_ACTION.MOVE_L : return "moveLeft"
 		TABLE_ACTION.MOVE_R : return "moveRight"
+		TABLE_ACTION.SINGLE_CLEAR : return "singleClear"
+		TABLE_ACTION.DOUBLE_CLEAR : return "doubleClear"
+		TABLE_ACTION.TRIPLE_CLEAR : return "tripleClear"
+		TABLE_ACTION.TETRIS : return "tetris"
+		TABLE_ACTION.LEVEL_UP : return "levelUp"
 		_ : return ""
 
 func do_finish_animation():

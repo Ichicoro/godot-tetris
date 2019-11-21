@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/singleClear.wav-f7a012708a6047f3a0d8a696c682de38.sample"
+
+[deps]
+
+source_file="res://assets/sounds/sfx/singleClear.wav"
+dest_files=[ "res://.import/singleClear.wav-f7a012708a6047f3a0d8a696c682de38.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
