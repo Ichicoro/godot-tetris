@@ -24,6 +24,8 @@ func _ready():
 		passedLevel = 4
 	tick_max = 1 - range_lerp(passedLevel, 4, Settings.max_difficulty, 0.5, 0.8)
 	table = Table.new(passedLevel)
+	table.connect("lines_cleared", self, "handle_lines_cleared")
+	table.connect("level_up", self, "handle_level_up")
 	redraw()
 
 
@@ -115,3 +117,13 @@ func redraw_old():
 					texrect.texture = img
 					texrect.modulate = Tetromino.get_tint_from_value(value)
 			add_child(texrect)
+
+
+func handle_lines_cleared(amount):
+	var text = ["SINGLE!", "DOUBLE!", "TRIPLE!", "TETRIS!"][amount-1]
+	get_tree().root.add_child(Alert.show_alert(text))
+
+
+func handle_level_up():
+	yield(get_tree().create_timer(1.4), "timeout")
+	get_tree().root.add_child(Alert.show_alert("Level up!"))

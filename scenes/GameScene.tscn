@@ -56,7 +56,7 @@ pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = -215.0
-margin_bottom = -254.0
+margin_bottom = -256.0
 rect_scale = Vector2( 2, 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -65,8 +65,7 @@ __meta__ = {
 [node name="ColorRect" type="ColorRect" parent="."]
 material = ExtResource( 2 )
 anchor_right = 1.0
-anchor_bottom = 0.992
-margin_bottom = 0.0639954
+anchor_bottom = 1.0
 script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -74,9 +73,9 @@ __meta__ = {
 
 [node name="Game view" type="Control" parent="."]
 pause_mode = 1
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_bottom = -2.0
+anchor_right = 1.005
+margin_right = -1.075
+margin_bottom = 256.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 __meta__ = {
@@ -121,12 +120,10 @@ __meta__ = {
 
 [node name="ScorePanel" type="Panel" parent="."]
 anchor_left = 1.0
-anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 0.5
 margin_left = -55.0
-margin_top = -56.0
-margin_bottom = -31.0
+margin_top = 73.0
+margin_bottom = 98.0
 custom_styles/panel = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -158,12 +155,10 @@ __meta__ = {
 
 [node name="HiscorePanel" type="Panel" parent="."]
 anchor_left = 1.0
-anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 0.5
 margin_left = -55.0
-margin_top = 21.0
-margin_bottom = 46.0
+margin_top = 150.0
+margin_bottom = 175.0
 custom_styles/panel = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -196,12 +191,10 @@ __meta__ = {
 
 [node name="LevelPanel" type="Panel" parent="."]
 anchor_left = 1.0
-anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 0.5
 margin_left = -55.0
-margin_top = -18.0
-margin_bottom = 7.0
+margin_top = 111.0
+margin_bottom = 136.0
 custom_styles/panel = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -257,7 +250,7 @@ margin_right = 35.5
 margin_bottom = 34.5
 custom_fonts/font = SubResource( 5 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "n/a"
+text = "OwO"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -275,7 +268,7 @@ __meta__ = {
 anchor_right = 1.007
 anchor_bottom = 1.012
 margin_right = -109.588
-margin_bottom = -129.963
+margin_bottom = -127.963
 rect_scale = Vector2( 2, 2 )
 color = Color( 0, 0, 0, 0.615686 )
 __meta__ = {
@@ -336,3 +329,17 @@ stream = ExtResource( 3 )
 volume_db = -35.0
 script = ExtResource( 7 )
 delay = 1.0
+
+[node name="TouchControls" type="Panel" parent="."]
+anchor_right = 1.0
+margin_top = 256.0
+margin_bottom = 327.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="TouchControls"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 50.0
+margin_bottom = 50.0

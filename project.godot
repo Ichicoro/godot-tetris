@@ -43,10 +43,10 @@ config/version=1.4
 
 UserData="*res://addons/github-integration/scripts/user_data.gd"
 Settings="*res://src/Settings.gd"
-ConsoleManager="res://src/ConsoleManager.gd"
 Utils="*res://src/Utils.gd"
 FXPlayer="*res://src/FXPlayer.gd"
 SceneSwitcher="*res://src/SceneSwitcher.gd"
+Alert="*res://src/Alert.gd"
 
 [display]
 
@@ -54,7 +54,7 @@ window/size/width=430
 window/size/height=512
 window/handheld/orientation="portrait"
 window/stretch/mode="viewport"
-window/stretch/aspect="keep"
+window/stretch/aspect="keep_width"
 
 [gui]
 
@@ -123,5 +123,4 @@ quit_confirm={
 [rendering]
 
 quality/intended_usage/framebuffer_allocation=0
-environment/default_environment="res://default_env.tres"
 quality/name="Tetris "

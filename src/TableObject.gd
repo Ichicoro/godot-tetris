@@ -1,6 +1,9 @@
 extends Object
 class_name Table
 
+signal lines_cleared(amount)
+signal level_up
+
 var can_tick = true
 
 var grid = []
@@ -199,6 +202,7 @@ func check_lines():
 				newline.append(0)
 			self.grid.push_front(newline)
 			lines_cleared += 1
+	if (lines_cleared >= 1): emit_signal("lines_cleared", lines_cleared)
 	self.total_lines_cleared += lines_cleared
 	update_level(lines_cleared)
 	return lines_cleared
@@ -206,9 +210,9 @@ func check_lines():
 
 func update_level(lines_cleared):
 	if (lines_cleared == 0): return
-	
 	cleared_counter += lines_cleared
 	if cleared_counter>=10 && difficulty_level<Settings.max_difficulty:
+		emit_signal("level_up")
 		difficulty_level += 1
 		cleared_counter = 0
 
