@@ -5,9 +5,54 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
 
+var template_str: String = '%s'
+var levelValue: int = Settings.min_difficulty
+onready var incrBtn = $Panel/VBoxContainer/HBoxContainer/incrLvlBtn
+onready var decrBtn = $Panel/VBoxContainer/HBoxContainer/decrLvlBtn
+onready var levelLabel = $Panel/VBoxContainer/HBoxContainer/ChosenLevel
+
+func _ready():
+	
+	incrBtn.disabled = false
+	decrBtn.disabled = true
+	setLevelLabel()
+
+func incrLevel() :
+	
+	if levelValue < Settings.max_difficulty:
+		levelValue += 1
+		setLevelLabel()
+		decrBtn.disabled = false
+	else :
+		incrBtn.disabled = true
+	
+func decrLevel() :
+	
+	if levelValue > Settings.min_difficulty:
+		levelValue -= 1
+		setLevelLabel()
+		incrBtn.disabled = false
+	else :
+		decrBtn.disabled = true
+
+func setLevelLabel() :
+
+	levelLabel.text = template_str % str(levelValue)
+
 func _input(event):
+	
 	if Input.is_action_just_pressed(\"menu\"):
-		self.queue_free()
+		queue_free()
+	elif Input.is_action_just_pressed(\"ui_accept\"):
+		startGame()
+	elif Input.is_action_just_pressed(\"move_left\"):
+		decrLevel()
+	elif Input.is_action_just_pressed(\"move_right\"):
+		incrLevel()
+		
+func startGame() :
+	queue_free()
+	SceneSwitcher.change_scene(\"res://scenes/GameScene.tscn\", {level=levelValue})
 "
 
 [sub_resource type="StyleBoxFlat" id=2]
@@ -20,33 +65,8 @@ font_data = ExtResource( 1 )
 [sub_resource type="DynamicFont" id=4]
 font_data = ExtResource( 1 )
 
-[sub_resource type="GDScript" id=5]
-script/source = "extends Label
-
-export var levelValue: int = Settings.min_difficulty
-
-const template_str: String = '← %s →'
-
-func _ready():
-	self.grab_focus()
-	self.text = template_str % str(levelValue)
-
-
-func _input(event):
-	if Input.is_action_just_pressed(\"move_left\"):
-		if levelValue > Settings.min_difficulty:
-			levelValue -= 1
-			self.text = template_str % str(levelValue)
-	elif Input.is_action_just_pressed(\"move_right\"):
-		if levelValue < Settings.max_difficulty:
-			levelValue += 1
-			self.text = template_str % str(levelValue)
-	elif Input.is_action_just_pressed(\"ui_accept\"):
-		for child in get_tree().root.get_children():
-			if child.name == \"PlayDialog\":
-				child.queue_free()
-		SceneSwitcher.change_scene(\"res://scenes/GameScene.tscn\", {level=levelValue})
-"
+[sub_resource type="DynamicFont" id=5]
+font_data = ExtResource( 1 )
 
 [node name="ExitDialog" type="Control"]
 anchor_right = 1.0
@@ -79,15 +99,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="Label" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -215.0
-margin_top = -87.9083
-margin_right = 215.0
-margin_bottom = 11.0917
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="Panel/VBoxContainer"]
+margin_right = 430.0
+margin_bottom = 51.0
+size_flags_vertical = 7
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "SELECT LEVEL"
@@ -97,38 +119,73 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Subtitle" type="Label" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -215.0
-margin_top = 34.5317
-margin_right = 215.0
-margin_bottom = 94.5317
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+margin_top = 55.0
+margin_right = 430.0
+margin_bottom = 106.0
+size_flags_vertical = 3
+custom_constants/separation = 20
+alignment = 1
+
+[node name="decrLvlBtn" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+margin_left = 135.0
+margin_top = 10.0
+margin_right = 175.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 30 )
+size_flags_vertical = 4
 custom_fonts/font = SubResource( 4 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 0 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Press ENTER to select
-or ESC to go back"
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+disabled = true
+text = "←"
+flat = true
+
+[node name="ChosenLevel" type="Label" parent="Panel/VBoxContainer/HBoxContainer"]
+margin_left = 195.0
+margin_right = 235.0
+margin_bottom = 51.0
+rect_min_size = Vector2( 40, 0 )
+size_flags_vertical = 7
+custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "%s"
 align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ChosenLevel" type="Label" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -215.0
-margin_top = -1.0
-margin_right = 215.0
-margin_bottom = 18.0
+[node name="incrLvlBtn" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+margin_left = 255.0
+margin_top = 10.0
+margin_right = 295.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 30 )
+size_flags_vertical = 4
 custom_fonts/font = SubResource( 4 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 0 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "← 4 →"
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+text = "→"
+flat = true
+
+[node name="Subtitle" type="Label" parent="Panel/VBoxContainer"]
+margin_top = 110.0
+margin_right = 430.0
+margin_bottom = 163.0
+size_flags_vertical = 7
+custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Press ENTER to select
+or ESC to go back"
 align = 1
-script = SubResource( 5 )
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/decrLvlBtn" to="." method="decrLevel"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/incrLvlBtn" to="." method="incrLevel"]
