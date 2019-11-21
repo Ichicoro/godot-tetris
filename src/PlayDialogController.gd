@@ -5,6 +5,7 @@ var levelValue: int = Settings.min_difficulty
 onready var incrBtn = $Panel/VBoxContainer/HBoxContainer/incrLvlBtn
 onready var decrBtn = $Panel/VBoxContainer/HBoxContainer/decrLvlBtn
 onready var levelLabel = $Panel/VBoxContainer/HBoxContainer/ChosenLevel
+onready var audio = $AudioStreamPlayer2D
 
 enum LVL_EDIT \
 {
@@ -38,11 +39,10 @@ func setLevel(direction) :
 	
 	if condition :
 		levelValue += direction
-		
-	incrBtn.disabled = not(levelValue < Settings.max_difficulty)
-	decrBtn.disabled = not(levelValue > Settings.min_difficulty)
-	
-	setLevelLabel()
+		audio.play()
+		incrBtn.disabled = not(levelValue < Settings.max_difficulty)
+		decrBtn.disabled = not(levelValue > Settings.min_difficulty)
+		setLevelLabel()
 
 func setLevelLabel() :
 
