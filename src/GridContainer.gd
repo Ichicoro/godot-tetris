@@ -21,8 +21,8 @@ func _ready():
 	
 	var passedLevel = SceneSwitcher.get_param("level")
 	if passedLevel == null:
-		passedLevel = 4
-	tick_max = 1 - range_lerp(passedLevel, 4, Settings.max_difficulty, 0.5, 0.8)
+		passedLevel = Settings.min_difficulty
+	tick_max = 1 - range_lerp(passedLevel, Settings.min_difficulty, Settings.max_difficulty, 0.5, 0.8)
 	table = Table.new(passedLevel)
 	table.connect("lines_cleared", self, "handle_lines_cleared")
 	table.connect("level_up", self, "handle_level_up")

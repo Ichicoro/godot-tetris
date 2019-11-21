@@ -23,12 +23,13 @@ font_data = ExtResource( 1 )
 [sub_resource type="GDScript" id=5]
 script/source = "extends Label
 
-export var levelValue: int = 4
+export var levelValue: int = Settings.min_difficulty
 
 const template_str: String = '← %s →'
 
 func _ready():
 	self.grab_focus()
+	self.text = template_str % str(levelValue)
 
 
 func _input(event):

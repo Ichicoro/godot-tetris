@@ -41,7 +41,6 @@ config/version=1.4
 
 [autoload]
 
-UserData="*res://addons/github-integration/scripts/user_data.gd"
 Settings="*res://src/Settings.gd"
 Utils="*res://src/Utils.gd"
 FXPlayer="*res://src/FXPlayer.gd"
