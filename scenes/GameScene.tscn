@@ -334,7 +334,7 @@ script = ExtResource( 9 )
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="Sound Controller"]
 stream = ExtResource( 3 )
-volume_db = -12.0
+volume_db = -54.189
 
 [node name="SFXPlayer" type="AudioStreamPlayer2D" parent="Sound Controller"]
 [connection signal="newTableAction" from="Game view/GridContainer" to="Sound Controller" method="playSFX"]
