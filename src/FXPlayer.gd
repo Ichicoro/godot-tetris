@@ -1,6 +1,6 @@
 extends AudioStreamPlayer
 
-const jingle = preload("res://assets/sounds/tetris_jingle.wav")
+const jingle = preload("res://assets/sounds/sfx/tetris_jingle.wav")
 
 
 func _ready():
