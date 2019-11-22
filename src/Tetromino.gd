@@ -82,6 +82,9 @@ func moved_down():
 	newft.topleft.row += 1
 	return newft
 
+func containsPoint(x : int, y : int) :
+	
+	return (y in range(topleft.row, topleft.row+len(shape)) and x in range(topleft.col, topleft.col+len(shape[0])))
 
 static func get_tint_from_value(value):
 	return colors[value]
