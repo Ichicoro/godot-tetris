@@ -231,7 +231,7 @@ func check_lines():
 			lines_cleared += 1
 	
 	self.total_lines_cleared += lines_cleared
-	if (lines_cleared >= 1): emit_signal("lines_cleared", linesClearedToAction(lines_cleared))
+	if (lines_cleared >= 1): emit_signal("newTableAction", linesClearedToAction(lines_cleared))
 	
 	update_level(lines_cleared)
 	return lines_cleared
