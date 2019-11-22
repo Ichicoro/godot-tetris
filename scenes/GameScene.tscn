@@ -274,6 +274,7 @@ margin_bottom = 355.0
 rect_scale = Vector2( 1, 1 )
 
 [node name="Pause screen" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 0.718
 margin_bottom = 1.10999
