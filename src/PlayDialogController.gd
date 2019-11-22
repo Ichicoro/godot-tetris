@@ -21,11 +21,9 @@ func _ready():
 	setLevelLabel()
 
 func incrLevel() :
-	
 	setLevel(LVL_EDIT.INCREASE)
 	
 func decrLevel() :
-	
 	setLevel(LVL_EDIT.DECREASE)
 		
 func setLevel(direction) :
@@ -51,14 +49,17 @@ func setLevelLabel() :
 func _input(event):
 	
 	if Input.is_action_just_pressed("menu"):
-		queue_free()
+		backToMenu()
 	elif Input.is_action_just_pressed("ui_accept"):
 		startGame()
 	elif Input.is_action_just_pressed("move_left"):
 		decrLevel()
 	elif Input.is_action_just_pressed("move_right"):
 		incrLevel()
-		
+
+func backToMenu() :
+	queue_free()
+
 func startGame() :
 	queue_free()
 	SceneSwitcher.change_scene("res://scenes/GameScene.tscn", {level=levelValue})

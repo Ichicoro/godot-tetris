@@ -2,8 +2,7 @@ extends Object
 
 class_name Table
 
-signal lines_cleared(amount)
-signal level_up
+signal newTableAction(action)
 
 enum TABLE_ACTION \
 {
@@ -93,18 +92,12 @@ func reset_grid():
 
 
 func gen_random_tetromino():
-	
 	var indexes = []
-	
 	for i in len(self.tetrominos) :
-		
 		if i != last_gened_tetromino :
 			indexes.append(i)
-		
 	indexes.shuffle()
-	
 	last_gened_tetromino = indexes[0]
-	
 	return self.tetrominos[indexes[0]].copy()
 	
 func check_newft(newft):
@@ -125,6 +118,9 @@ func try_moving_left():
 	if not check_newft(newft):
 		return false
 	self.ft = newft
+	
+	emit_signal("newTableAction", TABLE_ACTION.MOVE_L)
+	
 	return true
 	
 	
@@ -135,6 +131,9 @@ func try_moving_right():
 	if not check_newft(newft):
 		return false
 	self.ft = newft
+	
+	emit_signal("newTableAction", TABLE_ACTION.MOVE_R)
+	
 	return true
 
 
@@ -158,6 +157,9 @@ func try_rotating_left():
 	if not check_newft(newft):
 		return false
 	self.ft = newft
+	
+	emit_signal("newTableAction", TABLE_ACTION.SPIN_L)
+	
 	return true
 
 
@@ -170,6 +172,9 @@ func try_rotating_right():
 	if not check_newft(newft):
 		return false
 	self.ft = newft
+	
+	emit_signal("newTableAction", TABLE_ACTION.SPIN_R)
+	
 	return true
 
 
@@ -186,14 +191,15 @@ func drop_piece():
 		for row in self.ft.shape:
 			print(row)
 		print("-------------")
+		
+	emit_signal("newTableAction", TABLE_ACTION.SOFT_DROP)
 
 
 func hard_drop():
 	while (try_moving_down()):
 		pass
-#	drop_piece()
-#	self.ft = self.nextft
-#	self.nextft = self.gen_random_tetromino()
+	
+	emit_signal("newTableAction", TABLE_ACTION.HARD_DROP)
 
 
 func hold_tetromino():
@@ -206,6 +212,8 @@ func hold_tetromino():
 		self.ft = self.held_tetromino.copy()
 		self.held_tetromino = current_tetromino
 	self.ft.reset_topleft()
+	
+	emit_signal("newTableAction", TABLE_ACTION.HOLD)
 
 func check_lines():
 	var lines_cleared = 0
@@ -223,19 +231,27 @@ func check_lines():
 			lines_cleared += 1
 	
 	self.total_lines_cleared += lines_cleared
-	if (lines_cleared >= 1): emit_signal("lines_cleared", lines_cleared)
+	if (lines_cleared >= 1): emit_signal("lines_cleared", linesClearedToAction(lines_cleared))
 	
 	update_level(lines_cleared)
 	return lines_cleared
 
+func linesClearedToAction(lines):
+	
+	match lines :
+		
+		1 : return TABLE_ACTION.SINGLE_CLEAR
+		2 : return TABLE_ACTION.DOUBLE_CLEAR
+		3 : return TABLE_ACTION.TRIPLE_CLEAR
+		4 : return TABLE_ACTION.TETRIS
 
 func update_level(lines_cleared):
 	if (lines_cleared == 0): return
 	cleared_counter += lines_cleared
 	if cleared_counter>=10 && difficulty_level<Settings.max_difficulty:
-		emit_signal("level_up")
 		difficulty_level += 1
 		cleared_counter = 0
+		emit_signal("newTableAction", TABLE_ACTION.LEVEL_UP)
 
 func tick():
 	if !can_tick:
@@ -257,7 +273,6 @@ func tick():
 			can_tick = false
 			return check_lines()
 	return check_lines()
-	#return false
 
 static func tableActionToString(action) :
 	
