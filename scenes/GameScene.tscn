@@ -64,7 +64,7 @@ pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 0.996
 margin_right = -215.0
-margin_bottom = -154.952
+margin_bottom = -126.952
 rect_scale = Vector2( 2, 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -270,7 +270,7 @@ __meta__ = {
 anchor_right = 1.005
 anchor_bottom = 0.0
 margin_right = -1.07497
-margin_bottom = 355.0
+margin_bottom = 383.0
 rect_scale = Vector2( 1, 1 )
 
 [node name="Pause screen" type="Control" parent="."]
@@ -354,5 +354,5 @@ volume_db = 3.0
 [connection signal="newLevel" from="Game view/GridContainer" to="LevelPanel/LevelLabel" method="updateText"]
 [connection signal="newScore" from="Game view/GridContainer" to="ScorePanel/ScoreLabel" method="updateText"]
 [connection signal="newTableAction" from="Game view/GridContainer" to="Sound Controller" method="playSFX"]
-[connection signal="pauseToggled" from="Pause controller" to="Game view/GridContainer" method="toggle_pause"]
 [connection signal="pauseToggled" from="Pause controller" to="Sound Controller" method="toggleMusicPaused"]
+[connection signal="pauseToggled" from="Pause controller" to="Game view/GridContainer" method="toggle_pause"]
