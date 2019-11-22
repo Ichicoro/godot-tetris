@@ -26,11 +26,8 @@ func _ready():
 	table.connect("level_up", self, "handle_level_up")
 	redraw()
 
-
-func toggle_pause():
-
-	paused = (paused != Input.is_action_just_pressed("menu"))
-
+func toggle_pause(p):
+	paused = p
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
