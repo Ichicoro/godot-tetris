@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://shaders/grid.tres" type="Material" id=1]
 [ext_resource path="res://shaders/Blur.shader" type="Shader" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://src/PauseController.gd" type="Script" id=5]
 [ext_resource path="res://src/SoundController.gd" type="Script" id=6]
 [ext_resource path="res://assets/sounds/main_song.ogg" type="AudioStream" id=7]
+[ext_resource path="res://scenes/TouchControls.tscn" type="PackedScene" id=8]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends ColorRect
@@ -333,19 +334,7 @@ __meta__ = {
 [node name="Pause controller" type="Node" parent="."]
 script = ExtResource( 5 )
 
-[node name="TouchControls" type="Panel" parent="."]
-anchor_right = 1.0
-margin_top = 256.0
-margin_bottom = 327.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton" type="TextureButton" parent="TouchControls"]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 50.0
-margin_bottom = 50.0
+[node name="TouchControls" parent="." instance=ExtResource( 8 )]
 
 [node name="Sound Controller" type="Node" parent="."]
 script = ExtResource( 6 )
@@ -359,5 +348,5 @@ volume_db = 1.0
 [connection signal="newLevel" from="Game view/GridContainer" to="LevelPanel/LevelLabel" method="updateText"]
 [connection signal="newScore" from="Game view/GridContainer" to="ScorePanel/ScoreLabel" method="updateText"]
 [connection signal="newTableAction" from="Game view/GridContainer" to="Sound Controller" method="playSFX"]
-[connection signal="pauseToggled" from="Pause controller" to="Sound Controller" method="toggleMusicPaused"]
 [connection signal="pauseToggled" from="Pause controller" to="Game view/GridContainer" method="toggle_pause"]
+[connection signal="pauseToggled" from="Pause controller" to="Sound Controller" method="toggleMusicPaused"]

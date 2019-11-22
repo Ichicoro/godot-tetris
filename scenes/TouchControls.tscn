@@ -1,0 +1,15 @@
+[gd_scene format=2]
+
+[node name="TouchControls" type="Panel"]
+anchor_right = 1.0
+margin_top = 256.0
+margin_bottom = 327.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="."]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 50.0
+margin_bottom = 50.0
