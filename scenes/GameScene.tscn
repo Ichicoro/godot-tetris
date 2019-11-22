@@ -266,10 +266,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="TouchControls" parent="." instance=ExtResource( 8 )]
+anchor_right = 1.005
+anchor_bottom = 0.0
+margin_right = -1.07497
+margin_bottom = 355.0
+rect_scale = Vector2( 1, 1 )
+
 [node name="Pause screen" type="Control" parent="."]
-visible = false
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.718
+margin_bottom = 1.10999
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -334,13 +341,6 @@ __meta__ = {
 [node name="Pause controller" type="Node" parent="."]
 script = ExtResource( 5 )
 
-[node name="TouchControls" parent="." instance=ExtResource( 8 )]
-anchor_right = 1.005
-anchor_bottom = 0.0
-margin_right = -1.07497
-margin_bottom = 355.0
-rect_scale = Vector2( 1, 1 )
-
 [node name="Sound Controller" type="Node" parent="."]
 script = ExtResource( 6 )
 
@@ -353,5 +353,5 @@ volume_db = 3.0
 [connection signal="newLevel" from="Game view/GridContainer" to="LevelPanel/LevelLabel" method="updateText"]
 [connection signal="newScore" from="Game view/GridContainer" to="ScorePanel/ScoreLabel" method="updateText"]
 [connection signal="newTableAction" from="Game view/GridContainer" to="Sound Controller" method="playSFX"]
-[connection signal="pauseToggled" from="Pause controller" to="Sound Controller" method="toggleMusicPaused"]
 [connection signal="pauseToggled" from="Pause controller" to="Game view/GridContainer" method="toggle_pause"]
+[connection signal="pauseToggled" from="Pause controller" to="Sound Controller" method="toggleMusicPaused"]
