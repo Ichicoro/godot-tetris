@@ -62,9 +62,9 @@ font_data = ExtResource( 4 )
 [node name="Control" type="Control"]
 pause_mode = 2
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.996
 margin_right = -215.0
-margin_bottom = -256.0
+margin_bottom = -154.952
 rect_scale = Vector2( 2, 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -335,6 +335,11 @@ __meta__ = {
 script = ExtResource( 5 )
 
 [node name="TouchControls" parent="." instance=ExtResource( 8 )]
+anchor_right = 1.005
+anchor_bottom = 0.0
+margin_right = -1.07497
+margin_bottom = 355.0
+rect_scale = Vector2( 1, 1 )
 
 [node name="Sound Controller" type="Node" parent="."]
 script = ExtResource( 6 )
