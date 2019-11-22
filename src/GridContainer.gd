@@ -75,10 +75,8 @@ func _process(delta):
 			self.redraw()
 
 func redraw():
-	
 	for child in get_children():
 		child.queue_free()
-		
 	for y in range(len(table.grid)):
 		for x in range(len(table.grid[y])):
 			var texrect = TextureRect.new()

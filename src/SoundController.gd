@@ -34,3 +34,7 @@ func playSFX(action) :
 		
 		sfx.stream = load(fileName)
 		sfx.play()
+
+func toggleMusicPaused(pause):
+	
+	music.stream_paused = pause

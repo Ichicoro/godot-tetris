@@ -28,6 +28,7 @@ func _process(delta):
 			gameview.table.do_finish_animation()
 			pausescreen = null
 			return
+			
 			var old_hiscore = Utils.load_hiscore()
 			if gameview.table.total_lines_cleared > old_hiscore:
 				Utils.save_hiscore(gameview.table.total_lines_cleared)

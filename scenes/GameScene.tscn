@@ -355,7 +355,9 @@ stream = ExtResource( 7 )
 volume_db = -12.0
 
 [node name="SFXPlayer" type="AudioStreamPlayer2D" parent="Sound Controller"]
+volume_db = 1.0
 [connection signal="newLevel" from="Game view/GridContainer" to="LevelPanel/LevelLabel" method="updateText"]
 [connection signal="newScore" from="Game view/GridContainer" to="ScorePanel/ScoreLabel" method="updateText"]
 [connection signal="newTableAction" from="Game view/GridContainer" to="Sound Controller" method="playSFX"]
+[connection signal="pauseToggled" from="Pause controller" to="Sound Controller" method="toggleMusicPaused"]
 [connection signal="pauseToggled" from="Pause controller" to="Game view/GridContainer" method="toggle_pause"]
