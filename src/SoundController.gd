@@ -6,10 +6,11 @@ export(String, DIR) var sfxDir = "res://assets/sounds/sfx"
 onready var sfx = $SFXPlayer
 onready var music = $MusicPlayer
 
+var sfxQueue = []
+
 var playableActions = \
 [
 	Table.TABLE_ACTION.HARD_DROP,
-	Table.TABLE_ACTION.SOFT_DROP,
 	Table.TABLE_ACTION.SINGLE_CLEAR,
 	Table.TABLE_ACTION.DOUBLE_CLEAR,
 	Table.TABLE_ACTION.TRIPLE_CLEAR,
@@ -21,23 +22,28 @@ func _ready():
 	yield(get_tree().create_timer(delay), "timeout")
 	music.play()
 	
-func playSFX(action) :
+func _process(delta):
 	
-	if playableActions.has(action) :
+	if not sfx.playing and len(sfxQueue) > 0:
 	
-		#TEMPORARY (in attesa di avere .wav apposta anche per queste azioni)
-		if action == Table.TABLE_ACTION.DOUBLE_CLEAR or \
-		action == Table.TABLE_ACTION.TRIPLE_CLEAR :
-			action = Table.TABLE_ACTION.SINGLE_CLEAR
-		#TEMPORARY (come sopra)
-		if action == Table.TABLE_ACTION.SOFT_DROP :
-			action = Table.TABLE_ACTION.HARD_DROP
-	
-		var actionStr = Table.tableActionToString(action)
-		var fileName = sfxDir + "/" + actionStr + ".wav"
-		
+		var action = sfxQueue.pop_front()
+		var fileName = getFileForAction(action)
 		sfx.stream = load(fileName)
 		sfx.play()
+	
+func playSFX(action) :
+	
+	if playableActions.has(action) and not sfxQueue.has(action) :
+		sfxQueue.append(action)
+
+func getFileForAction(action) :
+	
+	#TEMPORARY (in attesa di avere .wav apposta anche per queste azioni)
+	if action == Table.TABLE_ACTION.DOUBLE_CLEAR or action == Table.TABLE_ACTION.TRIPLE_CLEAR :
+		action = Table.TABLE_ACTION.SINGLE_CLEAR
+
+	var actionStr = Table.tableActionToString(action)
+	return sfxDir + "/" + actionStr + ".wav"
 
 func toggleMusicPaused(pause):
 	
