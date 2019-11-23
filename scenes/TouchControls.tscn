@@ -19,9 +19,8 @@ border_color = Color( 0.486275, 0.486275, 0.486275, 1 )
 [node name="TouchControls" type="Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0332
-margin_top = 256.0
 margin_right = -215.0
-margin_bottom = -145.998
+margin_bottom = -401.998
 rect_min_size = Vector2( 215, 127 )
 rect_scale = Vector2( 2, 2 )
 custom_styles/panel = SubResource( 1 )

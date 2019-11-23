@@ -92,6 +92,7 @@ func reset_grid():
 
 
 func gen_random_tetromino():
+	randomize()
 	var indexes = []
 	for i in len(self.tetrominos) :
 		if i != last_gened_tetromino :

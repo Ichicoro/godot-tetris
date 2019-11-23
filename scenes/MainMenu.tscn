@@ -48,6 +48,13 @@ const PlayDialog = preload(\"res://scenes/PlayDialog.tscn\")
 func _ready():
 	self.grab_focus()
 
+
+func _gui_input(event):
+	if event is InputEventScreenTouch:
+		if event.pressed:
+			_pressed()
+
+
 func _pressed():
 	FXPlayer.playjingle()
 	for child in get_tree().root.get_children():
@@ -67,6 +74,13 @@ const ExitDialog = preload(\"res://scenes/ExitDialog.tscn\")
 func _ready():
 	if OS.get_name() in [\"HTML5\", \"Android\", \"iOS\"]:
 		self.queue_free()
+
+
+func _gui_input(event):
+	if event is InputEventScreenTouch:
+		if event.pressed:
+			_pressed()
+
 
 func _pressed():
 	FXPlayer.playjingle()
