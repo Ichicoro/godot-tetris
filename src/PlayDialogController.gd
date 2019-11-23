@@ -15,7 +15,7 @@ enum LVL_EDIT \
 
 func _ready():
 	
-	grab_focus()
+	set_focus_mode(Control.FOCUS_ALL)
 	incrBtn.disabled = false
 	decrBtn.disabled = true
 	setLevelLabel()

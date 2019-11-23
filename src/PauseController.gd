@@ -29,12 +29,12 @@ func _process(delta):
 			pausescreen = null
 			return
 			
-			var old_hiscore = Utils.load_hiscore()
-			if gameview.table.total_lines_cleared > old_hiscore:
-				Utils.save_hiscore(gameview.table.total_lines_cleared)
-				Utils.show_notification("HI SCORE!", "New score: " + str(gameview.table.total_lines_cleared) + "\nPress ENTER to exit.")
-			else:
-				Utils.show_notification("GAME OVER", "Total score: " + str(gameview.table.total_lines_cleared) + "\nPress ENTER to exit.")
+#			var old_hiscore = Utils.load_hiscore()
+#			if gameview.table.total_lines_cleared > old_hiscore:
+#				Utils.save_hiscore(gameview.table.total_lines_cleared)
+#				Utils.show_notification("HI SCORE!", "New score: " + str(gameview.table.total_lines_cleared) + "\nPress ENTER to exit.")
+#			else:
+#				Utils.show_notification("GAME OVER", "Total score: " + str(gameview.table.total_lines_cleared) + "\nPress ENTER to exit.")
 	else:
 		if Input.is_action_just_pressed("menu"):
 			newPaused = true

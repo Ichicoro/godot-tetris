@@ -33,9 +33,9 @@ var tetrominos = []
 var difficulty_level: int
 
 # Called when the node enters the scene tree for the first time.
-func _init(difficulty: int = Settings.min_difficulty, grid_size: Vector2 = Vector2(10,16)):
+func _init(difficulty: int = Settings.min_difficulty, grd_sz: Vector2 = Vector2(10,16)):
 	self.difficulty_level = difficulty
-	self.grid_size = grid_size
+	self.grid_size = grd_sz
 	self.can_tick = true
 	setup_tetrominos()
 	self.ft = gen_random_tetromino()
@@ -186,12 +186,6 @@ func drop_piece():
 			var ypos = self.ft.topleft.row+y
 			if self.ft.shape[y][x] != 0:
 				self.grid[ypos][xpos] = self.ft.shape[y][x]
-	if false:
-		for row in self.grid:
-			print(row)
-		for row in self.ft.shape:
-			print(row)
-		print("-------------")
 		
 	emit_signal("newTableAction", TABLE_ACTION.SOFT_DROP)
 
@@ -249,7 +243,7 @@ func linesClearedToAction(lines):
 func update_level(lines_cleared):
 	if (lines_cleared == 0): return
 	cleared_counter += lines_cleared
-	if cleared_counter>=10 && difficulty_level<Settings.max_difficulty:
+	if cleared_counter>=10 and difficulty_level<Settings.max_difficulty:
 		difficulty_level += 1
 		cleared_counter = 0
 		emit_signal("newTableAction", TABLE_ACTION.LEVEL_UP)

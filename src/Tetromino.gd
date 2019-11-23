@@ -30,10 +30,10 @@ const textures = {
 }
 
 
-func _init(shape, topleft = {"row": 0, "col": 3}):
-	self.shape = shape.duplicate(true)
-	self.topleft = topleft.duplicate(true)
-	self.def_topleft = topleft.duplicate(true)
+func _init(shp, tl = {"row": 0, "col": 3}):
+	self.shape = shp.duplicate(true)
+	self.topleft = tl.duplicate(true)
+	self.def_topleft = tl.duplicate(true)
 	
 	
 func copy():

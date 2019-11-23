@@ -4,8 +4,6 @@ signal newTableAction(action)
 signal newScore(score)
 signal newLevel(level)
 
-onready var img = preload("res://assets/block.png")
-
 var table: Table = null
 var tick_timer = 0
 var tick_max = 0.5
@@ -23,6 +21,10 @@ func _ready():
 	tick_max = 1 - range_lerp(passedLevel, Settings.min_difficulty, Settings.max_difficulty, 0.5, 0.8)
 	table = Table.new(passedLevel)
 	table.connect("newTableAction", self, "handleTableAction")
+	
+	emit_signal("newScore", 0)
+	emit_signal("newLevel", Settings.min_difficulty)
+	
 	redraw()
 
 func toggle_pause(p):
@@ -35,6 +37,7 @@ func handleTableAction(action) :
 	handle_lines_cleared(action)
 	
 	if action == Table.TABLE_ACTION.LEVEL_UP :
+		emit_signal("newLevel", table.difficulty_level)
 		handle_level_up()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

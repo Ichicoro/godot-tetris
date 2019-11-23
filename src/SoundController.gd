@@ -9,6 +9,7 @@ onready var music = $MusicPlayer
 var playableActions = \
 [
 	Table.TABLE_ACTION.HARD_DROP,
+	Table.TABLE_ACTION.SOFT_DROP,
 	Table.TABLE_ACTION.SINGLE_CLEAR,
 	Table.TABLE_ACTION.DOUBLE_CLEAR,
 	Table.TABLE_ACTION.TRIPLE_CLEAR,
@@ -24,10 +25,13 @@ func playSFX(action) :
 	
 	if playableActions.has(action) :
 	
+		#TEMPORARY (in attesa di avere .wav apposta anche per queste azioni)
 		if action == Table.TABLE_ACTION.DOUBLE_CLEAR or \
 		action == Table.TABLE_ACTION.TRIPLE_CLEAR :
-			
 			action = Table.TABLE_ACTION.SINGLE_CLEAR
+		#TEMPORARY (come sopra)
+		if action == Table.TABLE_ACTION.SOFT_DROP :
+			action = Table.TABLE_ACTION.HARD_DROP
 	
 		var actionStr = Table.tableActionToString(action)
 		var fileName = sfxDir + "/" + actionStr + ".wav"
