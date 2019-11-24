@@ -22,19 +22,14 @@ func _ready():
 	yield(get_tree().create_timer(delay), "timeout")
 	music.play()
 	
-func _process(delta):
+func queueSFX(action) :
 	
-	if not sfx.playing and len(sfxQueue) > 0:
-	
-		var action = sfxQueue.pop_front()
-		var fileName = getFileForAction(action)
-		sfx.stream = load(fileName)
-		sfx.play()
-	
-func playSFX(action) :
-	
-	if playableActions.has(action) and not sfxQueue.has(action) :
-		sfxQueue.append(action)
+	if playableActions.has(action) :
+		
+		if not sfxQueue.has(action) :
+			sfxQueue.append(action)
+			
+		playNextSFX()
 
 func getFileForAction(action) :
 	
@@ -48,3 +43,12 @@ func getFileForAction(action) :
 func toggleMusicPaused(pause):
 	
 	music.stream_paused = pause
+
+func playNextSFX():
+	
+	if len(sfxQueue) > 0:
+		var action = sfxQueue.pop_front()
+		print(action)
+		var fileName = getFileForAction(action)
+		sfx.stream = load(fileName)
+		sfx.play()

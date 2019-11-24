@@ -84,12 +84,6 @@ func reset_grid():
 		self.grid.append([])
 		for x in range(grid_size.x):
 			self.grid[y].append(0)
-	return
-	self.grid[0][0] = 4
-	self.grid[0][1] = 4
-	self.grid[0][9] = 4
-	self.grid[1][9] = 4
-
 
 func gen_random_tetromino():
 	randomize()
