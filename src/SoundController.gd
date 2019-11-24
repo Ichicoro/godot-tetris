@@ -10,12 +10,7 @@ var sfxQueue = []
 
 var playableActions = \
 [
-	Table.TABLE_ACTION.HARD_DROP,
-	Table.TABLE_ACTION.SINGLE_CLEAR,
-	Table.TABLE_ACTION.DOUBLE_CLEAR,
-	Table.TABLE_ACTION.TRIPLE_CLEAR,
-	Table.TABLE_ACTION.TETRIS,
-	Table.TABLE_ACTION.LEVEL_UP
+	Table.TABLE_ACTION.HARD_DROP
 ]
 
 func _ready():
@@ -23,28 +18,29 @@ func _ready():
 	music.play()
 	
 func _process(delta):
+	if not sfx.playing and not sfxQueue.empty():
+		playNextSFX()
 	
-	if not sfx.playing and len(sfxQueue) > 0:
+func queueSFX(action) :
 	
-		var action = sfxQueue.pop_front()
-		var fileName = getFileForAction(action)
-		sfx.stream = load(fileName)
-		sfx.play()
-	
-func playSFX(action) :
-	
-	if playableActions.has(action) and not sfxQueue.has(action) :
-		sfxQueue.append(action)
+	if playableActions.has(action) :
+		
+		if not sfxQueue.has(action) :
+			sfxQueue.append(action)
+			
+		playNextSFX()
 
 func getFileForAction(action) :
 	
-	#TEMPORARY (in attesa di avere .wav apposta anche per queste azioni)
-	if action == Table.TABLE_ACTION.DOUBLE_CLEAR or action == Table.TABLE_ACTION.TRIPLE_CLEAR :
-		action = Table.TABLE_ACTION.SINGLE_CLEAR
-
 	var actionStr = Table.tableActionToString(action)
 	return sfxDir + "/" + actionStr + ".wav"
 
 func toggleMusicPaused(pause):
 	
 	music.stream_paused = pause
+
+func playNextSFX():
+	var action = sfxQueue.pop_front()
+	var fileName = getFileForAction(action)
+	sfx.stream = load(fileName)
+	sfx.play()
