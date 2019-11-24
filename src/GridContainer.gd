@@ -31,7 +31,7 @@ func toggle_pause(p):
 
 func handleTableAction(action) :
 	
-	if action in range(Table.TABLE_ACTION.SINGLE_CLEAR, Table.TABLE_ACTION.TETRIS) :
+	if action in range(Table.TABLE_ACTION.SINGLE_CLEAR, Table.TABLE_ACTION.TETRIS+1) :
 		handle_lines_cleared(action - Table.TABLE_ACTION.SINGLE_CLEAR + 1)
 	
 	if action == Table.TABLE_ACTION.LEVEL_UP :
@@ -102,5 +102,5 @@ func handle_lines_cleared(amount = 1):
 func handle_level_up():
 	
 	emit_signal("newLevel", table.difficulty_level)
-	yield(get_tree().create_timer(1.4), "timeout")
+	yield(get_tree().create_timer(1.2), "timeout")
 	get_tree().root.add_child(Alert.show_alert(Table.TABLE_ACTION.LEVEL_UP))
