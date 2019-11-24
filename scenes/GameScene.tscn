@@ -372,4 +372,3 @@ volume_db = 3.0
 [connection signal="newScore" from="Game view/GridContainer" to="ScorePanel/ScoreLabel" method="updateText"]
 [connection signal="pauseToggled" from="Pause controller" to="Sound Controller" method="toggleMusicPaused"]
 [connection signal="pauseToggled" from="Pause controller" to="Game view/GridContainer" method="toggle_pause"]
-[connection signal="finished" from="Sound Controller/SFXPlayer" to="Sound Controller" method="playNextSFX"]

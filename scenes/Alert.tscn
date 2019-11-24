@@ -6,14 +6,50 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
 
+const texts = [\"SINGLE!\", \"DOUBLE!\", \"TRIPLE!\", \"TETRIS!\", \"LEVEL UP!\"]
+
+export(String, DIR) var sfxDir = \"res://assets/sounds/sfx\"
+
+var animFinished = false
+
+var sfx = null
+
 func _ready():
 	$AnimationPlayer.play(\"Animation\", -1, 1.6)
 
-func set_alert_text(text):
-	$Panel/Label.text = text
+#func set_alert_text(text):
+#	$Panel/Label.text = text
+
+func set_action(amount):
+	
+	sfx = $AudioStreamPlayer
+	
+	var action = -1
+	
+	if amount in [1,2,3,4] :
+		action = amount + Table.TABLE_ACTION.SINGLE_CLEAR - 1
+		$Panel/Label.text = texts[amount-1]
+	else :
+		action = Table.TABLE_ACTION.LEVEL_UP
+		$Panel/Label.text = texts[4]
+	
+	#TEMPORARY
+	if action in [Table.TABLE_ACTION.DOUBLE_CLEAR, Table.TABLE_ACTION.TRIPLE_CLEAR] :
+		action = Table.TABLE_ACTION.SINGLE_CLEAR
+	
+	var actionStr = Table.tableActionToString(action)
+	var fileName = sfxDir + \"/\" + actionStr + \".wav\"
+	
+	sfx.stream = load(fileName)
+	sfx.play()
+
+func _process(delta):
+	
+	if animFinished and not sfx.playing :
+		queue_free()
 
 func _on_AnimationPlayer_animation_finished(anim_name):
-	self.queue_free()
+	animFinished = true#self.queue_free()
 "
 
 [sub_resource type="StyleBoxFlat" id=2]
@@ -61,4 +97,6 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Animation = ExtResource( 2 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

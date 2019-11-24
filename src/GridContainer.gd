@@ -97,11 +97,10 @@ func connectTableSignal(sourceSignal : String, receiver : Node, receiverSignal :
 func handle_lines_cleared(amount = 1):
 	
 	emit_signal("newScore", table.total_lines_cleared)
-	var text = ["SINGLE!", "DOUBLE!", "TRIPLE!", "TETRIS!"][amount-1]
-	get_tree().root.add_child(Alert.show_alert(text))
+	get_tree().root.add_child(Alert.show_alert(amount))
 
 func handle_level_up():
 	
 	emit_signal("newLevel", table.difficulty_level)
 	yield(get_tree().create_timer(1.4), "timeout")
-	get_tree().root.add_child(Alert.show_alert("Level up!"))
+	get_tree().root.add_child(Alert.show_alert(Table.TABLE_ACTION.LEVEL_UP))
