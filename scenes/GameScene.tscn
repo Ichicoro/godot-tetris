@@ -15,6 +15,8 @@ script/source = "extends Control
 onready var grid = $\"Game view/GridContainer\"
 onready var sound = $\"Sound Controller\"
 
+var score = 0
+
 func _ready():
 	print(get_viewport().get_visible_rect().size)
 	var window_size: Vector2 = get_viewport().get_visible_rect().size
