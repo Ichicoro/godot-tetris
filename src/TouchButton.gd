@@ -18,7 +18,6 @@ func create_action_event(action_name: String, pressed: bool):
 	return iea
 
 func _gui_input(event):
-#	if event is InputEventMouseButton:
-	if event is InputEventScreenTouch:
+	if event is InputEventScreenTouch:			# This was an InputEventMouseButton
 		Input.parse_input_event(create_action_event(event_map[self.name], event.pressed))
 		self.modulate = Color(1,1,1,0.7) if event.pressed else Color(1,1,1,1)

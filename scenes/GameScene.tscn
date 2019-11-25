@@ -9,37 +9,45 @@
 [ext_resource path="res://assets/sounds/main_song.ogg" type="AudioStream" id=7]
 [ext_resource path="res://scenes/TouchControls.tscn" type="PackedScene" id=8]
 
-[sub_resource type="GDScript" id=1]
+[sub_resource type="GDScript" id=12]
 script/source = "extends Control
 
-
 func _ready():
-	# This fixes touch buttons scaling on screens with a screen ratio  taller than 16:9
+	# This fixes touch buttons scaling on screens with a screen ratio taller than 16:9
+	get_tree().get_root().connect(\"size_changed\", self, \"update_touch_controls_size\")
+	update_touch_controls_size()
+	\"\"\"
+	if false and window_size.y/window_size.x > 1.777777778:
+		$TouchControls.anchor_top = 0#.668
+		$TouchControls.anchor_bottom = 0#1
+		$TouchControls.margin_bottom = window_size.y-512+127
+	\"\"\"
+
+
+func update_touch_controls_size():
 	var window_size: Vector2 = get_viewport().get_visible_rect().size
-	if window_size.y/window_size.x > 1.777777778:
-		$TouchControls.anchor_bottom = 1
-		$TouchControls.anchor_top = 0.668
+	$TouchControls.margin_bottom = window_size.y/2#/0.6777771#512
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
 "
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=1]
 script/source = "extends ColorRect
 
 func _process(delta):
 	material.set_shader_param(\"global_transform\", get_global_transform())
 "
 
-[sub_resource type="ShaderMaterial" id=3]
+[sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 2 )
 shader_param/blurSize = 20
 
-[sub_resource type="StyleBoxFlat" id=4]
+[sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 1, 1, 1, 1 )
 
-[sub_resource type="GDScript" id=5]
+[sub_resource type="GDScript" id=4]
 script/source = "extends Label
 
 func updateText(newScore) :
@@ -47,7 +55,7 @@ func updateText(newScore) :
 	self.text = str(newScore)
 "
 
-[sub_resource type="GDScript" id=6]
+[sub_resource type="GDScript" id=5]
 script/source = "extends Label
 
 func updateText(newLevel) :
@@ -55,22 +63,22 @@ func updateText(newLevel) :
 	self.text = str(newLevel)
 "
 
-[sub_resource type="StyleBoxFlat" id=7]
+[sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 1, 1, 1, 1 )
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=7]
 size = 8
 font_data = ExtResource( 4 )
 
-[sub_resource type="StyleBoxFlat" id=9]
+[sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 1, 1, 1, 1 )
 
-[sub_resource type="StyleBoxEmpty" id=10]
+[sub_resource type="StyleBoxEmpty" id=9]
 
-[sub_resource type="DynamicFont" id=11]
+[sub_resource type="DynamicFont" id=10]
 font_data = ExtResource( 4 )
 
-[sub_resource type="DynamicFont" id=12]
+[sub_resource type="DynamicFont" id=11]
 size = 8
 extra_spacing_top = -2
 font_data = ExtResource( 4 )
@@ -82,7 +90,7 @@ anchor_bottom = 1.496
 margin_right = -215.0
 margin_bottom = -382.952
 rect_scale = Vector2( 2, 2 )
-script = SubResource( 1 )
+script = SubResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -91,7 +99,7 @@ __meta__ = {
 material = ExtResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = SubResource( 2 )
+script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -110,7 +118,7 @@ __meta__ = {
 [node name="Blur View" type="ColorRect" parent="Game view"]
 pause_mode = 1
 visible = false
-material = SubResource( 3 )
+material = SubResource( 2 )
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -149,7 +157,7 @@ anchor_right = 1.0
 margin_left = -55.0
 margin_top = 73.0
 margin_bottom = 98.0
-custom_styles/panel = SubResource( 4 )
+custom_styles/panel = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -174,7 +182,7 @@ margin_bottom = 38.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "0"
 align = 2
-script = SubResource( 5 )
+script = SubResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -185,7 +193,7 @@ anchor_right = 1.0
 margin_left = -55.0
 margin_top = 150.0
 margin_bottom = 175.0
-custom_styles/panel = SubResource( 4 )
+custom_styles/panel = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -221,7 +229,7 @@ anchor_right = 1.0
 margin_left = -55.0
 margin_top = 111.0
 margin_bottom = 136.0
-custom_styles/panel = SubResource( 4 )
+custom_styles/panel = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -246,7 +254,7 @@ margin_bottom = 38.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "0"
 align = 2
-script = SubResource( 6 )
+script = SubResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -265,7 +273,7 @@ margin_left = 173.0
 margin_top = 16.0
 margin_right = 202.0
 margin_bottom = 45.0
-custom_styles/panel = SubResource( 7 )
+custom_styles/panel = SubResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -275,7 +283,7 @@ margin_left = -4.5
 margin_top = 10.5
 margin_right = 35.5
 margin_bottom = 34.5
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 7 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "OwO"
 align = 1
@@ -293,8 +301,8 @@ rect_scale = Vector2( 1, 1 )
 [node name="Pause screen" type="Control" parent="."]
 visible = false
 anchor_right = 1.0
-anchor_bottom = 0.718
-margin_bottom = 1.10999
+anchor_bottom = 0.668
+margin_bottom = 0.155991
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -317,7 +325,7 @@ anchor_bottom = 0.5
 margin_top = -34.4124
 margin_right = -0.0749969
 margin_bottom = 34.5876
-custom_styles/panel = SubResource( 9 )
+custom_styles/panel = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -328,8 +336,8 @@ anchor_right = 1.0
 anchor_bottom = 0.5
 margin_top = -32.452
 margin_bottom = 10.548
-custom_styles/normal = SubResource( 10 )
-custom_fonts/font = SubResource( 11 )
+custom_styles/normal = SubResource( 9 )
+custom_fonts/font = SubResource( 10 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "PAUSED"
 align = 1
@@ -345,8 +353,8 @@ anchor_bottom = 0.5
 margin_top = 2.548
 margin_right = -0.0749969
 margin_bottom = 29.548
-custom_styles/normal = SubResource( 10 )
-custom_fonts/font = SubResource( 12 )
+custom_styles/normal = SubResource( 9 )
+custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Press Q to quit to
 the menu"
@@ -371,5 +379,5 @@ volume_db = 3.0
 [connection signal="newLevel" from="Game view/GridContainer" to="LevelPanel/LevelLabel" method="updateText"]
 [connection signal="newScore" from="Game view/GridContainer" to="ScorePanel/ScoreLabel" method="updateText"]
 [connection signal="newTableAction" from="Game view/GridContainer" to="Sound Controller" method="playSFX"]
-[connection signal="pauseToggled" from="Pause controller" to="Sound Controller" method="toggleMusicPaused"]
 [connection signal="pauseToggled" from="Pause controller" to="Game view/GridContainer" method="toggle_pause"]
+[connection signal="pauseToggled" from="Pause controller" to="Sound Controller" method="toggleMusicPaused"]
