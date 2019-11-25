@@ -45,8 +45,6 @@ Alert="*res://src/Alert.gd"
 
 window/size/width=430
 window/size/height=512
-window/size/test_width=430
-window/size/test_height=818
 window/handheld/orientation="portrait"
 window/stretch/mode="viewport"
 window/stretch/aspect="keep_width"
@@ -148,4 +146,5 @@ quit_confirm={
 [rendering]
 
 quality/intended_usage/framebuffer_allocation=0
+quality/intended_usage/framebuffer_allocation.mobile=0
 quality/name="Tetris "

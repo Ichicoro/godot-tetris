@@ -4,8 +4,8 @@ extends Node
 func _ready():
 	print(OS.min_window_size)
 	OS.min_window_size = Vector2(430,512)
-	if true or len(Input.get_connected_joypads()) > 0:
-		OS.screen_orientation = OS.SCREEN_ORIENTATION_SENSOR
+	if not OS.has_touchscreen_ui_hint():
+		get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_VIEWPORT, SceneTree.STRETCH_ASPECT_KEEP, Vector2(430,512))
 
 
 func show_notification(title: String, subtitle: String = ""):
