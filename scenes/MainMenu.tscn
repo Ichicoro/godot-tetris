@@ -77,7 +77,7 @@ func _pressed():
 	get_tree().root.add_child(ExitDialog.instance())
 "
 
-[sub_resource type="DynamicFont" id=11]
+[sub_resource type="DynamicFont" id=5]
 size = 64
 font_data = ExtResource( 1 )
 
@@ -191,7 +191,7 @@ anchor_bottom = 0.211
 margin_top = -1.0
 margin_right = -1.0
 margin_bottom = 44.968
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 5 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 0.396078 )
 custom_constants/shadow_offset_x = 7
 custom_constants/shadow_offset_y = 5
