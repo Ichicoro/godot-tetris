@@ -1,6 +1,7 @@
 [gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/fonts/PressStart2P.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://scenes/Button.tscn" type="PackedScene" id=2]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -36,24 +37,16 @@ shader_param/color2 = Plane( 0.2, 0.1, 0.1, 1 )
 shader_param/pixel_size = 16
 shader_param/global_transform = null
 
-[sub_resource type="DynamicFont" id=3]
-size = 24
-font_data = ExtResource( 1 )
-
-[sub_resource type="GDScript" id=4]
+[sub_resource type="GDScript" id=12]
 script/source = "extends Button
 
 const PlayDialog = preload(\"res://scenes/PlayDialog.tscn\")
 
 func _ready():
-	self.grab_focus()
-
-
-func _gui_input(event):
-	if event is InputEventScreenTouch:
-		if event.pressed:
-			_pressed()
-
+	if not OS.get_name() in [\"HTML5\", \"Android\", \"iOS\"]:
+		self.grab_focus()
+	else:
+		self.focus_mode = FOCUS_NONE
 
 func _pressed():
 	FXPlayer.playjingle()
@@ -66,7 +59,7 @@ func _pressed():
 	pass
 "
 
-[sub_resource type="GDScript" id=5]
+[sub_resource type="GDScript" id=13]
 script/source = "extends Button
 
 const ExitDialog = preload(\"res://scenes/ExitDialog.tscn\")
@@ -74,13 +67,6 @@ const ExitDialog = preload(\"res://scenes/ExitDialog.tscn\")
 func _ready():
 	if OS.get_name() in [\"HTML5\", \"Android\", \"iOS\"]:
 		self.queue_free()
-
-
-func _gui_input(event):
-	if event is InputEventScreenTouch:
-		if event.pressed:
-			_pressed()
-
 
 func _pressed():
 	FXPlayer.playjingle()
@@ -107,7 +93,8 @@ script/source = "extends Label
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	self.text = \"v\" + str(ProjectSettings.get_setting(\"application/config/version\"))
+	var version_number = str(ProjectSettings.get_setting(\"application/config/version\"))
+	self.text = \"v\" + version_number + (\"\" if \".\" in version_number else \".0\")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -173,40 +160,32 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PlayButton" type="Button" parent="."]
+[node name="PlayButton" parent="." instance=ExtResource( 2 )]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -128.0
-margin_top = -56.0
-margin_right = 128.0
-margin_bottom = 25.0
-focus_next = NodePath("../SettingsButton")
-custom_fonts/font = SubResource( 3 )
-text = "PLAY"
-flat = true
-script = SubResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+margin_left = -115.0
+margin_top = -76.0
+margin_right = 115.0
+margin_bottom = -12.0
+focus_mode = 2
+enabled_focus_mode = 2
+script = SubResource( 12 )
 
-[node name="QuitButton" type="Button" parent="."]
+[node name="QuitButton" parent="." instance=ExtResource( 2 )]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -128.0
-margin_top = 56.8112
-margin_right = 128.0
-margin_bottom = 137.811
-custom_fonts/font = SubResource( 3 )
+margin_left = -115.0
+margin_top = 45.0
+margin_right = 115.0
+margin_bottom = 109.0
+focus_mode = 2
+enabled_focus_mode = 2
 text = "QUIT"
-flat = true
-script = SubResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+script = SubResource( 13 )
 
 [node name="Label" type="Label" parent="."]
 anchor_right = 1.0

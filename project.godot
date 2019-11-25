@@ -31,7 +31,7 @@ run/main_scene="res://scenes/MainMenu.tscn"
 boot_splash/image="res://tetrissplash.png"
 boot_splash/bg_color=Color( 0.309804, 0.219608, 0.2, 1 )
 config/icon="res://tetrislogo.png"
-config/version=1.4
+config/version=2.0
 
 [autoload]
 
@@ -45,7 +45,8 @@ Alert="*res://src/Alert.gd"
 
 window/size/width=430
 window/size/height=512
-window/size/resizable=false
+window/size/test_width=430
+window/size/test_height=818
 window/handheld/orientation="portrait"
 window/stretch/mode="viewport"
 window/stretch/aspect="keep_width"

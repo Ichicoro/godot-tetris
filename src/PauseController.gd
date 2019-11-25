@@ -13,13 +13,10 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	
 	var newPaused = isPaused
-	
 	if !gameview.get("table").can_tick or pausescreen == null:
 		return
 	if isPaused:
-		
 		if Input.is_action_just_pressed("menu"):
 			newPaused = false
 			pausescreen.hide()
@@ -28,7 +25,6 @@ func _process(delta):
 			gameview.table.do_finish_animation()
 			pausescreen = null
 			return
-			
 #			var old_hiscore = Utils.load_hiscore()
 #			if gameview.table.total_lines_cleared > old_hiscore:
 #				Utils.save_hiscore(gameview.table.total_lines_cleared)
@@ -39,7 +35,10 @@ func _process(delta):
 		if Input.is_action_just_pressed("menu"):
 			newPaused = true
 			pausescreen.show()
-
+			if OS.has_touchscreen_ui_hint():
+				OS.alert("Ehhh", "You can't really pause here lmao")
+				pausescreen.hide()
+				newPaused = false
 	if newPaused != isPaused :
 		isPaused = newPaused
 		emit_signal("pauseToggled", newPaused)
