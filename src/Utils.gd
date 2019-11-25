@@ -1,6 +1,13 @@
 extends Node
 
 
+func _ready():
+	print(OS.min_window_size)
+	OS.min_window_size = Vector2(430,512)
+	if true or len(Input.get_connected_joypads()) > 0:
+		OS.screen_orientation = OS.SCREEN_ORIENTATION_SENSOR
+
+
 func show_notification(title: String, subtitle: String = ""):
 	var notification = load("res://scenes/Notification.tscn").instance()
 	notification.get_node("Title").text = title

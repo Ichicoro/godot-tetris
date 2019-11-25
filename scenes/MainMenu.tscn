@@ -37,7 +37,7 @@ shader_param/color2 = Plane( 0.2, 0.1, 0.1, 1 )
 shader_param/pixel_size = 16
 shader_param/global_transform = null
 
-[sub_resource type="GDScript" id=12]
+[sub_resource type="GDScript" id=3]
 script/source = "extends Button
 
 const PlayDialog = preload(\"res://scenes/PlayDialog.tscn\")
@@ -59,7 +59,7 @@ func _pressed():
 	pass
 "
 
-[sub_resource type="GDScript" id=13]
+[sub_resource type="GDScript" id=4]
 script/source = "extends Button
 
 const ExitDialog = preload(\"res://scenes/ExitDialog.tscn\")
@@ -77,14 +77,14 @@ func _pressed():
 	get_tree().root.add_child(ExitDialog.instance())
 "
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=5]
 size = 64
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=6]
 font_data = ExtResource( 1 )
 
-[sub_resource type="GDScript" id=8]
+[sub_resource type="GDScript" id=7]
 script/source = "extends Label
 
 # Declare member variables here. Examples:
@@ -101,7 +101,7 @@ func _ready():
 #	pass
 "
 
-[sub_resource type="GDScript" id=9]
+[sub_resource type="GDScript" id=8]
 script/source = "extends Label
 
 # Declare member variables here. Examples:
@@ -120,11 +120,11 @@ func _ready():
 #	pass
 "
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=9]
 size = 8
 font_data = ExtResource( 1 )
 
-[sub_resource type="GDScript" id=11]
+[sub_resource type="GDScript" id=10]
 script/source = "extends LinkButton
 
 # Declare member variables here. Examples:
@@ -171,7 +171,7 @@ margin_right = 115.0
 margin_bottom = -12.0
 focus_mode = 2
 enabled_focus_mode = 2
-script = SubResource( 12 )
+script = SubResource( 3 )
 
 [node name="QuitButton" parent="." instance=ExtResource( 2 )]
 anchor_left = 0.5
@@ -185,14 +185,14 @@ margin_bottom = 109.0
 focus_mode = 2
 enabled_focus_mode = 2
 text = "QUIT"
-script = SubResource( 13 )
+script = SubResource( 4 )
 
 [node name="Label" type="Label" parent="."]
 anchor_right = 1.0
 anchor_bottom = 0.211
 margin_right = 3.0
 margin_bottom = 45.968
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 5 )
 text = "TETRIS"
 align = 1
 valign = 1
@@ -208,11 +208,11 @@ anchor_bottom = 1.0
 margin_left = -100.0
 margin_top = -42.0
 margin_right = -16.0
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 6 )
 text = "v1.0"
 align = 2
 valign = 1
-script = SubResource( 8 )
+script = SubResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -223,10 +223,10 @@ anchor_bottom = 1.0
 margin_left = 20.0
 margin_top = -42.0
 margin_right = 180.0
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 6 )
 text = "HISCORE: 0"
 valign = 1
-script = SubResource( 9 )
+script = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -241,11 +241,11 @@ margin_top = -45.0
 margin_right = -18.0
 margin_bottom = -37.0
 grow_horizontal = 0
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 1, 1, 1, 0.447059 )
 text = "marte.dev"
 underline = 1
-script = SubResource( 11 )
+script = SubResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
