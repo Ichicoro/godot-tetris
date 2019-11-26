@@ -196,12 +196,12 @@ func hold_tetromino():
 	if held_tetromino == null:
 		self.ft = self.nextft.copy()
 		self.held_tetromino = current_tetromino
+		self.held_tetromino.reset_topleft()
 		self.nextft = gen_random_tetromino()
 	else:
 		self.ft = self.held_tetromino.copy()
 		self.held_tetromino = current_tetromino
-	self.ft.reset_topleft()
-	
+	#self.ft.reset_topleft()
 	emit_signal("newTableAction", TABLE_ACTION.HOLD)
 
 func check_lines():
@@ -226,13 +226,11 @@ func check_lines():
 	return lines_cleared
 
 func linesClearedToAction(lines):
-	
-	match lines :
-		
-		1 : return TABLE_ACTION.SINGLE_CLEAR
-		2 : return TABLE_ACTION.DOUBLE_CLEAR
-		3 : return TABLE_ACTION.TRIPLE_CLEAR
-		4 : return TABLE_ACTION.TETRIS
+	match lines:
+		1: return TABLE_ACTION.SINGLE_CLEAR
+		2: return TABLE_ACTION.DOUBLE_CLEAR
+		3: return TABLE_ACTION.TRIPLE_CLEAR
+		4: return TABLE_ACTION.TETRIS
 
 func update_level(lines_cleared):
 	if (lines_cleared == 0): return
@@ -264,9 +262,7 @@ func tick():
 	return check_lines()
 
 static func tableActionToString(action) :
-	
-	match action :
-		
+	match action:
 		TABLE_ACTION.HARD_DROP : return "hardDrop"
 		TABLE_ACTION.HOLD : return "hold"
 		TABLE_ACTION.SOFT_DROP : return "softDrop"

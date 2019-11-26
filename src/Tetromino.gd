@@ -33,7 +33,7 @@ const textures = {
 func _init(shp, tl = {"row": 0, "col": 3}):
 	self.shape = shp.duplicate(true)
 	self.topleft = tl.duplicate(true)
-	self.def_topleft = tl.duplicate(true)
+	self.def_topleft = topleft.duplicate(true)
 	
 	
 func copy():
@@ -82,13 +82,11 @@ func moved_down():
 	newft.topleft.row += 1
 	return newft
 
-func containsPoint(x : int, y : int) :
-	
+func containsPoint(x: int, y: int):
 	return (y in range(topleft.row, topleft.row+len(shape)) and x in range(topleft.col, topleft.col+len(shape[0])))
 
-func valueAtPoint(x : int, y : int) :
-	
-	if containsPoint(x, y) :
+func valueAtPoint(x: int, y: int):
+	if containsPoint(x, y):
 		return shape[y - topleft.row][x - topleft.col]
 	else :
 		return -1
@@ -102,4 +100,5 @@ static func get_texture_from_value(value):
 
 
 func reset_topleft():
-	self.topleft = self.def_topleft.duplicate(true)
+	var new_topleft = self.def_topleft.duplicate(true)
+	self.topleft = new_topleft
