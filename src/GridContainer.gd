@@ -23,7 +23,6 @@ func _ready():
 
 func toggle_pause(p):
 	paused = p
-	print_debug(paused)
 
 func handleTableAction(action) :
 	if action in range(Table.TABLE_ACTION.SINGLE_CLEAR, Table.TABLE_ACTION.TETRIS+1) :

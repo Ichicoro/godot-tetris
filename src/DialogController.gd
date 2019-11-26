@@ -30,10 +30,12 @@ func setup(msg, btnAName, kA, actA, btnBName = "Cancel", kB = "Esc", actB = "men
 	$VBoxContainer/HBoxContainer/VBoxContainer2/KeyB.text = subFormatStr % kB
 	
 func _input(event):
+	if not event is InputEventKey: return
+	print_debug(get_tree().is_input_handled())
 	if Input.is_action_just_pressed(actionA) :
 		emit_signal("buttonPressed", BUTTONS.BTN_A)
 	elif Input.is_action_just_pressed(actionB) :
-		emit_signal("buttonPressed", BUTTONS.BTN_A)
+		emit_signal("buttonPressed", BUTTONS.BTN_B)
 
 func _on_BtnA_pressed():
 	emit_signal("buttonPressed", BUTTONS.BTN_A)

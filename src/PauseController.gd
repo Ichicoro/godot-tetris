@@ -14,13 +14,9 @@ func _input(event):
 	if not gameview.get("table").can_tick or pausescreen == null:
 		return
 	if Input.is_action_just_pressed("menu"):
-		#if not isPaused:
+		if not isPaused:
+			get_tree().set_input_as_handled()
 			showPauseScreen()
-
-"""
-func canPause():
-	return not isPaused and Input.is_action_just_pressed("menu")
-"""
 
 func setPaused(newVal) :
 	isPaused = newVal
@@ -30,8 +26,7 @@ func hidePauseScreen(togglePause = true) :
 	if togglePause : setPaused(false)
 	pausescreen.hide()
 
-func showPauseScreen() :
-	print_debug(pausescreen)
+func showPauseScreen():
 	pausescreen.show()
 	setPaused(true)
 
