@@ -6,39 +6,37 @@ var gameview: Node = null
 var pausescreen: Node = null
 var isPaused = false
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	gameview = get_parent().get_node("Game view/GridContainer")
 	pausescreen = get_parent().get_node("Pause screen")
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	var newPaused = isPaused
-	if !gameview.get("table").can_tick or pausescreen == null:
-		return
-	if isPaused:
-		if Input.is_action_just_pressed("menu"):
-			newPaused = false
-			pausescreen.hide()
-		if Input.is_key_pressed(KEY_Q):
-			pausescreen.hide()
-			gameview.table.do_finish_animation()
-			pausescreen = null
-			return
-#			var old_hiscore = Utils.load_hiscore()
-#			if gameview.table.total_lines_cleared > old_hiscore:
-#				Utils.save_hiscore(gameview.table.total_lines_cleared)
-#				Utils.show_notification("HI SCORE!", "New score: " + str(gameview.table.total_lines_cleared) + "\nPress ENTER to exit.")
-#			else:
-#				Utils.show_notification("GAME OVER", "Total score: " + str(gameview.table.total_lines_cleared) + "\nPress ENTER to exit.")
+func _input(event):
+	if canPause():
+			showPauseScreen()
+			
+func canPause() :
+	return gameview.get("table").can_tick and pausescreen != null and not isPaused and Input.is_action_just_pressed("menu")
+	
+func setPaused(newVal) :
+	isPaused = newVal
+	emit_signal("pauseToggled", isPaused)
+
+func hidePauseScreen(togglePause = true) :
+	if togglePause : setPaused(false)
+	pausescreen.hide()
+
+func showPauseScreen() :
+	if OS.has_touchscreen_ui_hint():
+		OS.alert("Ehhh", "You can't really pause here lmao")
+		pausescreen.hide()
 	else:
-		if Input.is_action_just_pressed("menu"):
-			newPaused = true
-			pausescreen.show()
-			if OS.has_touchscreen_ui_hint():
-				OS.alert("Ehhh", "You can't really pause here lmao")
-				pausescreen.hide()
-				newPaused = false
-	if newPaused != isPaused :
-		isPaused = newPaused
-		emit_signal("pauseToggled", newPaused)
+		pausescreen.show()
+		setPaused(true)
+
+func _on_Dialog_buttonPressed(btn):
+	
+	hidePauseScreen((btn == DialogController.BUTTONS.BTN_A))
+	
+	if btn == DialogController.BUTTONS.BTN_B : 
+		gameview.table.do_finish_animation()
+		pausescreen = null
