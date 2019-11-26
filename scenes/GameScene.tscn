@@ -18,21 +18,10 @@ func _ready():
 	get_tree().get_root().connect(\"size_changed\", self, \"update_touch_controls_size\")
 	update_touch_controls_size()
 	$\"Pause screen\".hide()
-	\"\"\"
-	if false and window_size.y/window_size.x > 1.777777778:
-		$TouchControls.anchor_top = 0#.668
-		$TouchControls.anchor_bottom = 0#1
-		$TouchControls.margin_bottom = window_size.y-512+127
-	\"\"\"
-
 
 func update_touch_controls_size():
 	var window_size: Vector2 = get_viewport().get_visible_rect().size
 	$TouchControls.margin_bottom = window_size.y/2#/0.6777771#512
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
 "
 
 [sub_resource type="GDScript" id=2]
