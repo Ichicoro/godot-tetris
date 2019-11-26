@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://shaders/grid.tres" type="Material" id=1]
 [ext_resource path="res://shaders/Blur.shader" type="Shader" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://src/SoundController.gd" type="Script" id=6]
 [ext_resource path="res://assets/sounds/main_song.ogg" type="AudioStream" id=7]
 [ext_resource path="res://scenes/TouchControls.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/Dialog.tscn" type="PackedScene" id=9]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
@@ -70,18 +71,14 @@ bg_color = Color( 1, 1, 1, 1 )
 size = 8
 font_data = ExtResource( 4 )
 
-[sub_resource type="StyleBoxFlat" id=9]
-bg_color = Color( 1, 1, 1, 1 )
+[sub_resource type="GDScript" id=9]
+script/source = "extends Control
 
-[sub_resource type="StyleBoxEmpty" id=10]
+onready var dialog = $Dialog
 
-[sub_resource type="DynamicFont" id=11]
-font_data = ExtResource( 4 )
-
-[sub_resource type="DynamicFont" id=12]
-size = 8
-extra_spacing_top = -2
-font_data = ExtResource( 4 )
+func _ready():
+	dialog.setup(\"Paused\", \"Unpause\", \"Esc\", \"menu\", \"Exit\", \"Q\", \"quit_confirmed\")
+"
 
 [node name="Control" type="Control"]
 pause_mode = 2
@@ -299,70 +296,28 @@ margin_bottom = 383.0
 rect_scale = Vector2( 1, 1 )
 
 [node name="Pause screen" type="Control" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 0.668
 margin_bottom = 0.155991
+script = SubResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Filter" type="ColorRect" parent="Pause screen"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = -107.0
-margin_bottom = -128.0
-rect_scale = Vector2( 2, 2 )
+margin_right = 215.0
+margin_bottom = 256.0
 color = Color( 0, 0, 0, 0.615686 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel" type="Panel" parent="Pause screen"]
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_top = -34.4124
-margin_right = -0.0749969
-margin_bottom = 34.5876
-custom_styles/panel = SubResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Pause screen"]
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_top = -32.452
-margin_bottom = 10.548
-custom_styles/normal = SubResource( 10 )
-custom_fonts/font = SubResource( 11 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "PAUSED"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label2" type="Label" parent="Pause screen"]
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_top = 2.548
-margin_right = -0.0749969
-margin_bottom = 29.548
-custom_styles/normal = SubResource( 10 )
-custom_fonts/font = SubResource( 12 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Press Q to quit to
-the menu"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Dialog" parent="Pause screen" instance=ExtResource( 9 )]
+margin_left = -107.5
+margin_top = -31.0
+margin_right = 321.5
+margin_bottom = 93.0
+rect_scale = Vector2( 0.5, 0.5 )
 
 [node name="Pause controller" type="Node" parent="."]
 script = ExtResource( 5 )
@@ -378,5 +333,6 @@ volume_db = -12.0
 volume_db = 3.0
 [connection signal="newLevel" from="Game view/GridContainer" to="LevelPanel/LevelLabel" method="updateText"]
 [connection signal="newScore" from="Game view/GridContainer" to="ScorePanel/ScoreLabel" method="updateText"]
+[connection signal="buttonPressed" from="Pause screen/Dialog" to="Pause controller" method="_on_Dialog_buttonPressed"]
 [connection signal="pauseToggled" from="Pause controller" to="Sound Controller" method="toggleMusicPaused"]
 [connection signal="pauseToggled" from="Pause controller" to="Game view/GridContainer" method="toggle_pause"]
