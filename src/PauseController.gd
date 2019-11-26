@@ -11,11 +11,16 @@ func _ready():
 	pausescreen = get_parent().get_node("Pause screen")
 
 func _input(event):
-	if canPause():
+	
+	if not gameview.get("table").can_tick or pausescreen == null:
+		return
+	
+	if Input.is_action_just_pressed("menu"):
+		if not isPaused :
 			showPauseScreen()
 			
 func canPause() :
-	return gameview.get("table").can_tick and pausescreen != null and not isPaused and Input.is_action_just_pressed("menu")
+	return not isPaused and Input.is_action_just_pressed("menu")
 	
 func setPaused(newVal) :
 	isPaused = newVal
@@ -26,12 +31,9 @@ func hidePauseScreen(togglePause = true) :
 	pausescreen.hide()
 
 func showPauseScreen() :
-	if OS.has_touchscreen_ui_hint():
-		OS.alert("Ehhh", "You can't really pause here lmao")
-		pausescreen.hide()
-	else:
-		pausescreen.show()
-		setPaused(true)
+	pausescreen.show()
+	print("kljnbjklòmnjlòkjbnjklòkjbhv")
+	setPaused(true)
 
 func _on_Dialog_buttonPressed(btn):
 	

@@ -17,7 +17,7 @@ func _ready():
 	# This fixes touch buttons scaling on screens with a screen ratio taller than 16:9
 	get_tree().get_root().connect(\"size_changed\", self, \"update_touch_controls_size\")
 	update_touch_controls_size()
-	$\"Pause screen\".hide()
+	#$\"Pause screen\".hide()
 	\"\"\"
 	if false and window_size.y/window_size.x > 1.777777778:
 		$TouchControls.anchor_top = 0#.668
@@ -314,11 +314,11 @@ __meta__ = {
 }
 
 [node name="Dialog" parent="Pause screen" instance=ExtResource( 9 )]
-margin_left = -107.5
-margin_top = -31.0
-margin_right = 321.5
-margin_bottom = 93.0
-rect_scale = Vector2( 0.5, 0.5 )
+margin_left = -214.5
+margin_top = -62.0
+margin_right = 214.5
+margin_bottom = 62.0
+rect_pivot_offset = Vector2( 0, 0 )
 
 [node name="Pause controller" type="Node" parent="."]
 script = ExtResource( 5 )
@@ -335,5 +335,5 @@ volume_db = 3.0
 [connection signal="newLevel" from="Game view/GridContainer" to="LevelPanel/LevelLabel" method="updateText"]
 [connection signal="newScore" from="Game view/GridContainer" to="ScorePanel/ScoreLabel" method="updateText"]
 [connection signal="buttonPressed" from="Pause screen/Dialog" to="Pause controller" method="_on_Dialog_buttonPressed"]
-[connection signal="pauseToggled" from="Pause controller" to="Game view/GridContainer" method="toggle_pause"]
 [connection signal="pauseToggled" from="Pause controller" to="Sound Controller" method="toggleMusicPaused"]
+[connection signal="pauseToggled" from="Pause controller" to="Game view/GridContainer" method="toggle_pause"]

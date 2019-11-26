@@ -44,7 +44,6 @@ margin_right = 215.0
 margin_bottom = 63.5
 grow_horizontal = 2
 grow_vertical = 2
-rect_scale = Vector2( 0, 0 )
 rect_pivot_offset = Vector2( 215, 63.5 )
 custom_styles/panel = SubResource( 1 )
 script = ExtResource( 2 )

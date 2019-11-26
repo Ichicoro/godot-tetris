@@ -15,7 +15,7 @@ var actionB = ""
 const subFormatStr = "[%s]"
 
 func _ready():
-	$AnimationPlayer.play("OpenAnimation", -1, 1)
+	$AnimationPlayer.play("OpenAnimation", -1, 2)
 
 func setup(msg, btnAName, kA, actA, btnBName = "Cancel", kB = "Esc", actB = "menu") :
 	$VBoxContainer/Title.text = msg
@@ -30,9 +30,9 @@ func setup(msg, btnAName, kA, actA, btnBName = "Cancel", kB = "Esc", actB = "men
 	
 func _input(event):
 	if Input.is_action_just_pressed(actionA) :
-		emit_signal("buttonPressed", "A")
+		emit_signal("buttonPressed", BUTTONS.BTN_A)
 	elif Input.is_action_just_pressed(actionB) :
-		emit_signal("buttonPressed", "B")
+		emit_signal("buttonPressed", BUTTONS.BTN_A)
 
 func _on_BtnA_pressed():
 	emit_signal("buttonPressed", BUTTONS.BTN_A)
