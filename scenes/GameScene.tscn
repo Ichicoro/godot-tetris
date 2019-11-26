@@ -299,26 +299,30 @@ rect_scale = Vector2( 1, 1 )
 [node name="Pause screen" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 0.668
-margin_bottom = 0.155991
+margin_right = 215.0
+margin_bottom = 256.156
+rect_scale = Vector2( 0.5, 0.5 )
 script = SubResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Filter" type="ColorRect" parent="Pause screen"]
-margin_right = 215.0
-margin_bottom = 256.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 color = Color( 0, 0, 0, 0.615686 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Dialog" parent="Pause screen" instance=ExtResource( 9 )]
-margin_left = -214.5
+anchor_left = 0.0
+anchor_right = 1.0
+margin_left = 0.0
 margin_top = -62.0
-margin_right = 214.5
+margin_right = 0.0
 margin_bottom = 62.0
-rect_pivot_offset = Vector2( 0, 0 )
+rect_pivot_offset = Vector2( 212.962, 63 )
 
 [node name="Pause controller" type="Node" parent="."]
 script = ExtResource( 5 )

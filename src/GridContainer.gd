@@ -30,7 +30,6 @@ func toggle_pause(p):
 	paused = p
 
 func handleTableAction(action) :
-	
 	if action in range(Table.TABLE_ACTION.SINGLE_CLEAR, Table.TABLE_ACTION.TETRIS+1) :
 		handle_lines_cleared(action - Table.TABLE_ACTION.SINGLE_CLEAR + 1)
 	
@@ -89,18 +88,15 @@ func redraw():
 				if (value > 0):
 					texrect.texture = Tetromino.get_texture_from_value(value)
 			add_child(texrect)
-			
+
 func connectTableSignal(sourceSignal : String, receiver : Node, receiverSignal : String) :
-	
 	table.connect(sourceSignal, receiver, receiverSignal)
 
 func handle_lines_cleared(amount = 1):
-	
 	emit_signal("newScore", table.total_lines_cleared)
 	get_tree().root.add_child(Alert.show_alert(amount))
 
 func handle_level_up():
-	
 	emit_signal("newLevel", table.difficulty_level)
 	yield(get_tree().create_timer(1.2), "timeout")
 	get_tree().root.add_child(Alert.show_alert(Table.TABLE_ACTION.LEVEL_UP))
