@@ -14,6 +14,9 @@ var actionB = ""
 
 const subFormatStr = "[%s]"
 
+func _ready():
+	$AnimationPlayer.play("OpenAnimation", -1, 1)
+
 func setup(msg, btnAName, kA, actA, btnBName = "Cancel", kB = "Esc", actB = "menu") :
 	$VBoxContainer/Title.text = msg
 	
