@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://shaders/grid.tres" type="Material" id=1]
 [ext_resource path="res://shaders/Blur.shader" type="Shader" id=2]
@@ -55,6 +55,16 @@ script/source = "extends Label
 func updateText(newScore) :
 	
 	self.text = str(newScore)
+"
+
+[sub_resource type="GDScript" id=10]
+script/source = "extends Label
+
+func _ready():
+	var hiscore = Utils.load_hiscore()
+	if (hiscore == -1):
+		hiscore = 0
+	self.text = str(hiscore)
 "
 
 [sub_resource type="GDScript" id=6]
@@ -217,6 +227,7 @@ margin_bottom = 37.5
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "0"
 align = 2
+script = SubResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

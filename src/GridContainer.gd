@@ -9,11 +9,6 @@ var tick_max = 0.5
 var paused = false
 
 func _ready():
-	var hiscore = Utils.load_hiscore()
-	if (hiscore == -1):
-		hiscore = 0
-	get_tree().root.get_node("Control/HiscorePanel/HiscoreLabel").text = str(hiscore)
-	
 	var passedLevel = SceneSwitcher.get_param("level")
 	if passedLevel == null:
 		passedLevel = Settings.min_difficulty
@@ -28,6 +23,7 @@ func _ready():
 
 func toggle_pause(p):
 	paused = p
+	print_debug(paused)
 
 func handleTableAction(action) :
 	if action in range(Table.TABLE_ACTION.SINGLE_CLEAR, Table.TABLE_ACTION.TETRIS+1) :
@@ -48,8 +44,7 @@ func _process(delta):
 		tick_timer = tick_max/2
 	if Input.is_action_just_pressed("soft_drop"):
 		table.tick()
-		tick_timer = 0#tick_max/2
-		
+		tick_timer = 0     #tick_max/2
 	if Input.is_action_just_pressed("hold"):
 		table.hold_tetromino()
 		tick_timer = tick_max/4
@@ -98,5 +93,5 @@ func handle_lines_cleared(amount = 1):
 
 func handle_level_up():
 	emit_signal("newLevel", table.difficulty_level)
-	yield(get_tree().create_timer(1.2), "timeout")
+	yield(get_tree().create_timer(1), "timeout")
 	get_tree().root.add_child(Alert.show_alert(Table.TABLE_ACTION.LEVEL_UP))
