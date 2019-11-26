@@ -14,6 +14,8 @@ var actionB = ""
 
 const subFormatStr = "[%s]"
 
+var signalSent = false
+
 func _ready():
 	$AnimationPlayer.seek(0)
 	$AnimationPlayer.play("OpenAnimation", -1, 2)
@@ -38,7 +40,14 @@ func _input(event):
 		emit_signal("buttonPressed", BUTTONS.BTN_B)
 
 func _on_BtnA_pressed():
-	emit_signal("buttonPressed", BUTTONS.BTN_A)
+	if not signalSent :
+		emit_signal("buttonPressed", BUTTONS.BTN_A)
+		signalSent = true
 	
 func _on_BtnB_pressed():
-	emit_signal("buttonPressed", BUTTONS.BTN_B)
+	if not signalSent :
+		emit_signal("buttonPressed", BUTTONS.BTN_A)
+		signalSent = true
+
+func _on_Dialog_visibility_changed():
+	signalSent = false

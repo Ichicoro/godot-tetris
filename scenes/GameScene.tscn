@@ -57,7 +57,7 @@ func updateText(newScore) :
 	self.text = str(newScore)
 "
 
-[sub_resource type="GDScript" id=10]
+[sub_resource type="GDScript" id=6]
 script/source = "extends Label
 
 func _ready():
@@ -67,7 +67,7 @@ func _ready():
 	self.text = str(hiscore)
 "
 
-[sub_resource type="GDScript" id=6]
+[sub_resource type="GDScript" id=7]
 script/source = "extends Label
 
 func updateText(newLevel) :
@@ -75,14 +75,14 @@ func updateText(newLevel) :
 	self.text = str(newLevel)
 "
 
-[sub_resource type="StyleBoxFlat" id=7]
+[sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 1, 1, 1, 1 )
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=9]
 size = 8
 font_data = ExtResource( 4 )
 
-[sub_resource type="GDScript" id=9]
+[sub_resource type="GDScript" id=10]
 script/source = "extends Control
 
 onready var dialog = $Dialog
@@ -227,7 +227,7 @@ margin_bottom = 37.5
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "0"
 align = 2
-script = SubResource( 10 )
+script = SubResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -263,7 +263,7 @@ margin_bottom = 38.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "0"
 align = 2
-script = SubResource( 6 )
+script = SubResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -282,7 +282,7 @@ margin_left = 173.0
 margin_top = 16.0
 margin_right = 202.0
 margin_bottom = 45.0
-custom_styles/panel = SubResource( 7 )
+custom_styles/panel = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -292,7 +292,7 @@ margin_left = -4.5
 margin_top = 10.5
 margin_right = 35.5
 margin_bottom = 34.5
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "OwO"
 align = 1
@@ -314,7 +314,7 @@ anchor_bottom = 0.668
 margin_right = 215.0
 margin_bottom = 256.156
 rect_scale = Vector2( 0.5, 0.5 )
-script = SubResource( 9 )
+script = SubResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
