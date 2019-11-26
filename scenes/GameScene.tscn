@@ -17,6 +17,7 @@ func _ready():
 	# This fixes touch buttons scaling on screens with a screen ratio taller than 16:9
 	get_tree().get_root().connect(\"size_changed\", self, \"update_touch_controls_size\")
 	update_touch_controls_size()
+	$\"Pause screen\".hide()
 	\"\"\"
 	if false and window_size.y/window_size.x > 1.777777778:
 		$TouchControls.anchor_top = 0#.668
@@ -334,5 +335,5 @@ volume_db = 3.0
 [connection signal="newLevel" from="Game view/GridContainer" to="LevelPanel/LevelLabel" method="updateText"]
 [connection signal="newScore" from="Game view/GridContainer" to="ScorePanel/ScoreLabel" method="updateText"]
 [connection signal="buttonPressed" from="Pause screen/Dialog" to="Pause controller" method="_on_Dialog_buttonPressed"]
-[connection signal="pauseToggled" from="Pause controller" to="Sound Controller" method="toggleMusicPaused"]
 [connection signal="pauseToggled" from="Pause controller" to="Game view/GridContainer" method="toggle_pause"]
+[connection signal="pauseToggled" from="Pause controller" to="Sound Controller" method="toggleMusicPaused"]
