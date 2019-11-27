@@ -1,5 +1,4 @@
 extends Panel
-
 class_name DialogController
 
 signal buttonPressed(btn)
@@ -20,17 +19,25 @@ func _ready():
 	$AnimationPlayer.seek(0)
 	$AnimationPlayer.play("OpenAnimation", -1, 2)
 
-func setup(msg, btnAName, kA, actA, btnBName = "Cancel", kB = "Esc", actB = "menu") :
+func setup(msg, btnAName, kA, actA, btnBName = "Cancel", kB = "Esc", actB = "menu"):
 	$VBoxContainer/Title.text = msg
 	
+	btnA = $VBoxContainer/HBoxContainer/VBoxContainer/BtnA
 	btnA.text = btnAName
 	actionA = actA
-	$VBoxContainer/HBoxContainer/VBoxContainer/KeyA.text = subFormatStr % kA
+	if OS.has_touchscreen_ui_hint():
+		$VBoxContainer/HBoxContainer/VBoxContainer/KeyA.queue_free()
+	else:
+		$VBoxContainer/HBoxContainer/VBoxContainer/KeyA.text = subFormatStr % kA
 	
+	btnB = $VBoxContainer/HBoxContainer/VBoxContainer2/BtnB
 	btnB.text = btnBName
 	actionB = actB
-	$VBoxContainer/HBoxContainer/VBoxContainer2/KeyB.text = subFormatStr % kB
-	
+	if OS.has_touchscreen_ui_hint():
+		$VBoxContainer/HBoxContainer/VBoxContainer2/KeyB.queue_free()
+	else:
+		$VBoxContainer/HBoxContainer/VBoxContainer2/KeyB.text = subFormatStr % kB
+
 func _input(event):
 	if not event is InputEventKey: return
 	print_debug(get_tree().is_input_handled())

@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "Dialog",
+"language": "GDScript",
+"path": "res://src/Dialog.gd"
+}, {
 "base": "Panel",
 "class": "DialogController",
 "language": "GDScript",
@@ -25,6 +30,7 @@ _global_script_classes=[ {
 "path": "res://src/Tetromino.gd"
 } ]
 _global_script_class_icons={
+"Dialog": "",
 "DialogController": "",
 "Table": "",
 "Tetromino": ""
@@ -153,4 +159,5 @@ quit_confirm={
 
 quality/intended_usage/framebuffer_allocation=0
 quality/intended_usage/framebuffer_allocation.mobile=0
+quality/dynamic_fonts/use_oversampling=false
 quality/name="Tetris "

@@ -2,13 +2,12 @@
 
 [ext_resource path="res://scenes/Dialog.tscn" type="PackedScene" id=2]
 
-[sub_resource type="GDScript" id=4]
+[sub_resource type="GDScript" id=1]
 script/source = "extends Control
 
 onready var dialog = $Dialog
 
 func _ready():
-	
 	dialog.setup(\"Quit?\", \"Confirm\", \"Q\", \"quit_confirm\")
 
 func backToMenu() :
@@ -19,15 +18,15 @@ func exitGame() :
 	get_tree().quit()
 
 func _on_Dialog_buttonPressed(btn):
-	match btn :
-		DialogController.BUTTONS.BTN_A : exitGame()
-		DialogController.BUTTONS.BTN_B : backToMenu()
+	match btn:
+		DialogController.BUTTONS.BTN_A: exitGame()
+		DialogController.BUTTONS.BTN_B: backToMenu()
 "
 
 [node name="ExitDialog" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = SubResource( 4 )
+script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
