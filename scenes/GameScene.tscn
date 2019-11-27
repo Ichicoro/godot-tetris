@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://shaders/grid.tres" type="Material" id=1]
 [ext_resource path="res://shaders/Blur.shader" type="Shader" id=2]
@@ -8,7 +8,6 @@
 [ext_resource path="res://src/SoundController.gd" type="Script" id=6]
 [ext_resource path="res://assets/sounds/main_song.ogg" type="AudioStream" id=7]
 [ext_resource path="res://scenes/TouchControls.tscn" type="PackedScene" id=8]
-[ext_resource path="res://scenes/Dialog.tscn" type="PackedScene" id=9]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
@@ -17,7 +16,7 @@ func _ready():
 	# This fixes touch buttons scaling on screens with a screen ratio taller than 16:9
 	get_tree().get_root().connect(\"size_changed\", self, \"update_touch_controls_size\")
 	update_touch_controls_size()
-	$\"Pause screen\".hide()
+	#$\"Pause screen\".hide()
 
 func update_touch_controls_size():
 	var window_size: Vector2 = get_viewport().get_visible_rect().size
@@ -70,15 +69,6 @@ bg_color = Color( 1, 1, 1, 1 )
 [sub_resource type="DynamicFont" id=9]
 size = 8
 font_data = ExtResource( 4 )
-
-[sub_resource type="GDScript" id=10]
-script/source = "extends Control
-
-onready var dialog = $Dialog
-
-func _ready():
-	dialog.setup(\"Paused\", \"Unpause\", \"Esc\", \"menu\", \"Exit\", \"Q\", \"quit_confirm\")
-"
 
 [node name="Control" type="Control"]
 pause_mode = 2
@@ -296,35 +286,6 @@ margin_right = 0.0
 margin_bottom = 383.0
 rect_scale = Vector2( 1, 1 )
 
-[node name="Pause screen" type="Control" parent="."]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 0.668
-margin_right = 215.0
-margin_bottom = 256.156
-rect_scale = Vector2( 0.5, 0.5 )
-script = SubResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Filter" type="ColorRect" parent="Pause screen"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color( 0, 0, 0, 0.615686 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Dialog" parent="Pause screen" instance=ExtResource( 9 )]
-anchor_left = 0.0
-anchor_right = 1.0
-margin_left = 0.0
-margin_top = -62.0
-margin_right = 0.0
-margin_bottom = 62.0
-rect_pivot_offset = Vector2( 212.962, 63 )
-
 [node name="Pause controller" type="Node" parent="."]
 script = ExtResource( 5 )
 
@@ -339,6 +300,5 @@ volume_db = -12.0
 volume_db = 3.0
 [connection signal="newLevel" from="Game view/GridContainer" to="LevelPanel/LevelLabel" method="updateText"]
 [connection signal="newScore" from="Game view/GridContainer" to="ScorePanel/ScoreLabel" method="updateText"]
-[connection signal="buttonPressed" from="Pause screen/Dialog" to="Pause controller" method="_on_Dialog_buttonPressed"]
-[connection signal="pauseToggled" from="Pause controller" to="Game view/GridContainer" method="toggle_pause"]
 [connection signal="pauseToggled" from="Pause controller" to="Sound Controller" method="toggleMusicPaused"]
+[connection signal="pauseToggled" from="Pause controller" to="Game view/GridContainer" method="toggle_pause"]
