@@ -5,10 +5,10 @@ signal buttonPressed(btn)
 
 enum BUTTONS { BTN_A, BTN_B }
 
-onready var btnA = $VBoxContainer/HBoxContainer/VBoxContainer/BtnA
+var btnA = null
 var actionA = ""
 
-onready var btnB = $VBoxContainer/HBoxContainer/VBoxContainer2/BtnB
+var btnB = null
 var actionB = ""
 
 const subFormatStr = "[%s]"
@@ -40,7 +40,6 @@ func setup(msg, btnAName, kA, actA, btnBName = "Cancel", kB = "Esc", actB = "men
 
 func _input(event):
 	if not event is InputEventKey: return
-	print_debug(get_tree().is_input_handled())
 	if Input.is_action_just_pressed(actionA) :
 		emit_signal("buttonPressed", BUTTONS.BTN_A)
 	elif Input.is_action_just_pressed(actionB) :
@@ -53,7 +52,7 @@ func _on_BtnA_pressed():
 	
 func _on_BtnB_pressed():
 	if not signalSent :
-		emit_signal("buttonPressed", BUTTONS.BTN_A)
+		emit_signal("buttonPressed", BUTTONS.BTN_B)
 		signalSent = true
 
 func _on_Dialog_visibility_changed():

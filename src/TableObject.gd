@@ -243,9 +243,7 @@ func update_level(lines_cleared):
 func tick():
 	if !can_tick:
 		return
-	if false:
-		for row in self.ft.shape:
-			print(row)
+		
 	if try_moving_down():
 		return check_lines()
 	else:

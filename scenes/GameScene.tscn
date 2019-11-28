@@ -12,11 +12,16 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
 
+onready var gameview = $\"Game view/GridContainer\"
+onready var sound = $\"Sound Controller\"
+
 func _ready():
 	# This fixes touch buttons scaling on screens with a screen ratio taller than 16:9
 	get_tree().get_root().connect(\"size_changed\", self, \"update_touch_controls_size\")
 	update_touch_controls_size()
 	#$\"Pause screen\".hide()
+	
+	gameview.connectTableSignal(\"newTableAction\", sound, \"queueSFX\")
 
 func update_touch_controls_size():
 	var window_size: Vector2 = get_viewport().get_visible_rect().size
