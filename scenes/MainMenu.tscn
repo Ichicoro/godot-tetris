@@ -1,9 +1,16 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://assets/fonts/PressStart2P.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://scenes/Button.tscn" type="PackedScene" id=2]
 
-[sub_resource type="Shader" id=1]
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+func _ready():
+	Utils.load_settings()
+"
+
+[sub_resource type="Shader" id=2]
 code = "shader_type canvas_item;
 //render_mode skip_vertex_transform;
 
@@ -30,14 +37,14 @@ void fragment() {
 	}
 }"
 
-[sub_resource type="ShaderMaterial" id=2]
-shader = SubResource( 1 )
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 2 )
 shader_param/color1 = Plane( 0.3, 0.1, 0.1, 1 )
 shader_param/color2 = Plane( 0.2, 0.1, 0.1, 1 )
 shader_param/pixel_size = 16
 shader_param/global_transform = null
 
-[sub_resource type="GDScript" id=3]
+[sub_resource type="GDScript" id=4]
 script/source = "extends Button
 
 const PlayDialog = preload(\"res://scenes/PlayDialog.tscn\")
@@ -60,17 +67,16 @@ func _pressed():
 	pass
 "
 
-[sub_resource type="GDScript" id=4]
+[sub_resource type="GDScript" id=5]
 script/source = "extends Button
 
 export(String, FILE, \"*.tscn\") var settingsScene = \"res://scenes/SettingsMenu.tscn\"
 
 func _pressed() :
-	Utils.load_settings()
 	SceneSwitcher.change_scene(settingsScene)
 "
 
-[sub_resource type="GDScript" id=5]
+[sub_resource type="GDScript" id=6]
 script/source = "extends Button
 
 func _ready():
@@ -93,14 +99,14 @@ func reset_focus():
 	self.grab_focus()
 "
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=7]
 size = 64
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=8]
 font_data = ExtResource( 1 )
 
-[sub_resource type="GDScript" id=8]
+[sub_resource type="GDScript" id=9]
 script/source = "extends Label
 
 func _ready():
@@ -108,7 +114,7 @@ func _ready():
 	self.text = \"v\" + version_number + (\"\" if \".\" in version_number else \".0\")
 "
 
-[sub_resource type="GDScript" id=9]
+[sub_resource type="GDScript" id=10]
 script/source = "extends Label
 
 # Declare member variables here. Examples:
@@ -127,11 +133,11 @@ func _ready():
 #	pass
 "
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=11]
 size = 8
 font_data = ExtResource( 1 )
 
-[sub_resource type="GDScript" id=11]
+[sub_resource type="GDScript" id=12]
 script/source = "extends LinkButton
 
 # Declare member variables here. Examples:
@@ -153,6 +159,7 @@ func _pressed():
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = SubResource( 1 )
 __meta__ = {
 "_edit_horizontal_guides_": [  ],
 "_edit_use_anchors_": false,
@@ -160,7 +167,7 @@ __meta__ = {
 }
 
 [node name="ColorRect" type="ColorRect" parent="."]
-material = SubResource( 2 )
+material = SubResource( 3 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -188,7 +195,7 @@ margin_bottom = 65.0
 rect_min_size = Vector2( 0, 65 )
 focus_mode = 2
 enabled_focus_mode = 2
-script = SubResource( 3 )
+script = SubResource( 4 )
 
 [node name="SettingsButton " parent="VBoxContainer" instance=ExtResource( 2 )]
 margin_top = 95.0
@@ -198,7 +205,7 @@ rect_min_size = Vector2( 0, 65 )
 focus_mode = 2
 enabled_focus_mode = 2
 text = "SETTINGS"
-script = SubResource( 4 )
+script = SubResource( 5 )
 
 [node name="QuitButton" parent="VBoxContainer" instance=ExtResource( 2 )]
 margin_top = 190.0
@@ -208,7 +215,7 @@ rect_min_size = Vector2( 0, 65 )
 focus_mode = 2
 enabled_focus_mode = 2
 text = "QUIT"
-script = SubResource( 5 )
+script = SubResource( 6 )
 
 [node name="Label" type="Label" parent="."]
 anchor_right = 1.0
@@ -216,7 +223,7 @@ anchor_bottom = 0.211
 margin_top = -1.0
 margin_right = -1.0
 margin_bottom = 44.968
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 0.396078 )
 custom_constants/shadow_offset_x = 7
 custom_constants/shadow_offset_y = 5
@@ -235,11 +242,11 @@ anchor_bottom = 1.0
 margin_left = -100.0
 margin_top = -42.0
 margin_right = -16.0
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 text = "v1.0"
 align = 2
 valign = 1
-script = SubResource( 8 )
+script = SubResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -250,10 +257,10 @@ anchor_bottom = 1.0
 margin_left = 20.0
 margin_top = -42.0
 margin_right = 180.0
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 text = "HISCORE: 0"
 valign = 1
-script = SubResource( 9 )
+script = SubResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -268,11 +275,11 @@ margin_top = -45.0
 margin_right = -18.0
 margin_bottom = -37.0
 grow_horizontal = 0
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 1, 1, 1, 0.447059 )
 text = "marte.dev"
 underline = 1
-script = SubResource( 11 )
+script = SubResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
