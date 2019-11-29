@@ -40,10 +40,12 @@ func setLevel(direction) :
 	
 	if condition :
 		levelValue += direction
-		audio.play()
 		incrBtn.disabled = not(levelValue < Settings.max_difficulty)
 		decrBtn.disabled = not(levelValue > Settings.min_difficulty)
 		setLevelLabel()
+		
+		if Settings.canPlaySFX :
+			audio.play()
 
 func setLevelLabel() :
 

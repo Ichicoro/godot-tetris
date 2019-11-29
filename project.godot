@@ -42,7 +42,7 @@ config/name="Tetris"
 run/main_scene="res://scenes/MainMenu.tscn"
 boot_splash/image="res://tetrissplash.png"
 boot_splash/bg_color=Color( 0.309804, 0.219608, 0.2, 1 )
-config/icon="res://tetrislogo.png"
+config/icon="res://tetris_icon.png"
 config/version=2.0
 
 [autoload]
