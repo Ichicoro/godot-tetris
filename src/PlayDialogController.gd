@@ -2,6 +2,9 @@ extends Control
 
 var template_str: String = '%s'
 var levelValue: int = Settings.min_difficulty
+
+export(String, FILE, "*.tscn") var gameScene = "res://scenes/GameScene.tscn"
+
 onready var incrBtn = $Panel/VBoxContainer/HBoxContainer/incrLvlBtn
 onready var decrBtn = $Panel/VBoxContainer/HBoxContainer/decrLvlBtn
 onready var levelLabel = $Panel/VBoxContainer/HBoxContainer/ChosenLevel
@@ -62,4 +65,4 @@ func backToMenu() :
 
 func startGame() :
 	queue_free()
-	SceneSwitcher.change_scene("res://scenes/GameScene.tscn", {level=levelValue})
+	SceneSwitcher.change_scene(gameScene, {level=levelValue})
