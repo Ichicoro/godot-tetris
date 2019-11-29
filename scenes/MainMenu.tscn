@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/fonts/PressStart2P.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://scenes/Button.tscn" type="PackedScene" id=2]
@@ -58,6 +58,16 @@ func _pressed():
 	#get_tree().root.add_child(Dialog.new(\"Quit?\", \"Confirm\", \"Q\", \"quit_confirm\"))
 	# get_tree().change_scene(\"res://scenes/GameScene.tscn\")
 	pass
+"
+
+[sub_resource type="GDScript" id=11]
+script/source = "extends Button
+
+export(String, FILE, \"*.tscn\") var settingsScene = \"res://scenes/SettingsMenu.tscn\"
+
+func _pressed() :
+	
+	SceneSwitcher.change_scene(settingsScene)
 "
 
 [sub_resource type="GDScript" id=4]
@@ -173,18 +183,27 @@ __meta__ = {
 }
 
 [node name="PlayButton" parent="VBoxContainer" instance=ExtResource( 2 )]
-margin_top = 22.0
 margin_right = 230.0
-margin_bottom = 87.0
+margin_bottom = 65.0
 rect_min_size = Vector2( 0, 65 )
 focus_mode = 2
 enabled_focus_mode = 2
 script = SubResource( 3 )
 
-[node name="QuitButton" parent="VBoxContainer" instance=ExtResource( 2 )]
-margin_top = 117.0
+[node name="SettingsButton " parent="VBoxContainer" instance=ExtResource( 2 )]
+margin_top = 95.0
 margin_right = 230.0
-margin_bottom = 182.0
+margin_bottom = 160.0
+rect_min_size = Vector2( 0, 65 )
+focus_mode = 2
+enabled_focus_mode = 2
+text = "SETTINGS"
+script = SubResource( 11 )
+
+[node name="QuitButton" parent="VBoxContainer" instance=ExtResource( 2 )]
+margin_top = 190.0
+margin_right = 230.0
+margin_bottom = 255.0
 rect_min_size = Vector2( 0, 65 )
 focus_mode = 2
 enabled_focus_mode = 2
