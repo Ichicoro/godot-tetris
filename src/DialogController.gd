@@ -16,7 +16,6 @@ const subFormatStr = "[%s]"
 var signalSent = false
 
 func _ready():
-	$AnimationPlayer.seek(0)
 	$AnimationPlayer.play("OpenAnimation", -1, 2)
 
 func setup(msg, btnAName, kA, actA, btnBName = "Cancel", kB = "Esc", actB = "menu"):

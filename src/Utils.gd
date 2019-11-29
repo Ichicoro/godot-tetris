@@ -1,5 +1,7 @@
 extends Node
 
+var hiscoreFile = "user://hiscore.save"
+var settingsFile = "user://settings.save"
 
 func _ready():
 	print(OS.min_window_size)
@@ -31,28 +33,46 @@ func unpause_node(node : Node) -> void:
 
 func save_hiscore(score: int):
 	var save_game = File.new()
-	save_game.open("user://hiscore.save", File.WRITE)
+	save_game.open(hiscoreFile, File.WRITE)
 	save_game.seek(0)
 	save_game.store_16(score)
 	save_game.close()
+	
+func save_settings() :
+	var save_sets = File.new()
+	save_sets.open(settingsFile, File.WRITE)
+	save_sets.seek(0)
+	save_sets.store_8(Settings.canPlayMusic)
+	save_sets.store_8(Settings.canPlaySFX)
+	save_sets.close()
 
 
 func load_hiscore() -> int:
 	var save_game = File.new()
-	if not save_game.file_exists("user://hiscore.save"):
+	if not save_game.file_exists(hiscoreFile):
 		return -1
-	save_game.open("user://hiscore.save", File.READ)
+	save_game.open(hiscoreFile, File.READ)
 	var hiscore = save_game.get_16()
 	save_game.close()
 	return hiscore
 
+func load_settings() -> bool:
+	var save_sets = File.new()
+	if not save_sets.file_exists(settingsFile):
+		return false
+	save_sets.open(settingsFile, File.READ)
+	Settings.canPlayMusic = (save_sets.get_8() != 0)
+	Settings.canPlaySFX = (save_sets.get_8() != 0)
+	save_sets.close()
+	
+	return true
 
 func print_hiscore_file():
 	var save_game = File.new()
-	if not save_game.file_exists("user://hiscore.save"):
+	if not save_game.file_exists(hiscoreFile):
 		print_debug('ded file')
 		return
-	save_game.open("user://hiscore.save", File.READ)
+	save_game.open(hiscoreFile, File.READ)
 	print_debug(save_game.get_as_text())
 	save_game.close()
 

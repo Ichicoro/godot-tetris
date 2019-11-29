@@ -6,6 +6,7 @@ func _ready():
 	pass # Replace with function body.
 
 func playjingle():
-	self.stream = jingle
-	self.volume_db = -23
-	play()
+	if Settings.canPlaySFX :
+		self.stream = jingle
+		self.volume_db = -23
+		play()

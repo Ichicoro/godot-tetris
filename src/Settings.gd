@@ -5,3 +5,7 @@ const max_difficulty: int = 20
 
 var canPlayMusic : bool = true
 var canPlaySFX : bool = true
+
+func reset():
+	canPlayMusic = true
+	canPlaySFX = true

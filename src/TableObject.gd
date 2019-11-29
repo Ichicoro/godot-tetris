@@ -276,6 +276,7 @@ static func tableActionToString(action) :
 		_ : return ""
 
 func do_finish_animation():
+	
 	var old_hiscore = Utils.load_hiscore()
 	if self.total_lines_cleared > old_hiscore:
 		Utils.show_notification("HI SCORE!", "New score: " + str(self.total_lines_cleared) + "\nPress ENTER to exit.")

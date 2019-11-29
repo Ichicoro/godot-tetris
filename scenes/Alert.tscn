@@ -33,15 +33,16 @@ func set_action(amount):
 		action = Table.TABLE_ACTION.LEVEL_UP
 		$Panel/Label.text = texts[4]
 	
-	#TEMPORARY
-	if action in [Table.TABLE_ACTION.DOUBLE_CLEAR, Table.TABLE_ACTION.TRIPLE_CLEAR] :
-		action = Table.TABLE_ACTION.SINGLE_CLEAR
-	
-	var actionStr = Table.tableActionToString(action)
-	var fileName = sfxDir + \"/\" + actionStr + \".wav\"
-	
-	sfx.stream = load(fileName)
-	sfx.play()
+	if Settings.canPlaySFX :
+		#TEMPORARY
+		if action in [Table.TABLE_ACTION.DOUBLE_CLEAR, Table.TABLE_ACTION.TRIPLE_CLEAR] :
+			action = Table.TABLE_ACTION.SINGLE_CLEAR
+		
+		var actionStr = Table.tableActionToString(action)
+		var fileName = sfxDir + \"/\" + actionStr + \".wav\"
+		
+		sfx.stream = load(fileName)
+		sfx.play()
 
 func _process(delta):
 	
