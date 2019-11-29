@@ -57,12 +57,18 @@ region = Rect2( 0, 0, 30, 30 )
 [sub_resource type="GDScript" id=8]
 script/source = "extends CheckBox
 
+func _ready():
+	pressed = Settings.canPlayMusic
+
 func _toggled(button_pressed):
 	Settings.canPlayMusic = button_pressed
 "
 
 [sub_resource type="GDScript" id=9]
 script/source = "extends CheckBox
+
+func _ready():
+	pressed = Settings.canPlaySFX
 
 func _toggled(button_pressed):
 	Settings.canPlaySFX = button_pressed
@@ -74,7 +80,6 @@ script/source = "extends Button
 export(String, FILE, \"*.tscn\") var menuScene = \"res://scenes/MainMenu.tscn\"
 
 func _pressed():
-	
 	SceneSwitcher.change_scene(menuScene)
 
 "
