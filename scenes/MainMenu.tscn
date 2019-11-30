@@ -1,13 +1,42 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/fonts/PressStart2P.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://scenes/Button.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/sounds/sfx/tetris_jingle.wav" type="AudioStream" id=3]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
 
+export(String, FILE, \"*.tscn\") var playDialogScene = \"res://scenes/PlayDialog.tscn\"
+export(String, FILE, \"*.tscn\") var settingsScene = \"res://scenes/SettingsMenu.tscn\"
+
 func _ready():
 	Utils.load_settings()
+	if OS.get_name() in [\"HTML5\", \"Android\", \"iOS\"]:
+		$VBoxContainer/QuitButton.hide()
+
+func _on_PlayButton_pressed():
+	$AudioStreamPlayer.play()
+	var PlayDialog = load(playDialogScene)
+	add_child(PlayDialog.instance())
+
+func _on_SettingsButton__pressed():
+	SceneSwitcher.change_scene(settingsScene)
+
+func _on_QuitButton_pressed():
+	$AudioStreamPlayer.play()
+	var dialog = Dialog.new(\"Quit?\", \"Confirm\", \"Q\", \"quit_confirm\")
+	dialog.connect(\"button_a_pressed\", self, \"exit_game\")
+	dialog.connect(\"button_b_pressed\", self, \"reset_focus\")
+	add_child(dialog)
+	self.focus_mode = Control.FOCUS_NONE
+
+func exit_game():
+	get_tree().quit()
+
+func reset_focus():
+	self.focus_mode = Control.FOCUS_ALL
+	self.grab_focus()
 "
 
 [sub_resource type="Shader" id=2]
@@ -43,61 +72,6 @@ shader_param/color1 = Plane( 0.3, 0.1, 0.1, 1 )
 shader_param/color2 = Plane( 0.2, 0.1, 0.1, 1 )
 shader_param/pixel_size = 16
 shader_param/global_transform = null
-
-[sub_resource type="GDScript" id=4]
-script/source = "extends Button
-
-const PlayDialog = preload(\"res://scenes/PlayDialog.tscn\")
-
-func _ready():
-	if not OS.get_name() in [\"HTML5\", \"Android\", \"iOS\"]:
-		self.grab_focus()
-	else:
-		self.focus_mode = FOCUS_NONE
-
-func _pressed():
-	FXPlayer.playjingle()
-	for child in get_tree().root.get_children():
-		if child.name == \"PlayDialog\":
-			print(PlayDialog.resource_name)
-			return
-	get_tree().root.add_child(PlayDialog.instance())
-	#get_tree().root.add_child(Dialog.new(\"Quit?\", \"Confirm\", \"Q\", \"quit_confirm\"))
-	# get_tree().change_scene(\"res://scenes/GameScene.tscn\")
-	pass
-"
-
-[sub_resource type="GDScript" id=5]
-script/source = "extends Button
-
-export(String, FILE, \"*.tscn\") var settingsScene = \"res://scenes/SettingsMenu.tscn\"
-
-func _pressed() :
-	SceneSwitcher.change_scene(settingsScene)
-"
-
-[sub_resource type="GDScript" id=6]
-script/source = "extends Button
-
-func _ready():
-	if OS.get_name() in [\"HTML5\", \"Android\", \"iOS\"]:
-		self.queue_free()
-
-func _pressed():
-	FXPlayer.playjingle()
-	var dialog = Dialog.new(\"Quit?\", \"Confirm\", \"Q\", \"quit_confirm\")
-	dialog.connect(\"button_a_pressed\", self, \"exit_game\")
-	dialog.connect(\"button_b_pressed\", self, \"reset_focus\")
-	get_tree().root.add_child(dialog)
-	self.focus_mode = Control.FOCUS_NONE
-
-func exit_game():
-	get_tree().quit()
-
-func reset_focus():
-	self.focus_mode = Control.FOCUS_ALL
-	self.grab_focus()
-"
 
 [sub_resource type="DynamicFont" id=7]
 size = 64
@@ -195,7 +169,6 @@ margin_bottom = 65.0
 rect_min_size = Vector2( 0, 65 )
 focus_mode = 2
 enabled_focus_mode = 2
-script = SubResource( 4 )
 
 [node name="SettingsButton " parent="VBoxContainer" instance=ExtResource( 2 )]
 margin_top = 95.0
@@ -205,7 +178,6 @@ rect_min_size = Vector2( 0, 65 )
 focus_mode = 2
 enabled_focus_mode = 2
 text = "SETTINGS"
-script = SubResource( 5 )
 
 [node name="QuitButton" parent="VBoxContainer" instance=ExtResource( 2 )]
 margin_top = 190.0
@@ -215,7 +187,6 @@ rect_min_size = Vector2( 0, 65 )
 focus_mode = 2
 enabled_focus_mode = 2
 text = "QUIT"
-script = SubResource( 6 )
 
 [node name="Label" type="Label" parent="."]
 anchor_right = 1.0
@@ -283,3 +254,10 @@ script = SubResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+volume_db = -23.0
+[connection signal="pressed" from="VBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/SettingsButton " to="." method="_on_SettingsButton__pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_QuitButton_pressed"]
