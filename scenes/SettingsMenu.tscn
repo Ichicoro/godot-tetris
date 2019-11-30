@@ -2,6 +2,7 @@
 
 [ext_resource path="res://assets/fonts/PressStart2P.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://scenes/Button.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/SoundCheckbox.gd" type="Script" id=3]
 [ext_resource path="res://assets/buttons/Tetris Checkbox.png" type="Texture" id=4]
 
 [sub_resource type="Shader" id=1]
@@ -54,26 +55,6 @@ region = Rect2( 0, 30, 30, 30 )
 atlas = ExtResource( 4 )
 region = Rect2( 0, 0, 30, 30 )
 
-[sub_resource type="GDScript" id=7]
-script/source = "extends CheckBox
-
-func _ready():
-	pressed = Settings.canPlayMusic
-
-func _toggled(button_pressed):
-	Settings.canPlayMusic = button_pressed
-"
-
-[sub_resource type="GDScript" id=8]
-script/source = "extends CheckBox
-
-func _ready():
-	pressed = Settings.canPlaySFX
-
-func _toggled(button_pressed):
-	Settings.canPlaySFX = button_pressed
-"
-
 [sub_resource type="GDScript" id=9]
 script/source = "extends Button
 
@@ -83,6 +64,16 @@ func _pressed():
 	Utils.save_settings()
 	SceneSwitcher.change_scene(menuScene)
 
+"
+
+[sub_resource type="GDScript" id=10]
+script/source = "extends Button
+
+signal reset
+
+func _pressed():
+	Settings.reset()
+	emit_signal(\"reset\")
 "
 
 [node name="Control" type="Control"]
@@ -156,7 +147,7 @@ size_flags_vertical = 4
 custom_icons/checked = SubResource( 5 )
 custom_icons/unchecked = SubResource( 6 )
 pressed = true
-script = SubResource( 7 )
+script = ExtResource( 3 )
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 82.0
@@ -184,17 +175,39 @@ size_flags_vertical = 4
 custom_icons/checked = SubResource( 5 )
 custom_icons/unchecked = SubResource( 6 )
 pressed = true
-script = SubResource( 8 )
+script = ExtResource( 3 )
+target = 1
 
-[node name="BackBtn" parent="." instance=ExtResource( 2 )]
+[node name="VBoxContainer2" type="HBoxContainer" parent="."]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -100.5
-margin_top = -88.0
-margin_right = 100.5
-margin_bottom = -40.0
-rect_min_size = Vector2( 0, 65 )
+margin_left = -152.0
+margin_top = -92.7009
+margin_right = 152.0
+margin_bottom = -27.7009
+custom_constants/separation = 38
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackBtn" parent="VBoxContainer2" instance=ExtResource( 2 )]
+margin_right = 130.0
+margin_bottom = 65.0
+rect_min_size = Vector2( 130, 65 )
+size_flags_horizontal = 4
 text = "BACK"
 script = SubResource( 9 )
+
+[node name="ResetBtn" parent="VBoxContainer2" instance=ExtResource( 2 )]
+margin_left = 168.0
+margin_right = 304.0
+margin_bottom = 65.0
+rect_min_size = Vector2( 130, 65 )
+size_flags_horizontal = 4
+text = "RESET"
+script = SubResource( 10 )
+[connection signal="reset" from="VBoxContainer2/ResetBtn" to="VBoxContainer/HBoxContainer2/SFXCheck" method="_on_ResetBtn_reset"]
+[connection signal="reset" from="VBoxContainer2/ResetBtn" to="VBoxContainer/HBoxContainer/MusicCheck" method="_on_ResetBtn_reset"]

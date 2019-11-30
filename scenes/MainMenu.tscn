@@ -73,14 +73,14 @@ shader_param/color2 = Plane( 0.2, 0.1, 0.1, 1 )
 shader_param/pixel_size = 16
 shader_param/global_transform = null
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=4]
 size = 64
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=5]
 font_data = ExtResource( 1 )
 
-[sub_resource type="GDScript" id=9]
+[sub_resource type="GDScript" id=6]
 script/source = "extends Label
 
 func _ready():
@@ -88,7 +88,7 @@ func _ready():
 	self.text = \"v\" + version_number + (\"\" if \".\" in version_number else \".0\")
 "
 
-[sub_resource type="GDScript" id=10]
+[sub_resource type="GDScript" id=7]
 script/source = "extends Label
 
 func _ready():
@@ -98,11 +98,11 @@ func _ready():
 	self.text = \"HISCORE: \" + str(hiscore)
 "
 
-[sub_resource type="DynamicFont" id=11]
+[sub_resource type="DynamicFont" id=8]
 size = 8
 font_data = ExtResource( 1 )
 
-[sub_resource type="GDScript" id=12]
+[sub_resource type="GDScript" id=9]
 script/source = "extends LinkButton
 
 func _pressed():
@@ -173,7 +173,7 @@ anchor_bottom = 0.211
 margin_top = -1.0
 margin_right = -1.0
 margin_bottom = 44.968
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 0.396078 )
 custom_constants/shadow_offset_x = 7
 custom_constants/shadow_offset_y = 5
@@ -192,11 +192,11 @@ anchor_bottom = 1.0
 margin_left = -100.0
 margin_top = -42.0
 margin_right = -16.0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 5 )
 text = "v1.0"
 align = 2
 valign = 1
-script = SubResource( 9 )
+script = SubResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -207,10 +207,10 @@ anchor_bottom = 1.0
 margin_left = 20.0
 margin_top = -42.0
 margin_right = 180.0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 5 )
 text = "HISCORE: 0"
 valign = 1
-script = SubResource( 10 )
+script = SubResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -225,11 +225,11 @@ margin_top = -45.0
 margin_right = -18.0
 margin_bottom = -37.0
 grow_horizontal = 0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 8 )
 custom_colors/font_color = Color( 1, 1, 1, 0.447059 )
 text = "marte.dev"
 underline = 1
-script = SubResource( 12 )
+script = SubResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
