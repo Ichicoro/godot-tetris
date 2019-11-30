@@ -91,20 +91,11 @@ func _ready():
 [sub_resource type="GDScript" id=10]
 script/source = "extends Label
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = \"text\"
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	var hiscore = Utils.load_hiscore()
 	if hiscore == -1:
 		hiscore = 0
 	self.text = \"HISCORE: \" + str(hiscore)
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
 "
 
 [sub_resource type="DynamicFont" id=11]
@@ -113,18 +104,6 @@ font_data = ExtResource( 1 )
 
 [sub_resource type="GDScript" id=12]
 script/source = "extends LinkButton
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = \"text\"
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
 
 func _pressed():
 	OS.shell_open(\"https://marte.dev\")
@@ -188,7 +167,7 @@ focus_mode = 2
 enabled_focus_mode = 2
 text = "QUIT"
 
-[node name="Label" type="Label" parent="."]
+[node name="Title" type="Label" parent="."]
 anchor_right = 1.0
 anchor_bottom = 0.211
 margin_top = -1.0
@@ -205,7 +184,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label2" type="Label" parent="."]
+[node name="VersionLabel" type="Label" parent="."]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -236,7 +215,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label3" type="LinkButton" parent="."]
+[node name="WebsiteLink" type="LinkButton" parent="."]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0

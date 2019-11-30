@@ -22,20 +22,23 @@ func setup(msg, btnAName, kA, actA, btnBName = "Cancel", kB = "Esc", actB = "men
 	$VBoxContainer/Title.text = msg
 	
 	btnA = $VBoxContainer/HBoxContainer/VBoxContainer/BtnA
+	var keyA = $VBoxContainer/HBoxContainer/VBoxContainer/KeyA
+	btnB = $VBoxContainer/HBoxContainer/VBoxContainer2/BtnB
+	var keyB = $VBoxContainer/HBoxContainer/VBoxContainer2/KeyB
+	
 	btnA.text = btnAName
 	actionA = actA
 	if OS.has_touchscreen_ui_hint():
-		$VBoxContainer/HBoxContainer/VBoxContainer/KeyA.queue_free()
+		keyA.queue_free()
 	else:
-		$VBoxContainer/HBoxContainer/VBoxContainer/KeyA.text = subFormatStr % kA
+		keyA.text = subFormatStr % kA
 	
-	btnB = $VBoxContainer/HBoxContainer/VBoxContainer2/BtnB
 	btnB.text = btnBName
 	actionB = actB
 	if OS.has_touchscreen_ui_hint():
-		$VBoxContainer/HBoxContainer/VBoxContainer2/KeyB.queue_free()
+		keyB.queue_free()
 	else:
-		$VBoxContainer/HBoxContainer/VBoxContainer2/KeyB.text = subFormatStr % kB
+		keyB.text = subFormatStr % kB
 
 func _input(event):
 	if not event is InputEventKey: return

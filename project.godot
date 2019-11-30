@@ -49,7 +49,6 @@ config/version=2.0
 
 Settings="*res://src/Settings.gd"
 Utils="*res://src/Utils.gd"
-FXPlayer="*res://src/FXPlayer.gd"
 SceneSwitcher="*res://src/SceneSwitcher.gd"
 Alert="*res://src/Alert.gd"
 
