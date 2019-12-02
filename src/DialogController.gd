@@ -40,6 +40,13 @@ func setup(msg, btnAName, kA, actA, btnBName = "Cancel", kB = "Esc", actB = "men
 	else:
 		keyB.text = subFormatStr % kB
 
+func remove_one_button():
+	$VBoxContainer/HBoxContainer/VBoxContainer2.queue_free()
+
+func add_subtitle(subtitle: String = ""):
+	$VBoxContainer/Subtitle.show()
+	$VBoxContainer/Subtitle.text = subtitle
+
 func _input(event):
 	if event is InputEventKey: 
 		if Input.is_action_just_pressed(actionA) :

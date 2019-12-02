@@ -25,8 +25,14 @@ func _init(msg, btnAName, kA, actA, btnBName = "Cancel", kB = "Esc", actB = "men
 	self.add_child(dialog_instance)
 
 func handle_btn_pressed(btn):
-	
 	match btn:
 		DialogController.BUTTONS.BTN_A: emit_signal("button_a_pressed")
 		DialogController.BUTTONS.BTN_B: emit_signal("button_b_pressed")
 	self.queue_free()
+
+func one_button():
+	dialog_instance.remove_one_button()
+	return dialog_instance
+
+func add_subtitle(text: String = ""):
+	dialog_instance.add_subtitle(text)

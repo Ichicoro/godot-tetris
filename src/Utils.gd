@@ -11,10 +11,11 @@ func _ready():
 
 
 func show_notification(title: String, subtitle: String = ""):
-	var notification = load("res://scenes/Notification.tscn").instance()
-	notification.get_node("Title").text = title
-	notification.get_node("Subtitle").text = subtitle
-	get_tree().root.add_child(notification)
+	var dialog = Dialog.new(title, "Ok", "Enter", "ui_accept")
+	dialog.one_button()
+	dialog.add_subtitle(subtitle)
+	get_tree().root.add_child(dialog)
+	return dialog
 
 
 func pause_node(node : Node) -> void:

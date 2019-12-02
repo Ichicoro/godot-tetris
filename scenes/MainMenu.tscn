@@ -26,6 +26,7 @@ func _on_SettingsButton__pressed():
 func _on_QuitButton_pressed():
 	$AudioStreamPlayer.play()
 	var dialog = Dialog.new(\"Quit?\", \"Confirm\", \"Q\", \"quit_confirm\")
+	dialog = Dialog.new(\"Quit?\", \"Confirm\", \"Q\", \"quit_confirm\")
 	dialog.connect(\"button_a_pressed\", self, \"exit_game\")
 	dialog.connect(\"button_b_pressed\", self, \"reset_focus\")
 	add_child(dialog)

@@ -52,14 +52,6 @@ Utils="*res://src/Utils.gd"
 SceneSwitcher="*res://src/SceneSwitcher.gd"
 Alert="*res://src/Alert.gd"
 
-[debug]
-
-gdscript/completion/autocomplete_setters_and_getters=true
-gdscript/warnings/unused_class_variable=false
-gdscript/warnings/unused_argument=false
-gdscript/warnings/return_value_discarded=false
-gdscript/warnings/unsafe_cast=true
-
 [display]
 
 window/size/width=430

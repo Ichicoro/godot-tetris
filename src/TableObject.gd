@@ -3,6 +3,7 @@ extends Object
 class_name Table
 
 signal newTableAction(action)
+signal quit_request()
 
 enum TABLE_ACTION \
 {
@@ -276,10 +277,14 @@ static func tableActionToString(action) :
 		_ : return ""
 
 func do_finish_animation():
-	
 	var old_hiscore = Utils.load_hiscore()
+	var dialog
 	if self.total_lines_cleared > old_hiscore:
-		Utils.show_notification("HI SCORE!", "New score: " + str(self.total_lines_cleared) + "\nPress ENTER to exit.")
+		dialog = Utils.show_notification("HI SCORE!", "New score: " + str(self.total_lines_cleared))
 		Utils.save_hiscore(self.total_lines_cleared)
 	else:
-		Utils.show_notification("GAME OVER", "Total score: " + str(self.total_lines_cleared) + "\nPress ENTER to exit.")
+		dialog = Utils.show_notification("GAME OVER", "Total score: " + str(self.total_lines_cleared))
+	dialog.connect("button_a_pressed", self, "handle_quitting")
+
+func handle_quitting():
+	emit_signal("quit_request")

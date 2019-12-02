@@ -15,6 +15,7 @@ func _ready():
 	tick_max = 1 - range_lerp(passedLevel, Settings.min_difficulty, Settings.max_difficulty, 0.5, 0.8)
 	table = Table.new(passedLevel)
 	table.connect("newTableAction", self, "handleTableAction")
+	table.connect("quit_request", self, "handle_quitting")
 	
 	emit_signal("newScore", 0)
 	emit_signal("newLevel", Settings.min_difficulty)
@@ -94,3 +95,6 @@ func handle_level_up():
 	emit_signal("newLevel", table.difficulty_level)
 	yield(get_tree().create_timer(1), "timeout")
 	get_tree().root.add_child(Alert.show_alert(Table.TABLE_ACTION.LEVEL_UP))
+
+func handle_quitting():
+	get_tree().change_scene("res://scenes/MainMenu.tscn")

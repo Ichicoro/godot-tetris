@@ -1,7 +1,6 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/buttons/MoveRightButton.tres" type="Texture" id=1]
-[ext_resource path="res://assets/buttons/HardDropButton.tres" type="Texture" id=2]
 [ext_resource path="res://assets/buttons/MoveLeftButton.tres" type="Texture" id=3]
 [ext_resource path="res://assets/buttons/RotateRightButton.tres" type="Texture" id=4]
 [ext_resource path="res://assets/buttons/RotateLeftButton.tres" type="Texture" id=5]
@@ -72,7 +71,7 @@ margin_top = -51.5002
 margin_right = -61.5
 margin_bottom = -39.5002
 rect_scale = Vector2( 3, 3 )
-texture_normal = ExtResource( 2 )
+texture_normal = ExtResource( 7 )
 texture_click_mask = ExtResource( 10 )
 script = ExtResource( 8 )
 __meta__ = {

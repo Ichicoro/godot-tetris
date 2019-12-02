@@ -143,8 +143,10 @@ margin_right = 280.0
 margin_bottom = 54.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 0
 size_flags_vertical = 4
 pressed = true
+enabled_focus_mode = 0
 script = ExtResource( 3 )
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
@@ -169,10 +171,12 @@ margin_right = 280.0
 margin_bottom = 54.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 0
 size_flags_vertical = 4
 custom_icons/checked = SubResource( 5 )
 custom_icons/unchecked = SubResource( 6 )
 pressed = true
+enabled_focus_mode = 0
 script = ExtResource( 3 )
 target = 1
 
@@ -192,16 +196,15 @@ __meta__ = {
 }
 
 [node name="BackBtn" type="Button" parent="VBoxContainer2"]
-margin_left = 4.0
-margin_right = 140.0
+margin_right = 136.0
 margin_bottom = 65.0
 rect_min_size = Vector2( 136, 0 )
 text = "BACK"
 script = SubResource( 7 )
 
 [node name="ResetBtn" type="Button" parent="VBoxContainer2"]
-margin_left = 178.0
-margin_right = 314.0
+margin_left = 174.0
+margin_right = 310.0
 margin_bottom = 65.0
 rect_min_size = Vector2( 136, 0 )
 text = "RESET"
