@@ -1,9 +1,9 @@
 [gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/fonts/PressStart2P.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://scenes/Button.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/SoundCheckbox.gd" type="Script" id=3]
 [ext_resource path="res://assets/buttons/Tetris Checkbox.png" type="Texture" id=4]
+[ext_resource path="res://assets/UI_theme.res" type="Theme" id=5]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -55,7 +55,7 @@ region = Rect2( 0, 30, 30, 30 )
 atlas = ExtResource( 4 )
 region = Rect2( 0, 0, 30, 30 )
 
-[sub_resource type="GDScript" id=9]
+[sub_resource type="GDScript" id=7]
 script/source = "extends Button
 
 export(String, FILE, \"*.tscn\") var menuScene = \"res://scenes/MainMenu.tscn\"
@@ -63,10 +63,9 @@ export(String, FILE, \"*.tscn\") var menuScene = \"res://scenes/MainMenu.tscn\"
 func _pressed():
 	Utils.save_settings()
 	SceneSwitcher.change_scene(menuScene)
-
 "
 
-[sub_resource type="GDScript" id=10]
+[sub_resource type="GDScript" id=8]
 script/source = "extends Button
 
 signal reset
@@ -79,6 +78,7 @@ func _pressed():
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 5 )
 __meta__ = {
 "_edit_horizontal_guides_": [  ],
 "_edit_use_anchors_": false,
@@ -129,7 +129,7 @@ size_flags_vertical = 7
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
 margin_top = 27.0
-margin_right = 238.0
+margin_right = 246.0
 margin_bottom = 51.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 4 )
@@ -137,15 +137,13 @@ text = "Music"
 valign = 1
 
 [node name="MusicCheck" type="CheckBox" parent="VBoxContainer/HBoxContainer"]
-margin_left = 242.0
-margin_top = 20.0
+margin_left = 250.0
+margin_top = 24.0
 margin_right = 280.0
-margin_bottom = 58.0
+margin_bottom = 54.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 4
-custom_icons/checked = SubResource( 5 )
-custom_icons/unchecked = SubResource( 6 )
 pressed = true
 script = ExtResource( 3 )
 
@@ -157,7 +155,7 @@ size_flags_vertical = 7
 
 [node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer2"]
 margin_top = 27.0
-margin_right = 238.0
+margin_right = 246.0
 margin_bottom = 51.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 4 )
@@ -165,10 +163,10 @@ text = "SFX"
 valign = 1
 
 [node name="SFXCheck" type="CheckBox" parent="VBoxContainer/HBoxContainer2"]
-margin_left = 242.0
-margin_top = 20.0
+margin_left = 250.0
+margin_top = 24.0
 margin_right = 280.0
-margin_bottom = 58.0
+margin_bottom = 54.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 4
@@ -183,31 +181,30 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -152.0
-margin_top = -92.7009
-margin_right = 152.0
-margin_bottom = -27.7009
+margin_left = -155.0
+margin_top = -95.3252
+margin_right = 155.0
+margin_bottom = -30.3252
 custom_constants/separation = 38
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BackBtn" parent="VBoxContainer2" instance=ExtResource( 2 )]
-margin_right = 130.0
+[node name="BackBtn" type="Button" parent="VBoxContainer2"]
+margin_left = 4.0
+margin_right = 140.0
 margin_bottom = 65.0
-rect_min_size = Vector2( 130, 65 )
-size_flags_horizontal = 4
+rect_min_size = Vector2( 136, 0 )
 text = "BACK"
-script = SubResource( 9 )
+script = SubResource( 7 )
 
-[node name="ResetBtn" parent="VBoxContainer2" instance=ExtResource( 2 )]
-margin_left = 168.0
-margin_right = 304.0
+[node name="ResetBtn" type="Button" parent="VBoxContainer2"]
+margin_left = 178.0
+margin_right = 314.0
 margin_bottom = 65.0
-rect_min_size = Vector2( 130, 65 )
-size_flags_horizontal = 4
+rect_min_size = Vector2( 136, 0 )
 text = "RESET"
-script = SubResource( 10 )
-[connection signal="reset" from="VBoxContainer2/ResetBtn" to="VBoxContainer/HBoxContainer2/SFXCheck" method="_on_ResetBtn_reset"]
-[connection signal="reset" from="VBoxContainer2/ResetBtn" to="VBoxContainer/HBoxContainer/MusicCheck" method="_on_ResetBtn_reset"]
+script = SubResource( 8 )
+[connection signal="reset" from="VBoxContainer2/ResetBtn" to="VBoxContainer/HBoxContainer2/SFXCheck" method="reset"]
+[connection signal="reset" from="VBoxContainer2/ResetBtn" to="VBoxContainer/HBoxContainer/MusicCheck" method="reset"]
