@@ -48,20 +48,15 @@ func setup_tetrominos():
 	self.tetrominos.append(Tetromino.new(
 		[[2,2],
 		[2,2]],
-		{'row':0,'col':4})
-	)
+		{'row':0,'col':4}
+	))
 	self.tetrominos.append(Tetromino.new(
 		[[3,3,3],
 		[3,0,0]]
 	))
 	self.tetrominos.append(Tetromino.new(
-		[[4,4,4,4]],
-		{'row':0,'col':3}
+		[[4,4,4,4]]
 	))
-#	self.tetrominos.append(Tetromino.new(
-#		[[4],[4],[4],[4]],
-#		{'row':0,'col':4}
-#	))
 	self.tetrominos.append(Tetromino.new(
 		[[5,5,5],
 		[0,0,5]]
@@ -202,7 +197,7 @@ func hold_tetromino():
 	else:
 		self.ft = self.held_tetromino.copy()
 		self.held_tetromino = current_tetromino
-	#self.ft.reset_topleft()
+	self.ft.reset_topleft()
 	emit_signal("newTableAction", TABLE_ACTION.HOLD)
 
 func check_lines():
@@ -234,31 +229,27 @@ func linesClearedToAction(lines):
 		4: return TABLE_ACTION.TETRIS
 
 func update_level(lines_cleared):
-	if (lines_cleared == 0): return
-	cleared_counter += lines_cleared
-	if cleared_counter>=10 and difficulty_level<Settings.max_difficulty:
-		difficulty_level += 1
-		cleared_counter = 0
-		emit_signal("newTableAction", TABLE_ACTION.LEVEL_UP)
+	if (lines_cleared != 0):
+		cleared_counter += lines_cleared
+		if cleared_counter>=10 and difficulty_level<Settings.max_difficulty:
+			difficulty_level += 1
+			cleared_counter = 0
+			emit_signal("newTableAction", TABLE_ACTION.LEVEL_UP)
 
 func tick():
-	if !can_tick:
-		return
-		
-	if try_moving_down():
+	if can_tick:
+		if not try_moving_down():
+			drop_piece()
+			self.ft = self.nextft
+			self.nextft = self.gen_random_tetromino()
+			if !check_newft(self.ft):
+				self.ft = null
+				self.nextft = null
+				print("ENDGAME - Total score: ", self.total_lines_cleared)
+				do_finish_animation()
+				can_tick = false
 		return check_lines()
-	else:
-		drop_piece()
-		self.ft = self.nextft
-		self.nextft = self.gen_random_tetromino()
-		if !check_newft(self.ft):
-			self.ft = null
-			self.nextft = null
-			print("ENDGAME - Total score: ", self.total_lines_cleared)
-			do_finish_animation()
-			can_tick = false
-			return check_lines()
-	return check_lines()
+	return -1
 
 static func tableActionToString(action) :
 	match action:

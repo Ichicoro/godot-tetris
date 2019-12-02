@@ -29,17 +29,14 @@ const textures = {
 	8: preload("res://assets/tetrominos/z.png"),
 }
 
-
 func _init(shp, tl = {"row": 0, "col": 3}):
 	self.shape = shp.duplicate(true)
 	self.topleft = tl.duplicate(true)
-	self.def_topleft = topleft.duplicate(true)
-	
+	self.def_topleft = {"row": 0, "col": tl.col}
 	
 func copy():
 	var t = get_script().new(self.shape.duplicate(true), self.topleft.duplicate(true))
 	return t
-
 
 func rotated_right():
 	var newft = self.copy()
@@ -50,7 +47,6 @@ func rotated_right():
 			newshape[x].push_front(self.shape[y][x])
 	newft.shape = newshape
 	return newft
-
 
 func rotated_left():
 	var newft = self.copy()
@@ -64,18 +60,15 @@ func rotated_left():
 	newft.shape = newshape
 	return newft
 
-
 func moved_left():
 	var newft = self.copy()
 	newft.topleft.col -= 1
 	return newft
 
-
 func moved_right():
 	var newft = self.copy()
 	newft.topleft.col += 1
 	return newft
-
 
 func moved_down():
 	var newft = self.copy()
@@ -86,19 +79,18 @@ func containsPoint(x: int, y: int):
 	return (y in range(topleft.row, topleft.row+len(shape)) and x in range(topleft.col, topleft.col+len(shape[0])))
 
 func valueAtPoint(x: int, y: int):
-	if containsPoint(x, y):
-		return shape[y - topleft.row][x - topleft.col]
-	else :
-		return -1
+	return shape[y - topleft.row][x - topleft.col] if containsPoint(x, y) else -1
 
 static func get_tint_from_value(value):
 	return colors[value]
 
-
 static func get_texture_from_value(value):
 	return textures[value]
 
-
 func reset_topleft():
-	var new_topleft = self.def_topleft.duplicate(true)
-	self.topleft = new_topleft
+	
+	print(self.shape)
+	print("TOPLEFT : " + str(self.topleft) + " | DEF_TOPLEFT : " + str(self.def_topleft))
+	
+	self.topleft.row = self.def_topleft.row
+	self.topleft.col = self.def_topleft.col
