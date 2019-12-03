@@ -8,9 +8,6 @@ var tick_timer = 0
 var tick_max = 0.5
 var paused = false
 
-var tick_count = 0
-var prev_tick = -1
-
 func _ready():
 	var passedLevel = SceneSwitcher.get_param("level")
 	if passedLevel == null:
@@ -59,17 +56,9 @@ func _process(delta):
 		table.try_rotating_right()
 		tick_timer = tick_max/4
 	if Input.is_action_just_pressed("move_left"):
-		if tick_count != prev_tick :
-			prev_tick = tick_count
-		print("MOVE LEFT")
-		#table.ft.print_status()
 		table.try_moving_left()
 		tick_timer = tick_max/4
 	if Input.is_action_just_pressed("move_right"):
-		if tick_count != prev_tick :
-			prev_tick = tick_count
-		print("MOVE RIGHT")
-		#table.ft.print_status()
 		table.try_moving_right()
 		tick_timer = tick_max/4
 		
@@ -78,7 +67,6 @@ func _process(delta):
 	if (tick_timer >= tick_max):
 		tick_timer = 0
 		table.tick()
-		tick_count += 1
 		if table.can_tick:
 			self.redraw()
 

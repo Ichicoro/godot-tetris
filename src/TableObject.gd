@@ -219,7 +219,6 @@ func update_level(lines_cleared):
 
 func tick():
 	if can_tick:
-		ft.print_status()
 		if not try_moving_down():
 			drop_piece()
 			self.ft = self.nextft
