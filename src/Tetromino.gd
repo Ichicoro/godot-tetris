@@ -29,13 +29,14 @@ const textures = {
 	8: preload("res://assets/tetrominos/z.png"),
 }
 
-func _init(shp, tl = {"row": 0, "col": 3}, tl_col : int = 3):
+func _init(shp, tl_col: int = 3, tl_row: int = 0):   # tl = {"row": 0, "col": 3},
 	self.shape = shp.duplicate(true)
-	self.topleft = tl.duplicate(true)
-	self.def_topleft = {"row": 0, "col": tl.col}
+	self.topleft = {"row": tl_row, "col": tl_col}
+	self.def_topleft = {"row": 0, "col": tl_col}
 	
 func copy():
-	var t = get_script().new(self.shape, self.topleft)
+	var t = get_script().new(self.shape, self.topleft.col, self.topleft.row)
+	t.def_topleft = { "row": self.def_topleft.row, "col": self.def_topleft.col }
 	return t
 
 func rotated_right():
@@ -96,5 +97,4 @@ func print_status():
 	print("TOPLEFT : " + str(self.topleft) + " | DEF_TOPLEFT : " + str(self.def_topleft))
 
 func reset_topleft():
-	self.topleft.row = self.def_topleft.row
-	self.topleft.col = self.def_topleft.col
+	self.topleft = {"row": self.def_topleft.row, "col": self.def_topleft.col }

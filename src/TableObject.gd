@@ -48,7 +48,7 @@ func setup_tetrominos():
 	self.tetrominos.append(Tetromino.new(
 		[[2,2],
 		[2,2]],
-		{'row':0,'col':4}, 4
+		4
 	))
 	self.tetrominos.append(Tetromino.new(
 		[[3,3,3],
@@ -177,7 +177,7 @@ func hold_tetromino():
 	else:
 		self.ft = self.held_tetromino.copy()
 		self.held_tetromino = current_tetromino
-	self.ft.reset_topleft()
+	self.ft.topleft = {"row": 0, "col": self.ft.def_topleft.col}
 	
 	emit_signal("newTableAction", TABLE_ACTION.HOLD)
 
