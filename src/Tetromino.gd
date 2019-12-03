@@ -3,7 +3,7 @@ class_name Tetromino
 
 var shape = []
 var topleft
-var def_col
+var def_topleft
 
 const colors = {
 	0: Color(1,1,1,0.1), 				# no tetromino
@@ -29,13 +29,14 @@ const textures = {
 	8: preload("res://assets/tetrominos/z.png"),
 }
 
-func _init(shp, tl_col: int = 3, tl_row: int = 0, d_col : int = 3) :
+func _init(shp, tl_col: int = 3, tl_row: int = 0):   # tl = {"row": 0, "col": 3},
 	self.shape = shp.duplicate(true)
 	self.topleft = {"row": tl_row, "col": tl_col}
-	self.def_col = d_col
+	self.def_topleft = {"row": 0, "col": tl_col}
 	
 func copy():
-	var t = get_script().new(self.shape, self.topleft.col, self.topleft.row, self.def_col)
+	var t = get_script().new(self.shape, self.topleft.col, self.topleft.row)
+	t.def_topleft = { "row": self.def_topleft.row, "col": self.def_topleft.col }
 	return t
 
 func rotated_right():
@@ -52,6 +53,7 @@ func rotated_left():
 	var newft = self.copy()
 	var newshape = []
 	for x in range(len(self.shape[0])):
+#		x = len(self.shape[0]) -1 -x
 		newshape.append([])
 		for y in range(len(self.shape)):
 			y = len(self.shape) - y - 1
@@ -61,12 +63,16 @@ func rotated_left():
 
 func moved_left():
 	var newft : Tetromino = self.copy()
+	var mah = def_topleft.col
 	newft.topleft.col -= 1
+	newft.def_topleft.col = mah
 	return newft
 
 func moved_right():
 	var newft : Tetromino = self.copy()
+	var mah = def_topleft.col
 	newft.topleft.col += 1
+	newft.def_topleft.col = mah
 	return newft
 
 func moved_down():
@@ -91,5 +97,4 @@ func print_status():
 	print("TOPLEFT : " + str(self.topleft) + " | DEF_TOPLEFT : " + str(self.def_topleft))
 
 func reset_topleft():
-	self.topleft.row = 0
-	self.topleft.col = self.def_col
+	self.topleft = {"row": self.def_topleft.row, "col": self.def_topleft.col }
