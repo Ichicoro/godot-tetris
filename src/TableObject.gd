@@ -48,7 +48,7 @@ func setup_tetrominos():
 	self.tetrominos.append(Tetromino.new(
 		[[2,2],
 		[2,2]],
-		{'row':0,'col':4}
+		{'row':0,'col':4}, 4
 	))
 	self.tetrominos.append(Tetromino.new(
 		[[3,3,3],
@@ -96,47 +96,34 @@ func check_newft(newft):
 		for x in range(len(self.ft.shape[0])):
 			var xpos = x+newft.topleft.col
 			var ypos = y+newft.topleft.row
-			if self.ft.shape[y][x] != 0:
-				if self.grid[ypos][xpos] != 0:
-					return false
+			if self.ft.shape[y][x] != 0 and self.grid[ypos][xpos] != 0:
+				return false
 	return true
 
 
 func try_moving_left():
 	var newft = self.ft.moved_left()
-	if (newft.topleft.col == -1):
-		return false
-	if not check_newft(newft):
-		return false
-	self.ft = newft
-	
-	emit_signal("newTableAction", TABLE_ACTION.MOVE_L)
-	
-	return true
-	
+	if (newft.topleft.col != -1) and check_newft(newft):
+		self.ft = newft
+		emit_signal("newTableAction", TABLE_ACTION.MOVE_L)
+		return true
+	return false
 	
 func try_moving_right():
 	var newft = self.ft.moved_right()
-	if (newft.topleft.col+len(newft.shape[0]) == self.grid_size.x+1):
-		return false
-	if not check_newft(newft):
-		return false
-	self.ft = newft
-	
-	emit_signal("newTableAction", TABLE_ACTION.MOVE_R)
-	
-	return true
+	if (newft.topleft.col+len(newft.shape[0]) != self.grid_size.x+1) and check_newft(newft):
+		self.ft = newft
+		emit_signal("newTableAction", TABLE_ACTION.MOVE_R)
+		return true
+	return false
 
 
 func try_moving_down():
 	var newft = self.ft.moved_down()
-	if (newft.topleft.row+len(newft.shape) == self.grid_size.y+1):
-		return false
-	if not check_newft(newft):
-		return false
-	self.ft = newft
-	return true
-
+	if (newft.topleft.row+len(newft.shape) != self.grid_size.y+1) and check_newft(newft):
+		self.ft = newft
+		return true
+	return false
 
 func try_rotating_left():
 	var newft = self.ft.rotated_left()
@@ -145,14 +132,11 @@ func try_rotating_left():
 			newft.topleft.col -= 1
 	while (newft.topleft.row+len(newft.shape) >= self.grid_size.y+1):
 		newft.topleft.row -= 1
-	if not check_newft(newft):
-		return false
-	self.ft = newft
-	
-	emit_signal("newTableAction", TABLE_ACTION.SPIN_L)
-	
-	return true
-
+	if check_newft(newft):
+		self.ft = newft
+		emit_signal("newTableAction", TABLE_ACTION.SPIN_L)
+		return true
+	return false
 
 func try_rotating_right():
 	var newft = self.ft.rotated_right()
@@ -160,14 +144,11 @@ func try_rotating_right():
 			newft.topleft.col -= 1
 	while (newft.topleft.row+len(newft.shape) >= self.grid_size.y+1):
 		newft.topleft.row -= 1
-	if not check_newft(newft):
-		return false
-	self.ft = newft
-	
-	emit_signal("newTableAction", TABLE_ACTION.SPIN_R)
-	
-	return true
-
+	if check_newft(newft):
+		self.ft = newft
+		emit_signal("newTableAction", TABLE_ACTION.SPIN_R)
+		return true
+	return false
 
 func drop_piece():
 	for y in range(len(self.ft.shape)):
@@ -176,9 +157,8 @@ func drop_piece():
 			var ypos = self.ft.topleft.row+y
 			if self.ft.shape[y][x] != 0:
 				self.grid[ypos][xpos] = self.ft.shape[y][x]
-		
+	
 	emit_signal("newTableAction", TABLE_ACTION.SOFT_DROP)
-
 
 func hard_drop():
 	while (try_moving_down()):
@@ -198,6 +178,7 @@ func hold_tetromino():
 		self.ft = self.held_tetromino.copy()
 		self.held_tetromino = current_tetromino
 	self.ft.reset_topleft()
+	
 	emit_signal("newTableAction", TABLE_ACTION.HOLD)
 
 func check_lines():
@@ -238,6 +219,7 @@ func update_level(lines_cleared):
 
 func tick():
 	if can_tick:
+		ft.print_status()
 		if not try_moving_down():
 			drop_piece()
 			self.ft = self.nextft

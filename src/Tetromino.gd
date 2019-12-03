@@ -29,13 +29,13 @@ const textures = {
 	8: preload("res://assets/tetrominos/z.png"),
 }
 
-func _init(shp, tl = {"row": 0, "col": 3}):
+func _init(shp, tl = {"row": 0, "col": 3}, tl_col : int = 3):
 	self.shape = shp.duplicate(true)
 	self.topleft = tl.duplicate(true)
 	self.def_topleft = {"row": 0, "col": tl.col}
 	
 func copy():
-	var t = get_script().new(self.shape.duplicate(true), self.topleft.duplicate(true))
+	var t = get_script().new(self.shape, self.topleft)
 	return t
 
 func rotated_right():
@@ -61,13 +61,17 @@ func rotated_left():
 	return newft
 
 func moved_left():
-	var newft = self.copy()
+	var newft : Tetromino = self.copy()
+	var mah = def_topleft.col
 	newft.topleft.col -= 1
+	newft.def_topleft.col = mah
 	return newft
 
 func moved_right():
-	var newft = self.copy()
+	var newft : Tetromino = self.copy()
+	var mah = def_topleft.col
 	newft.topleft.col += 1
+	newft.def_topleft.col = mah
 	return newft
 
 func moved_down():
@@ -87,10 +91,10 @@ static func get_tint_from_value(value):
 static func get_texture_from_value(value):
 	return textures[value]
 
-func reset_topleft():
-	
+func print_status():
 	print(self.shape)
 	print("TOPLEFT : " + str(self.topleft) + " | DEF_TOPLEFT : " + str(self.def_topleft))
-	
+
+func reset_topleft():
 	self.topleft.row = self.def_topleft.row
 	self.topleft.col = self.def_topleft.col
