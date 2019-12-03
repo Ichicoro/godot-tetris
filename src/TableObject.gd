@@ -177,7 +177,7 @@ func hold_tetromino():
 	else:
 		self.ft = self.held_tetromino.copy()
 		self.held_tetromino = current_tetromino
-	self.ft.topleft = {"row": 0, "col": self.ft.offset}
+	self.ft.topleft = {"row": 0, "col": self.ft.def_col}
 	
 	emit_signal("newTableAction", TABLE_ACTION.HOLD)
 

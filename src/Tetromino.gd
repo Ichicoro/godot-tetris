@@ -3,7 +3,7 @@ class_name Tetromino
 
 var shape = []
 var topleft
-var offset
+var def_col
 
 const colors = {
 	0: Color(1,1,1,0.1), 				# no tetromino
@@ -32,11 +32,11 @@ const textures = {
 func _init(shp, tl_col: int = 3, tl_row: int = 0):
 	self.shape = shp.duplicate(true)
 	self.topleft = {"row": tl_row, "col": tl_col}
-	self.offset = tl_col
+	self.def_col = tl_col
 	
 func copy():
 	var t = get_script().new(self.shape, self.topleft.col, self.topleft.row)
-	t.offset = self.offset
+	t.def_col = self.def_col
 	return t
 
 func rotated_right():
@@ -97,4 +97,4 @@ func print_status():
 	#print("TOPLEFT : " + str(self.topleft) + " | DEF_TOPLEFT : " + str(self.def_topleft))
 
 func reset_topleft():
-	self.topleft = {"row": 0, "col": offset}
+	self.topleft = {"row": 0, "col": def_col}
