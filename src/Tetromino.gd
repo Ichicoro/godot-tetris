@@ -3,7 +3,7 @@ class_name Tetromino
 
 var shape = []
 var topleft
-var def_topleft
+var offset
 
 const colors = {
 	0: Color(1,1,1,0.1), 				# no tetromino
@@ -29,14 +29,14 @@ const textures = {
 	8: preload("res://assets/tetrominos/z.png"),
 }
 
-func _init(shp, tl_col: int = 3, tl_row: int = 0):   # tl = {"row": 0, "col": 3},
+func _init(shp, tl_col: int = 3, tl_row: int = 0):
 	self.shape = shp.duplicate(true)
 	self.topleft = {"row": tl_row, "col": tl_col}
-	self.def_topleft = {"row": 0, "col": tl_col}
+	self.offset = tl_col
 	
 func copy():
 	var t = get_script().new(self.shape, self.topleft.col, self.topleft.row)
-	t.def_topleft = { "row": self.def_topleft.row, "col": self.def_topleft.col }
+	t.offset = self.offset
 	return t
 
 func rotated_right():
@@ -63,16 +63,16 @@ func rotated_left():
 
 func moved_left():
 	var newft : Tetromino = self.copy()
-	var mah = def_topleft.col
+#	var mah = def_topleft.col
 	newft.topleft.col -= 1
-	newft.def_topleft.col = mah
+#	newft.def_topleft.col = mah
 	return newft
 
 func moved_right():
 	var newft : Tetromino = self.copy()
-	var mah = def_topleft.col
+#	var mah = def_topleft.col
 	newft.topleft.col += 1
-	newft.def_topleft.col = mah
+#	newft.def_topleft.col = mah
 	return newft
 
 func moved_down():
@@ -94,7 +94,7 @@ static func get_texture_from_value(value):
 
 func print_status():
 	print(self.shape)
-	print("TOPLEFT : " + str(self.topleft) + " | DEF_TOPLEFT : " + str(self.def_topleft))
+	#print("TOPLEFT : " + str(self.topleft) + " | DEF_TOPLEFT : " + str(self.def_topleft))
 
 func reset_topleft():
-	self.topleft = {"row": self.def_topleft.row, "col": self.def_topleft.col }
+	self.topleft = {"row": 0, "col": offset}
