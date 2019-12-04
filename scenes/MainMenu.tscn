@@ -14,6 +14,8 @@ func _ready():
 	Utils.load_settings()
 	if OS.get_name() in [\"HTML5\", \"Android\", \"iOS\"]:
 		$VBoxContainer/QuitButton.hide()
+	else:
+		$VBoxContainer/PlayButton.grab_focus()
 
 func _on_PlayButton_pressed():
 	$AudioStreamPlayer.play()

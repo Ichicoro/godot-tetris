@@ -28,11 +28,10 @@ func toggle_pause(p):
 func handleTableAction(action) :
 	if action in range(Table.TABLE_ACTION.SINGLE_CLEAR, Table.TABLE_ACTION.TETRIS+1) :
 		handle_lines_cleared(action - Table.TABLE_ACTION.SINGLE_CLEAR + 1)
-	
 	if action == Table.TABLE_ACTION.LEVEL_UP :
 		handle_level_up()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+
 func _process(delta):
 	if !table.can_tick or paused:
 		return
