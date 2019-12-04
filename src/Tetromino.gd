@@ -4,6 +4,7 @@ class_name Tetromino
 var shape = []
 var topleft
 var def_col
+var def_shape = []
 
 const colors = {
 	0: Color(1,1,1,0.1), 				# no tetromino
@@ -31,12 +32,14 @@ const textures = {
 
 func _init(shp, tl_col: int = 3, tl_row: int = 0):
 	self.shape = shp.duplicate(true)
+	self.def_shape = shp.duplicate(true)
 	self.topleft = {"row": tl_row, "col": tl_col}
 	self.def_col = tl_col
 	
 func copy():
 	var t = get_script().new(self.shape, self.topleft.col, self.topleft.row)
 	t.def_col = self.def_col
+	t.def_shape = self.def_shape.duplicate(true)
 	return t
 
 func rotated_right():
@@ -50,7 +53,7 @@ func rotated_right():
 	return newft
 
 func rotated_left():
-	var newft = self.copy()
+	var newft : Tetromino = self.copy()
 	var newshape = []
 	for x in range(len(self.shape[0])):
 #		x = len(self.shape[0]) -1 -x
@@ -63,22 +66,24 @@ func rotated_left():
 
 func moved_left():
 	var newft : Tetromino = self.copy()
-#	var mah = def_topleft.col
 	newft.topleft.col -= 1
-#	newft.def_topleft.col = mah
 	return newft
 
 func moved_right():
 	var newft : Tetromino = self.copy()
-#	var mah = def_topleft.col
 	newft.topleft.col += 1
-#	newft.def_topleft.col = mah
 	return newft
 
 func moved_down():
 	var newft = self.copy()
 	newft.topleft.row += 1
 	return newft
+	
+func getHeight() -> int:
+	return len(shape)
+	
+func getWidth() -> int:
+	return len(shape[0])
 
 func containsPoint(x: int, y: int):
 	return (y in range(topleft.row, topleft.row+len(shape)) and x in range(topleft.col, topleft.col+len(shape[0])))
@@ -92,9 +97,6 @@ static func get_tint_from_value(value):
 static func get_texture_from_value(value):
 	return textures[value]
 
-func print_status():
-	print(self.shape)
-	#print("TOPLEFT : " + str(self.topleft) + " | DEF_TOPLEFT : " + str(self.def_topleft))
-
-func reset_topleft():
+func reset():
 	self.topleft = {"row": 0, "col": def_col}
+	self.shape = def_shape

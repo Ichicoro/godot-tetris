@@ -100,7 +100,6 @@ func check_newft(newft):
 				return false
 	return true
 
-
 func try_moving_left():
 	var newft = self.ft.moved_left()
 	if (newft.topleft.col != -1) and check_newft(newft):
@@ -172,12 +171,12 @@ func hold_tetromino():
 	if held_tetromino == null:
 		self.ft = self.nextft.copy()
 		self.held_tetromino = current_tetromino
-		self.held_tetromino.reset_topleft()
+		self.held_tetromino.reset()
 		self.nextft = gen_random_tetromino()
 	else:
 		self.ft = self.held_tetromino.copy()
 		self.held_tetromino = current_tetromino
-	self.ft.topleft = {"row": 0, "col": self.ft.def_col}
+	self.ft.reset()
 	
 	emit_signal("newTableAction", TABLE_ACTION.HOLD)
 
