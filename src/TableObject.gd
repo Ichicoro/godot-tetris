@@ -124,6 +124,10 @@ func try_moving_down():
 		return true
 	return false
 
+func can_move_down():
+	var newft = self.ft.moved_down()
+	return (newft.topleft.row+len(newft.shape) != self.grid_size.y+1) and check_newft(newft)
+
 func try_rotating_left():
 	var newft = self.ft.rotated_left()
 	if (newft.topleft.col+len(newft.shape[0]) >= self.grid_size.x+1):
