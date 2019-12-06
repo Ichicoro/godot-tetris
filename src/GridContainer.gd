@@ -37,9 +37,20 @@ func handleTableAction(action) :
 func _process(delta):
 	if !table.can_tick or paused:
 		return
-		
+	
+	var did_act = false
 	table.check_lines()
-	tick_timer += delta
+	
+	if not table.can_move_down():
+		if pause_locked_time <= 3:# && pause_locked_time >= 0:
+			pause_lockable = true
+		else:
+			pause_lockable = false
+#			pause_locked_time = 0
+		print_debug("pause_lockable = ", pause_lockable, "\n", "pause_locked_time = ", pause_locked_time)
+	else:
+		pause_lockable = false
+		pause_locked_time = 0
 	
 	if not table.can_move_down():
 		if pause_locked_time <= 5 && pause_locked_time >= 0-delta*2:
@@ -50,38 +61,33 @@ func _process(delta):
 	
 	if Input.is_action_just_pressed("hard_drop"):
 		table.hard_drop()
-		if pause_lockable:
-			tick_timer -= delta
-			pause_locked_time += delta
+		did_act = true
 	if Input.is_action_just_pressed("soft_drop"):
 		table.tick()
-		if pause_lockable:
-			tick_timer -= delta
-			pause_locked_time += delta
+		did_act = true
 	if Input.is_action_just_pressed("hold"):
 		table.hold_tetromino()
-		tick_timer -= max(8/tick_max, 0)
+		did_act = true
 	if Input.is_action_just_pressed("spin_left"):
 		table.try_rotating_left()
-		if pause_lockable:
-			tick_timer -= delta
-			pause_locked_time += delta
+		did_act = true
 	if Input.is_action_just_pressed("spin_right"):
 		table.try_rotating_right()
-		if pause_lockable:
-			tick_timer -= delta
-			pause_locked_time += delta
+		did_act = true
 	if Input.is_action_just_pressed("move_left"):
 		table.try_moving_left()
-		if pause_lockable:
-			tick_timer -= delta
-			pause_locked_time += delta
+		did_act = true
 	if Input.is_action_just_pressed("move_right"):
 		table.try_moving_right()
+		did_act = true
+	
+	if did_act:
 		if pause_lockable:
-			tick_timer -= delta
+			tick_timer = max(0, tick_timer-delta)
 			pause_locked_time += delta
-		
+	else:
+		tick_timer += delta
+	
 	self.redraw()
 		
 	if (tick_timer >= tick_max):
