@@ -34,8 +34,8 @@ var tetrominos = []
 var difficulty_level: int
 
 # Called when the node enters the scene tree for the first time.
-func _init(difficulty: int = Settings.min_difficulty, grd_sz: Vector2 = Vector2(10,16)):
-	self.difficulty_level = difficulty
+func _init(diff: int = Settings.min_difficulty, grd_sz: Vector2 = Vector2(10,16)):
+	self.difficulty_level = diff
 	self.grid_size = grd_sz
 	self.can_tick = true
 	setup_tetrominos()

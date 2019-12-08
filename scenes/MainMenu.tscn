@@ -18,7 +18,7 @@ func _ready():
 		$VBoxContainer/PlayButton.grab_focus()
 
 func _on_PlayButton_pressed():
-	$AudioStreamPlayer.play()
+	playJingle()
 	var PlayDialog = load(playDialogScene)
 	add_child(PlayDialog.instance())
 
@@ -26,13 +26,17 @@ func _on_SettingsButton__pressed():
 	SceneSwitcher.change_scene(settingsScene)
 
 func _on_QuitButton_pressed():
-	$AudioStreamPlayer.play()
+	playJingle()
 	var dialog = Dialog.new(\"Quit?\", \"Confirm\", \"Q\", \"quit_confirm\")
 	dialog = Dialog.new(\"Quit?\", \"Confirm\", \"Q\", \"quit_confirm\")
 	dialog.connect(\"button_a_pressed\", self, \"exit_game\")
 	dialog.connect(\"button_b_pressed\", self, \"reset_focus\")
 	add_child(dialog)
 	self.focus_mode = Control.FOCUS_NONE
+
+func playJingle():
+	if Settings.canPlaySFX:
+		$AudioStreamPlayer.play()
 
 func exit_game():
 	get_tree().quit()
