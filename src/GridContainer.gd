@@ -41,12 +41,23 @@ func _process(delta):
 	var did_act = false
 	table.check_lines()
 	
-	var pltInRange = (pause_locked_time >= -delta*2 and pause_locked_time <= 5)
+	if not table.can_move_down():
+		if pause_locked_time <= 3:
+			pause_lockable = true
+		else:
+			pause_lockable = false
+#			pause_locked_time = 0
+		print_debug("pause_lockable = ", pause_lockable, "\n", "pause_locked_time = ", pause_locked_time)
+	else:
+		pause_lockable = false
+		pause_locked_time = 0
 	
-	pause_lockable = (not table.can_move_down() and pltInRange)
-	
-	if not(table.can_move_down() and not pltInRange):
-		pause_lockable = 0
+	if not table.can_move_down():
+		if pause_locked_time <= 5 && pause_locked_time >= 0-delta*2:
+			pause_lockable = true
+		else:
+			pause_lockable = false
+			pause_locked_time = 0
 	
 	if Input.is_action_just_pressed("hard_drop"):
 		table.hard_drop()
