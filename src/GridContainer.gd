@@ -42,20 +42,12 @@ func _process(delta):
 	table.check_lines()
 	
 	if not table.can_move_down():
-		if pause_locked_time <= 3:
-			pause_lockable = true
-		else:
-			pause_lockable = false
+		pause_lockable = (pause_locked_time >= -delta*2 and pause_locked_time <= 5)
+		if not pause_lockable:
+			pause_locked_time = 0
 	else:
 		pause_lockable = false
 		pause_locked_time = 0
-	
-	if not table.can_move_down():
-		if pause_locked_time <= 5 && pause_locked_time >= 0-delta*2:
-			pause_lockable = true
-		else:
-			pause_lockable = false
-			pause_locked_time = 0
 	
 	if Input.is_action_just_pressed("hard_drop"):
 		table.hard_drop()
