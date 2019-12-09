@@ -46,8 +46,6 @@ func _process(delta):
 			pause_lockable = true
 		else:
 			pause_lockable = false
-#			pause_locked_time = 0
-		print_debug("pause_lockable = ", pause_lockable, "\n", "pause_locked_time = ", pause_locked_time)
 	else:
 		pause_lockable = false
 		pause_locked_time = 0
