@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/fonts/PressStart2P.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://scenes/Button.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/sounds/sfx/tetris_jingle.wav" type="AudioStream" id=3]
+[ext_resource path="res://src/SafeAreaContainer.gd" type="Script" id=4]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
@@ -13,9 +14,9 @@ export(String, FILE, \"*.tscn\") var settingsScene = \"res://scenes/SettingsMenu
 func _ready():
 	Utils.load_settings()
 	if OS.get_name() in [\"HTML5\", \"Android\", \"iOS\"]:
-		$VBoxContainer/QuitButton.hide()
+		$SafeAreaContainer/VBoxContainer/QuitButton.hide()
 	else:
-		$VBoxContainer/PlayButton.grab_focus()
+		$SafeAreaContainer/VBoxContainer/PlayButton.grab_focus()
 
 func _on_PlayButton_pressed():
 	playJingle()
@@ -36,7 +37,7 @@ func _on_QuitButton_pressed():
 
 func playJingle():
 	if Settings.canPlaySFX:
-		$AudioStreamPlayer.play()
+		$SafeAreaContainer/AudioStreamPlayer.play()
 
 func exit_game():
 	get_tree().quit()
@@ -72,6 +73,7 @@ void fragment() {
 		COLOR = color2;
 	}
 }"
+custom_defines = ""
 
 [sub_resource type="ShaderMaterial" id=3]
 shader = SubResource( 2 )
@@ -134,7 +136,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="SafeAreaContainer" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SafeAreaContainer"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -142,21 +152,21 @@ anchor_bottom = 0.5
 margin_left = -115.0
 margin_top = -102.0
 margin_right = 115.0
-margin_bottom = 102.0
+margin_bottom = 153.0
 custom_constants/separation = 30
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PlayButton" parent="VBoxContainer" instance=ExtResource( 2 )]
+[node name="PlayButton" parent="SafeAreaContainer/VBoxContainer" instance=ExtResource( 2 )]
 margin_right = 230.0
 margin_bottom = 65.0
 rect_min_size = Vector2( 0, 65 )
 focus_mode = 2
 enabled_focus_mode = 2
 
-[node name="SettingsButton " parent="VBoxContainer" instance=ExtResource( 2 )]
+[node name="SettingsButton " parent="SafeAreaContainer/VBoxContainer" instance=ExtResource( 2 )]
 margin_top = 95.0
 margin_right = 230.0
 margin_bottom = 160.0
@@ -165,7 +175,7 @@ focus_mode = 2
 enabled_focus_mode = 2
 text = "SETTINGS"
 
-[node name="QuitButton" parent="VBoxContainer" instance=ExtResource( 2 )]
+[node name="QuitButton" parent="SafeAreaContainer/VBoxContainer" instance=ExtResource( 2 )]
 margin_top = 190.0
 margin_right = 230.0
 margin_bottom = 255.0
@@ -174,12 +184,10 @@ focus_mode = 2
 enabled_focus_mode = 2
 text = "QUIT"
 
-[node name="Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="SafeAreaContainer"]
 anchor_right = 1.0
-anchor_bottom = 0.211
-margin_top = -1.0
-margin_right = -1.0
-margin_bottom = 44.968
+anchor_bottom = 0.244
+margin_bottom = 0.071991
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 0.396078 )
 custom_constants/shadow_offset_x = 7
@@ -191,7 +199,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VersionLabel" type="Label" parent="."]
+[node name="VersionLabel" type="Label" parent="SafeAreaContainer"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -208,7 +216,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HighScoreLabel" type="Label" parent="."]
+[node name="HighScoreLabel" type="Label" parent="SafeAreaContainer"]
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 20.0
@@ -222,7 +230,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="WebsiteLink" type="LinkButton" parent="."]
+[node name="WebsiteLink" type="LinkButton" parent="SafeAreaContainer"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -241,9 +249,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="SafeAreaContainer"]
 stream = ExtResource( 3 )
 volume_db = -23.0
-[connection signal="pressed" from="VBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
-[connection signal="pressed" from="VBoxContainer/SettingsButton " to="." method="_on_SettingsButton__pressed"]
-[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_QuitButton_pressed"]
+[connection signal="pressed" from="SafeAreaContainer/VBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="SafeAreaContainer/VBoxContainer/SettingsButton " to="." method="_on_SettingsButton__pressed"]
+[connection signal="pressed" from="SafeAreaContainer/VBoxContainer/QuitButton" to="." method="_on_QuitButton_pressed"]
