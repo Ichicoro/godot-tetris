@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://shaders/grid.tres" type="Material" id=1]
 [ext_resource path="res://shaders/Blur.shader" type="Shader" id=2]
@@ -8,24 +8,25 @@
 [ext_resource path="res://src/SoundController.gd" type="Script" id=6]
 [ext_resource path="res://assets/sounds/main_song.ogg" type="AudioStream" id=7]
 [ext_resource path="res://scenes/TouchControls.tscn" type="PackedScene" id=8]
+[ext_resource path="res://src/SafeAreaContainer.gd" type="Script" id=9]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
 
-onready var gameview = $\"Game view/GridContainer\"
+onready var gameview = $\"SafeAreaContainer/Game view/GridContainer\"
 onready var sound = $\"Sound Controller\"
 
 func _ready():
 	# This fixes touch buttons scaling on screens with a screen ratio taller than 16:9
-	get_tree().get_root().connect(\"size_changed\", self, \"update_touch_controls_size\")
 	update_touch_controls_size()
+	get_tree().get_root().connect(\"size_changed\", self, \"update_touch_controls_size\")
 	#$\"Pause screen\".hide()
 	
 	gameview.connectTableSignal(\"newTableAction\", sound, \"queueSFX\")
 
 func update_touch_controls_size():
-	var window_size: Vector2 = get_viewport().get_visible_rect().size
-	$TouchControls.margin_bottom = window_size.y/2
+	var window_size: Vector2 = $SafeAreaContainer.rect_size #get_viewport().get_visible_rect().size
+	$SafeAreaContainer/TouchControls.margin_bottom = window_size.y/2
 "
 
 [sub_resource type="GDScript" id=2]
@@ -64,7 +65,6 @@ func _ready():
 script/source = "extends Label
 
 func updateText(newLevel) :
-	
 	self.text = str(newLevel)
 "
 
@@ -79,9 +79,7 @@ font_data = ExtResource( 4 )
 pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.496
-margin_right = -215.0
-margin_bottom = -382.952
-rect_scale = Vector2( 2, 2 )
+margin_bottom = 0.0479736
 script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -96,7 +94,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Game view" type="Control" parent="."]
+[node name="SafeAreaContainer" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -215.0
+margin_bottom = -383.0
+rect_scale = Vector2( 2, 2 )
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel2" type="Panel" parent="SafeAreaContainer"]
+visible = false
+anchor_right = 0.5
+anchor_bottom = 0.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Game view" type="Control" parent="SafeAreaContainer"]
 pause_mode = 1
 anchor_right = 1.0
 margin_right = -1.075
@@ -107,7 +124,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Blur View" type="ColorRect" parent="Game view"]
+[node name="Blur View" type="ColorRect" parent="SafeAreaContainer/Game view"]
 pause_mode = 1
 visible = false
 material = SubResource( 3 )
@@ -123,7 +140,7 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="Red Filter" type="ColorRect" parent="Game view"]
+[node name="Red Filter" type="ColorRect" parent="SafeAreaContainer/Game view"]
 pause_mode = 1
 margin_right = 160.0
 margin_bottom = 256.0
@@ -132,7 +149,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GridContainer" type="GridContainer" parent="Game view"]
+[node name="GridContainer" type="GridContainer" parent="SafeAreaContainer/Game view"]
 pause_mode = 1
 rect_scale = Vector2( 2, 2 )
 custom_constants/vseparation = 0
@@ -143,21 +160,24 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ScorePanel" type="Panel" parent="."]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -55.0
+[node name="ScorePanel" type="Panel" parent="SafeAreaContainer"]
+margin_left = 160.0
 margin_top = 73.0
+margin_right = 215.0
 margin_bottom = 98.0
+grow_horizontal = 0
+rect_pivot_offset = Vector2( 55, 0 )
 custom_styles/panel = SubResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="ScorePanel"]
-margin_left = -3.92026
+[node name="Label" type="Label" parent="SafeAreaContainer/ScorePanel"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -58.9203
 margin_top = 4.0396
-margin_right = 52.0797
+margin_right = -2.9203
 margin_bottom = 28.0396
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "SCORE"
@@ -166,10 +186,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ScoreLabel" type="Label" parent="ScorePanel"]
-margin_left = -4.8595
+[node name="ScoreLabel" type="Label" parent="SafeAreaContainer/ScorePanel"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -59.8595
 margin_top = 14.0
-margin_right = 51.1405
+margin_right = -3.8595
 margin_bottom = 38.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "0"
@@ -179,18 +201,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HiscorePanel" type="Panel" parent="."]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -55.0
+[node name="HiscorePanel" type="Panel" parent="SafeAreaContainer"]
+margin_left = 160.0
 margin_top = 150.0
+margin_right = 215.0
 margin_bottom = 175.0
 custom_styles/panel = SubResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="HiscorePanel"]
+[node name="Label" type="Label" parent="SafeAreaContainer/HiscorePanel"]
 margin_left = -3.92026
 margin_top = 4.0396
 margin_right = 52.0797
@@ -203,7 +224,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HiscoreLabel" type="Label" parent="HiscorePanel"]
+[node name="HiscoreLabel" type="Label" parent="SafeAreaContainer/HiscorePanel"]
 margin_left = -4.8595
 margin_top = 13.5
 margin_right = 51.1405
@@ -216,18 +237,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LevelPanel" type="Panel" parent="."]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -55.0
+[node name="LevelPanel" type="Panel" parent="SafeAreaContainer"]
+margin_left = 160.0
 margin_top = 111.0
+margin_right = 215.0
 margin_bottom = 136.0
 custom_styles/panel = SubResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="LevelPanel"]
+[node name="Label" type="Label" parent="SafeAreaContainer/LevelPanel"]
 margin_left = -3.92026
 margin_top = 4.0396
 margin_right = 52.0797
@@ -239,7 +259,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LevelLabel" type="Label" parent="LevelPanel"]
+[node name="LevelLabel" type="Label" parent="SafeAreaContainer/LevelPanel"]
 margin_left = -4.8595
 margin_top = 14.0
 margin_right = 51.1405
@@ -252,7 +272,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GameGridShadow" type="ColorRect" parent="."]
+[node name="GameGridShadow" type="ColorRect" parent="SafeAreaContainer"]
 margin_left = 160.0
 margin_right = 169.0
 margin_bottom = 256.0
@@ -261,7 +281,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel" type="Panel" parent="."]
+[node name="TouchControls" parent="SafeAreaContainer" instance=ExtResource( 8 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 256.0
+margin_right = 215.0
+margin_bottom = 383.0
+rect_scale = Vector2( 1, 1 )
+
+[node name="Panel" type="Panel" parent="SafeAreaContainer"]
 margin_left = 173.0
 margin_top = 16.0
 margin_right = 202.0
@@ -271,7 +299,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Panel"]
+[node name="Label" type="Label" parent="SafeAreaContainer/Panel"]
 margin_left = -4.5
 margin_top = 10.5
 margin_right = 35.5
@@ -283,13 +311,6 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="TouchControls" parent="." instance=ExtResource( 8 )]
-anchor_bottom = 0.0
-margin_top = 256.0
-margin_right = 0.0
-margin_bottom = 383.0
-rect_scale = Vector2( 1, 1 )
 
 [node name="Pause controller" type="Node" parent="."]
 script = ExtResource( 5 )
@@ -303,7 +324,7 @@ volume_db = -12.0
 
 [node name="SFXPlayer" type="AudioStreamPlayer" parent="Sound Controller"]
 volume_db = 3.0
-[connection signal="newLevel" from="Game view/GridContainer" to="LevelPanel/LevelLabel" method="updateText"]
-[connection signal="newScore" from="Game view/GridContainer" to="ScorePanel/ScoreLabel" method="updateText"]
-[connection signal="pauseToggled" from="Pause controller" to="Game view/GridContainer" method="toggle_pause"]
+[connection signal="newLevel" from="SafeAreaContainer/Game view/GridContainer" to="SafeAreaContainer/LevelPanel/LevelLabel" method="updateText"]
+[connection signal="newScore" from="SafeAreaContainer/Game view/GridContainer" to="SafeAreaContainer/ScorePanel/ScoreLabel" method="updateText"]
 [connection signal="pauseToggled" from="Pause controller" to="Sound Controller" method="toggleMusicPaused"]
+[connection signal="pauseToggled" from="Pause controller" to="SafeAreaContainer/Game view/GridContainer" method="toggle_pause"]

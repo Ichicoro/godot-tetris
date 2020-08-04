@@ -47,7 +47,7 @@ _global_script_class_icons={
 config/name="Tetris"
 run/main_scene="res://scenes/MainMenu.tscn"
 boot_splash/image="res://tetrissplash.png"
-boot_splash/bg_color=Color( 0.309804, 0.219608, 0.2, 1 )
+boot_splash/bg_color=Color( 0.14902, 0.0823529, 0.0862745, 1 )
 config/icon="res://tetris_icon.png"
 config/version=2.0
 
@@ -69,8 +69,10 @@ gdscript/warnings/return_value_discarded=false
 window/size/width=430
 window/size/height=512
 window/handheld/orientation="portrait"
+window/ios/hide_home_indicator=false
 window/stretch/mode="viewport"
 window/stretch/aspect="keep_width"
+window/ios/disable_safe_zone=false
 
 [gui]
 

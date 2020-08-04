@@ -8,7 +8,7 @@ var isPaused = false
 var dialog
 
 func _ready():
-	gameview = get_parent().get_node("Game view/GridContainer")
+	gameview = get_parent().get_node("SafeAreaContainer/Game view/GridContainer")
 	#pausescreen = get_parent().get_node("Pause screen")
 
 func _input(event):
